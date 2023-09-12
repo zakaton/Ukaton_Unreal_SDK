@@ -6,6 +6,7 @@
 #include "Math/Quat.h"
 #include "Math/Vector.h"
 #include "Math/Rotator.h"
+#include "UkatonDeviceType.h"
 #include "UkatonMotionDataType.h"
 #include "UkatonMotionData.generated.h"
 
@@ -35,8 +36,22 @@ struct FUkatonMotionData
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
 	FVector Euler;
 
-	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset = 0);
+	void SetDeviceType(EUkatonDeviceType DeviceType);
+	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset);
 
-protected:
+private:
 	static const TMap<EUkatonMotionDataType, float> ScalarMap;
+
+	FVector TempAcceleration;
+	FVector TempGravity;
+	FVector TempLinearAcceleration;
+	FVector TempRotationRate;
+	FVector TempMagnetometer;
+	FQuat TempQuaternion;
+	FVector TempEuler;
+
+	EUkatonDeviceType DeviceType;
+	void ParseVector(const TArray<uint8> &Data, uint8 Offset, EUkatonMotionDataType MotionDataType);
+	void ParseEuler(const TArray<uint8> &Data, uint8 Offset);
+	void ParseQuaternion(const TArray<uint8> &Data, uint8 Offset);
 };
