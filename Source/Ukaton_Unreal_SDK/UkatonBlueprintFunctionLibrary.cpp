@@ -1,4 +1,4 @@
-// // Copyright (c) 2023 Zack Qattan
+// Copyright (c) 2023 Zack Qattan
 
 #include "UkatonBlueprintFunctionLibrary.h"
 #include "Engine/Engine.h"

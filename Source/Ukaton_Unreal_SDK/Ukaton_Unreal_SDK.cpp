@@ -1,4 +1,4 @@
-// // Copyright (c) 2023 Zack Qattan
+// Copyright (c) 2023 Zack Qattan
 
 #include "Ukaton_Unreal_SDK.h"
 #include "Modules/ModuleManager.h"

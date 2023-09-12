@@ -1,4 +1,4 @@
-// // Copyright (c) 2023 Zack Qattan
+// Copyright (c) 2023 Zack Qattan
 
 using UnrealBuildTool;
 using System.Collections.Generic;
