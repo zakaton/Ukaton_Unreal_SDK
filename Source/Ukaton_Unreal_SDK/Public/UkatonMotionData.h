@@ -8,6 +8,7 @@
 #include "Math/Rotator.h"
 #include "UkatonDeviceType.h"
 #include "UkatonMotionDataType.h"
+#include "EnumFlagManager.h"
 #include "UkatonMotionData.generated.h"
 
 USTRUCT(BlueprintType)
@@ -42,16 +43,13 @@ struct FUkatonMotionData
 private:
 	static const TMap<EUkatonMotionDataType, float> ScalarMap;
 
-	FVector TempAcceleration;
-	FVector TempGravity;
-	FVector TempLinearAcceleration;
-	FVector TempRotationRate;
-	FVector TempMagnetometer;
+	FVector TempVector;
 	FQuat TempQuaternion;
-	FVector TempEuler;
 
 	EUkatonDeviceType DeviceType;
 	void ParseVector(const TArray<uint8> &Data, uint8 Offset, EUkatonMotionDataType MotionDataType);
 	void ParseEuler(const TArray<uint8> &Data, uint8 Offset);
 	void ParseQuaternion(const TArray<uint8> &Data, uint8 Offset);
+
+	EnumFlagManager<EUkatonMotionDataType> UpdateFlags;
 };

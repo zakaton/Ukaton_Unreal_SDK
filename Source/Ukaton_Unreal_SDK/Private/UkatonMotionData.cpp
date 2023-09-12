@@ -55,6 +55,8 @@ uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint
             UE_LOG(UkatonMotionData, Error, TEXT("Uncaught handler for MotionDataType: %u"), MotionDataType);
             break;
         }
+
+        UpdateFlags.SetFlag(MotionDataType);
     }
     return Offset;
 }
@@ -68,16 +70,68 @@ void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 Offset, EUk
 
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
+        // FILL
     }
     else
     {
+        // FILL
+    }
+
+    TempVector *= scalar;
+
+    switch (MotionDataType)
+    {
+    case EUkatonMotionDataType::ACCELERATION:
+        Acceleration = TempVector;
+        break;
+    case EUkatonMotionDataType::GRAVITY:
+        Gravity = TempVector;
+        break;
+    case EUkatonMotionDataType::LINEAR_ACCELERATION:
+        LinearAcceleration = TempVector;
+        break;
+    case EUkatonMotionDataType::MAGNETOMETER:
+        Magnetometer = TempVector;
+        break;
+    default:
+        UE_LOG(UkatonMotionData, Error, TEXT("Uncaught handler for MotionDataType: %u"), MotionDataType);
+        break;
     }
 }
 void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 Offset)
 {
     auto scalar = ScalarMap[EUkatonMotionDataType::ROTATION_RATE];
+    auto x = ByteParser::GetInt16(Data, Offset);
+    auto y = ByteParser::GetInt16(Data, Offset + 2);
+    auto z = ByteParser::GetInt16(Data, Offset + 4);
+
+    if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
+    {
+        // FILL
+    }
+    else
+    {
+        // FILL
+    }
+
+    TempVector *= scalar;
+
+    RotationRate = TempVector;
 }
 void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 Offset)
 {
     auto scalar = ScalarMap[EUkatonMotionDataType::QUATERNION];
+
+    if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
+    {
+        // FILL
+    }
+    else
+    {
+        // FILL
+    }
+
+    TempQuaternion *= scalar;
+
+    Quaternion = TempQuaternion;
 }

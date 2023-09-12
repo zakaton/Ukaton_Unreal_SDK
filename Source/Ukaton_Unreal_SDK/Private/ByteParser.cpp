@@ -1,7 +1,6 @@
 // Copyright (c) 2023 Zack Qattan + ChatGPT
 
 #include "ByteParser.h"
-#include <cstdint>
 
 uint16 ByteParser::GetUint16(const TArray<uint8> &Data, uint8 Offset)
 {
