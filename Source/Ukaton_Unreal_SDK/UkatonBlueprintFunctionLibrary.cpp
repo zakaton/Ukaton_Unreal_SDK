@@ -1,0 +1,18 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#include "UkatonBlueprintFunctionLibrary.h"
+#include "Engine/Engine.h"
+
+void UUkatonBlueprintFunctionLibrary::OnUDPMessage(const TArray<uint8> &ByteArray)
+{
+    FString DebugString = "Byte Values: ";
+
+    for (uint8 ByteValue : ByteArray)
+    {
+        // Append each byte value to the debug string
+        DebugString += FString::Printf(TEXT("%d, "), ByteValue);
+    }
+
+    // Add the debug string to the screen
+    GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, DebugString);
+}
