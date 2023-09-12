@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
-enum class EUkatonDeviceTypeEnum : uint8
+enum class EUkatonDeviceType : uint8
 {
 	MOTION_MODULE UMETA(DisplayName = "Motion Module"),
 	LEFT_INSOLE UMETA(DisplayName = "Left Insole"),

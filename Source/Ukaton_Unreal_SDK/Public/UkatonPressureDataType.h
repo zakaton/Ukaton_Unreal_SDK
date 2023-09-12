@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
-enum class EUkatonPressureDataTypeEnum : uint8
+enum class EUkatonPressureDataType : uint8
 {
 	PRESSURE_SINGLE_BYTE UMETA(DisplayName = "Pressure (single-byte precision)"),
 	PRESSURE_DOUBLE_BYTE UMETA(DisplayName = "Pressure (double-byte precision)"),

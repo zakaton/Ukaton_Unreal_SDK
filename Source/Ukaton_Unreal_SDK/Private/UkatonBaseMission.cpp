@@ -9,7 +9,6 @@ AUkatonBaseMission::AUkatonBaseMission()
 	PrimaryActorTick.bCanEverTick = false;
 
 	bIsConnected = false;
-	DeviceType = EUkatonDeviceTypeEnum::MOTION_MODULE;
 }
 
 // Called when the game starts or when spawned

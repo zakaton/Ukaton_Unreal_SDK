@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
-enum class EUkatonMotionDataTypeEnum : uint8
+enum class EUkatonMotionDataType : uint8
 {
 	ACCELERATION UMETA(DisplayName = "Acceleration"),
 	GRAVITY UMETA(DisplayName = "Gravity"),

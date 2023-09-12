@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "UkatonDeviceTypeEnum.h"
+#include "UkatonDeviceType.h"
+#include "UkatonMotionData.h"
+#include "UkatonPressureData.h"
 #include "UkatonBaseMission.generated.h"
 
 UCLASS()
@@ -16,14 +18,20 @@ public:
 	// Sets default values for this actor's properties
 	AUkatonBaseMission();
 
-	UPROPERTY(BlueprintReadOnly)
-	EUkatonDeviceTypeEnum DeviceType;
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
+	EUkatonDeviceType DeviceType;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
 	bool bIsConnected;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
 	FString DeviceName;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
+	FUkatonMotionData UkatonMotionData;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
+	FUkatonPressureData UkatonPressureData;
 
 protected:
 	// Called when the game starts or when spawned
@@ -32,4 +40,7 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	FQuat TempQuaternion;
 };
