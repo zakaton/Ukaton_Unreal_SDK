@@ -1,5 +1,6 @@
 // Copyright (c) 2023 Zack Qattan
 
+#include "UkatonPressureData.h"
 #include "UkatonPressureValuesWrapper.h"
 
 const FVector2D FUkatonPressureValuesWrapper::PressurePositions[NumberOfPressureSensors] = {
@@ -31,11 +32,59 @@ void FUkatonPressureValuesWrapper::SetDeviceType(EUkatonDeviceType NewDeviceType
 
 void FUkatonPressureValuesWrapper::UpdatePressureValuePositions()
 {
-    // FILL
+    for (uint8 i = 0; i < NumberOfPressureSensors; i++)
+    {
+        auto &PressureValue = PressureValues[i];
+        PressureValue.Position.X = PressurePositions[i].X;
+        if (DeviceType == EUkatonDeviceType::RIGHT_INSOLE)
+        {
+            PressureValue.Position.X = 1 - PressureValue.Position.X;
+        }
+        PressureValue.Position.Y = PressurePositions[i].Y;
+    }
 }
 
 uint8 FUkatonPressureValuesWrapper::ParseData(const TArray<uint8> &Data, uint8 Offset, EUkatonPressureDataType PressureDataType)
 {
-    // FILL
+    RawValueSum = 0;
+
+    auto bIsSingleByte = PressureDataType == EUkatonPressureDataType::PRESSURE_SINGLE_BYTE;
+    auto Scalar = FUkatonPressureData::ScalarMap[PressureDataType];
+
+    uint8 OffsetIncrement = bIsSingleByte ? 1 : 2;
+    for (uint8 i = 0; i < NumberOfPressureSensors; i++)
+    {
+        auto &PressureValue = PressureValues[i];
+        if (bIsSingleByte)
+        {
+            PressureValue.RawValue = Data[Offset];
+        }
+        else
+        {
+            PressureValue.RawValue = ByteParser::GetUint16(Data, Offset);
+        }
+        PressureValue.NormalizedValue = PressureValue.RawValue * Scalar;
+        RawValueSum += PressureValue.RawValue;
+        Offset += OffsetIncrement;
+    }
+
+    CenterOfMass.Set(0, 0);
+    HeelToToe = 0;
+
+    if (RawValueSum > 0)
+    {
+        for (uint8 i = 0; i < NumberOfPressureSensors; i++)
+        {
+            auto &PressureValue = PressureValues[i];
+            PressureValue.WeightedValue = PressureValue.RawValue / RawValueSum;
+            CenterOfMass += PressureValue.Position * PressureValue.WeightedValue;
+        }
+
+        CenterOfMass.Y = 1 - CenterOfMass.Y;
+        HeelToToe = CenterOfMass.Y;
+    }
+
+    Mass = RawValueSum * Scalar / NumberOfPressureSensors;
+
     return Offset;
 }

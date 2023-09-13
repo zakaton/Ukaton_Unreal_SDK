@@ -7,6 +7,7 @@
 #include "UkatonPressureValue.h"
 #include "UkatonDeviceType.h"
 #include "UkatonPressureDataType.h"
+#include "ByteParser.h"
 #include "UkatonPressureValuesWrapper.generated.h"
 
 USTRUCT(BlueprintType)
@@ -18,16 +19,19 @@ struct FUkatonPressureValuesWrapper
 	static const FVector2D PressurePositions[NumberOfPressureSensors];
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Pressure Values")
-	TArray<FUkatonPressureValue> Values;
+	TArray<FUkatonPressureValue> PressureValues;
 
 	FUkatonPressureValuesWrapper()
 	{
-		Values.SetNum(NumberOfPressureSensors);
+		PressureValues.SetNum(NumberOfPressureSensors);
+		DeviceType = EUkatonDeviceType::LEFT_INSOLE;
+		UpdatePressureValuePositions();
 	};
 
 	EUkatonDeviceType DeviceType;
 	void SetDeviceType(EUkatonDeviceType NewDeviceType);
 
+	uint32 RawValueSum;
 	FVector2D CenterOfMass;
 	float Mass;
 	double HeelToToe;

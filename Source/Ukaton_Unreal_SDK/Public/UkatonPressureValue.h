@@ -12,7 +12,7 @@ struct FUkatonPressureValue
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Pressure Value")
-	float RawValue;
+	int32 RawValue;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Pressure Value")
 	float WeightedValue;

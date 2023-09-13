@@ -41,9 +41,9 @@ struct FUkatonMotionData
 	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset);
 	UEnumFlagManager<EUkatonMotionDataType> DataUpdateFlags;
 
-private:
 	static const TMap<EUkatonMotionDataType, double> ScalarMap;
 
+private:
 	EUkatonDeviceType DeviceType;
 
 	FVector TempVector;

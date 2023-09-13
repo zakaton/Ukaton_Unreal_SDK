@@ -33,8 +33,6 @@ uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, ui
         auto PressureDataType = (EUkatonPressureDataType)Data[Offset++];
         UE_LOG(UkatonPressureData, UKATON_PRESSURE_DATA_LOG_VERBOSITY, TEXT("PressureDataType: %d"), static_cast<uint8>(PressureDataType));
 
-        auto Scalar = ScalarMap.Find(PressureDataType);
-
         switch (PressureDataType)
         {
         case EUkatonPressureDataType::PRESSURE_SINGLE_BYTE:
@@ -57,9 +55,11 @@ uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, ui
             Offset += 2 * 4; // sizeof(float)
             break;
         case EUkatonPressureDataType::MASS:
-            Mass = ByteParser::GetUint32(Data, Offset);
+        
+            Mass = ByteParser::GetUint32(Data, Offset) * ScalarMap[PressureDataType];
             Offset += 4; // sizeof(uint32)
-            break;
+        
+        break;
         case EUkatonPressureDataType::HEEL_TO_TOE:
             HeelToToe = ByteParser::GetDouble(Data, Offset);
             Offset += 8; // sizeof(double)

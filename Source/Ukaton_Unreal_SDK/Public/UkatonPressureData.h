@@ -31,8 +31,8 @@ struct FUkatonPressureData
 	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset);
 	UEnumFlagManager<EUkatonPressureDataType> DataUpdateFlags;
 
-protected:
 	static const TMap<EUkatonPressureDataType, double> ScalarMap;
 
+private:
 	EUkatonDeviceType DeviceType;
 };
