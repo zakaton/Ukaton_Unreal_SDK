@@ -1,8 +1,8 @@
 // Copyright (c) 2023 Zack Qattan
 
-#include "UkatonPressureValues.h"
+#include "UkatonPressureValuesWrapper.h"
 
-const FVector2D FUkatonPressureValues::PressurePositions[NumberOfPressureSensors] = {
+const FVector2D FUkatonPressureValuesWrapper::PressurePositions[NumberOfPressureSensors] = {
     FVector2D(0.6385579634772724, 0.12185506415310729),
     FVector2D(0.3549331417480725, 0.15901519981589698),
     FVector2D(0.7452523671145329, 0.20937944459744443),
@@ -19,3 +19,23 @@ const FVector2D FUkatonPressureValues::PressurePositions[NumberOfPressureSensors
     FVector2D(0.19301500155484305, 0.7545205210718718),
     FVector2D(0.46645292042420405, 0.9129698304969649),
     FVector2D(0.19891268215790772, 0.9133470907575008)};
+
+void FUkatonPressureValuesWrapper::SetDeviceType(EUkatonDeviceType NewDeviceType)
+{
+    if (DeviceType != NewDeviceType)
+    {
+        DeviceType = NewDeviceType;
+        UpdatePressureValuePositions();
+    }
+}
+
+void FUkatonPressureValuesWrapper::UpdatePressureValuePositions()
+{
+    // FILL
+}
+
+uint8 FUkatonPressureValuesWrapper::ParseData(const TArray<uint8> &Data, uint8 Offset, EUkatonPressureDataType PressureDataType)
+{
+    // FILL
+    return Offset;
+}

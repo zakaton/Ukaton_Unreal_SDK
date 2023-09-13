@@ -42,7 +42,7 @@ struct FUkatonMotionData
 	UEnumFlagManager<EUkatonMotionDataType> DataUpdateFlags;
 
 private:
-	static const TMap<EUkatonMotionDataType, float> ScalarMap;
+	static const TMap<EUkatonMotionDataType, double> ScalarMap;
 
 	EUkatonDeviceType DeviceType;
 

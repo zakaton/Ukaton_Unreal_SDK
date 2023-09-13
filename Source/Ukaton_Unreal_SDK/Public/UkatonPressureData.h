@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Math/Vector2D.h"
+#include "UkatonDeviceType.h"
 #include "UkatonPressureDataType.h"
-#include "UkatonPressureValues.h"
+#include "UkatonPressureValuesWrapper.h"
+#include "EnumFlagManager.h"
 #include "UkatonPressureData.generated.h"
 
 USTRUCT(BlueprintType)
@@ -14,7 +16,7 @@ struct FUkatonPressureData
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Pressure Data")
-	FUkatonPressureValues PressureValues;
+	FUkatonPressureValuesWrapper PressureValuesWrapper;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Pressure Data")
 	FVector2D CenterOfMass;
@@ -23,10 +25,14 @@ struct FUkatonPressureData
 	float Mass;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Pressure Data")
-	float HeelToToe;
+	double HeelToToe;
 
-	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset = 0);
+	void SetDeviceType(EUkatonDeviceType NewDeviceType);
+	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset);
+	UEnumFlagManager<EUkatonPressureDataType> DataUpdateFlags;
 
 protected:
-	static const TMap<EUkatonPressureDataType, float> ScalarMap;
+	static const TMap<EUkatonPressureDataType, double> ScalarMap;
+
+	EUkatonDeviceType DeviceType;
 };
