@@ -44,17 +44,21 @@ struct FUkatonMotionData
 private:
 	static const TMap<EUkatonMotionDataType, float> ScalarMap;
 
-	FVector TempVector;
-	FQuat TempQuaternion;
-
 	EUkatonDeviceType DeviceType;
+
+	FVector TempVector;
 	void ParseVector(const TArray<uint8> &Data, uint8 Offset, EUkatonMotionDataType MotionDataType);
 	void ParseEuler(const TArray<uint8> &Data, uint8 Offset);
+
+	FQuat TempQuaternion;
+	FQuat CorrectionQuaternion;
 	void ParseQuaternion(const TArray<uint8> &Data, uint8 Offset);
 
 	void SetQuat(FQuat &Quat, float W, float X, float Y, float Z);
 
 	static const TMap<EUkatonDeviceType, FQuat> CorrectionQuaternions;
 	static const TMap<EUkatonDeviceType, FQuat> InsoleCorrectionQuaternions;
-	FQuat CorrectionQuaternion;
+
+	static const TMap<EUkatonDeviceType, FQuat> InitializeCorrectionQuaternions();
+	static const TMap<EUkatonDeviceType, FQuat> InitializeInsoleCorrectionQuaternions();
 };

@@ -11,11 +11,7 @@
 	],
 	"settings": {
 		"typescript.tsc.autoDetect": "off",
-		"files.associations": {
-			"*.ipp": "cpp",
-			"complex": "cpp",
-			"valarray": "cpp"
-		}
+		"dotnet.defaultSolution": "UE5/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.sln"
 	},
 	"extensions": {
 		"recommendations": [

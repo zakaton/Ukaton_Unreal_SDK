@@ -141,16 +141,35 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 Offset)
     RotationRate = TempVector;
 }
 
-const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::CorrectionQuaternions = []
+const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeCorrectionQuaternions()
 {
+    // FILL
     TMap<EUkatonDeviceType, FQuat> Quaternions;
+
+    auto Vector = FVector(0, 0, 0);
+    auto Quaternion = FQuat::MakeFromEuler(Vector);
+
+    Quaternions.Add(EUkatonDeviceType::MOTION_MODULE, Quaternion);
+    Quaternions.Add(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
+    Quaternions.Add(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
     return Quaternions;
-}();
-const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InsoleCorrectionQuaternions = []
+}
+const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeInsoleCorrectionQuaternions()
 {
+    // FILL
     TMap<EUkatonDeviceType, FQuat> Quaternions;
+
+    auto Vector = FVector(0, 0, 0);
+    auto Quaternion = FQuat::MakeFromEuler(Vector);
+
+    Quaternions.Add(EUkatonDeviceType::MOTION_MODULE, Quaternion);
+    Quaternions.Add(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
+    Quaternions.Add(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
     return Quaternions;
-}();
+}
+
+const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::CorrectionQuaternions = FUkatonMotionData::InitializeCorrectionQuaternions();
+const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InsoleCorrectionQuaternions = FUkatonMotionData::InitializeInsoleCorrectionQuaternions();
 
 void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 Offset)
 {
