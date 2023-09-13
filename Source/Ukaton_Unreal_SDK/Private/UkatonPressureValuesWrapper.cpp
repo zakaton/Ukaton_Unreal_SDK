@@ -1,7 +1,7 @@
 // Copyright (c) 2023 Zack Qattan
 
-#include "UkatonPressureData.h"
 #include "UkatonPressureValuesWrapper.h"
+#include "UkatonPressureData.h"
 
 const FVector2D FUkatonPressureValuesWrapper::PressurePositions[NumberOfPressureSensors] = {
     FVector2D(0.6385579634772724, 0.12185506415310729),

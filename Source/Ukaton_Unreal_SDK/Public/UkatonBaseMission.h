@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "UkatonDeviceType.h"
-#include "UkatonSensorData.h"
+#include "UkatonSensorDataManager.h"
 #include "UkatonBaseMission.generated.h"
 
 UCLASS()
@@ -27,7 +27,7 @@ public:
 	FString DeviceName;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
-	FUkatonSensorData UkatonSensorData;
+	FUkatonSensorDataManager UkatonSensorDataManager;
 
 protected:
 	// Called when the game starts or when spawned

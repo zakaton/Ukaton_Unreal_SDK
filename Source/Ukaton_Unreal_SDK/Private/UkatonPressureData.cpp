@@ -2,14 +2,7 @@
 
 #include "UkatonPressureData.h"
 #include "ByteParser.h"
-
-#define ENABLE_UKATON_PRESSURE_DATA_LOGGING true
-
-#if ENABLE_UKATON_PRESSURE_DATA_LOGGING
-#define UKATON_PRESSURE_DATA_LOG_VERBOSITY Log
-#else
-#define UKATON_PRESSURE_DATA_LOG_VERBOSITY None
-#endif
+#include "Logging/StructuredLog.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonPressureData, Log, All);
 
@@ -31,7 +24,7 @@ uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, ui
     while (Offset < FinalByteOffset)
     {
         auto PressureDataType = (EUkatonPressureDataType)Data[Offset++];
-        UE_LOG(UkatonPressureData, UKATON_PRESSURE_DATA_LOG_VERBOSITY, TEXT("PressureDataType: %d"), static_cast<uint8>(PressureDataType));
+        UE_LOG(UkatonPressureData, Log, TEXT("PressureDataType: %d"), static_cast<uint8>(PressureDataType));
 
         switch (PressureDataType)
         {
@@ -55,17 +48,17 @@ uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, ui
             Offset += 2 * 4; // sizeof(float)
             break;
         case EUkatonPressureDataType::MASS:
-        
+
             Mass = ByteParser::GetUint32(Data, Offset) * ScalarMap[PressureDataType];
             Offset += 4; // sizeof(uint32)
-        
-        break;
+
+            break;
         case EUkatonPressureDataType::HEEL_TO_TOE:
             HeelToToe = ByteParser::GetDouble(Data, Offset);
             Offset += 8; // sizeof(double)
             break;
         default:
-            UE_LOG(UkatonPressureData, Error, TEXT("Uncaught handler for PressureDataType: %d"), static_cast<uint8>(PressureDataType));
+            UE_LOGFMT(UkatonPressureData, Error, "Uncaught handler for PressureDataType {0}", static_cast<uint8>(PressureDataType));
             break;
         }
 

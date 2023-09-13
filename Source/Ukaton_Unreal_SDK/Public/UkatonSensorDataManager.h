@@ -7,10 +7,10 @@
 #include "UkatonDeviceType.h"
 #include "UkatonMotionData.h"
 #include "UkatonPressureData.h"
-#include "UkatonSensorData.generated.h"
+#include "UkatonSensorDataManager.generated.h"
 
 USTRUCT(BlueprintType)
-struct FUkatonSensorData
+struct FUkatonSensorDataManager
 {
     GENERATED_BODY()
 
