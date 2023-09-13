@@ -2,6 +2,7 @@
 
 #include "UkatonMotionData.h"
 #include "ByteParser.h"
+#include "Math/UnrealMathUtility.h"
 
 #define ENABLE_UKATON_MOTION_DATA_LOGGING true
 
@@ -143,28 +144,38 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 Offset)
 
 const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeCorrectionQuaternions()
 {
-    // FILL
+    // FIX
     TMap<EUkatonDeviceType, FQuat> Quaternions;
 
-    auto Vector = FVector(0, 0, 0);
-    auto Quaternion = FQuat::MakeFromEuler(Vector);
+    auto Quaternion = FQuat::MakeFromEuler(FVector(0, 0, 0));
+    Quaternions.Emplace(EUkatonDeviceType::MOTION_MODULE, Quaternion);
 
-    Quaternions.Add(EUkatonDeviceType::MOTION_MODULE, Quaternion);
-    Quaternions.Add(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
-    Quaternions.Add(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
+    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternions.Emplace(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
+
+    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternions.Emplace(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
+
     return Quaternions;
 }
 const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeInsoleCorrectionQuaternions()
 {
-    // FILL
+    // FIX
     TMap<EUkatonDeviceType, FQuat> Quaternions;
 
-    auto Vector = FVector(0, 0, 0);
-    auto Quaternion = FQuat::MakeFromEuler(Vector);
+    auto Quaternion = FQuat::MakeFromEuler(FVector(0, 0, 0));
+    Quaternions.Emplace(EUkatonDeviceType::MOTION_MODULE, Quaternion);
 
-    Quaternions.Add(EUkatonDeviceType::MOTION_MODULE, Quaternion);
-    Quaternions.Add(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
-    Quaternions.Add(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
+    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternions.Emplace(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
+
+    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternions.Emplace(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
+
     return Quaternions;
 }
 
