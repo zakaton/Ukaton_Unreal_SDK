@@ -22,9 +22,15 @@ const TMap<EUkatonMotionDataType, float> FUkatonMotionData::ScalarMap = {
     {EUkatonMotionDataType::QUATERNION, FMath::Pow(2.0f, -14.0f)},
 };
 
-void FUkatonMotionData::SetDeviceType(EUkatonDeviceType _DeviceType)
+void FUkatonMotionData::SetDeviceType(EUkatonDeviceType NewDeviceType)
 {
-    DeviceType = _DeviceType;
+    DeviceType = NewDeviceType;
+
+    CorrectionQuaternion = CorrectionQuaternions[DeviceType];
+    if (InsoleCorrectionQuaternions.Contains(DeviceType))
+    {
+        CorrectionQuaternion *= InsoleCorrectionQuaternions[DeviceType];
+    }
 }
 
 uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset)
@@ -56,28 +62,36 @@ uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint
             break;
         }
 
-        UpdateFlags.SetFlag(MotionDataType);
+        DataUpdateFlags.SetFlag(MotionDataType);
     }
     return Offset;
 }
 
 void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 Offset, EUkatonMotionDataType MotionDataType)
 {
-    auto scalar = ScalarMap[MotionDataType];
-    auto x = ByteParser::GetInt16(Data, Offset);
-    auto y = ByteParser::GetInt16(Data, Offset + 2);
-    auto z = ByteParser::GetInt16(Data, Offset + 4);
+    auto Scalar = ScalarMap[MotionDataType];
+    auto X = ByteParser::GetInt16(Data, Offset);
+    auto Y = ByteParser::GetInt16(Data, Offset + 2);
+    auto Z = ByteParser::GetInt16(Data, Offset + 4);
 
+    // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
-        // FILL
+        TempVector.Set(X, Y, Z);
     }
     else
     {
-        // FILL
+        if (DeviceType == EUkatonDeviceType::LEFT_INSOLE)
+        {
+            TempVector.Set(X, Y, Z);
+        }
+        else
+        {
+            TempVector.Set(X, Y, Z);
+        }
     }
 
-    TempVector *= scalar;
+    TempVector *= Scalar;
 
     switch (MotionDataType)
     {
@@ -100,38 +114,67 @@ void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 Offset, EUk
 }
 void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 Offset)
 {
-    auto scalar = ScalarMap[EUkatonMotionDataType::ROTATION_RATE];
-    auto x = ByteParser::GetInt16(Data, Offset);
-    auto y = ByteParser::GetInt16(Data, Offset + 2);
-    auto z = ByteParser::GetInt16(Data, Offset + 4);
+    auto Scalar = ScalarMap[EUkatonMotionDataType::ROTATION_RATE];
+    auto X = ByteParser::GetInt16(Data, Offset);
+    auto Y = ByteParser::GetInt16(Data, Offset + 2);
+    auto Z = ByteParser::GetInt16(Data, Offset + 4);
 
+    // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
-        // FILL
+        TempVector.Set(X, Y, Z);
     }
     else
     {
-        // FILL
+        if (DeviceType == EUkatonDeviceType::LEFT_INSOLE)
+        {
+            TempVector.Set(X, Y, Z);
+        }
+        else
+        {
+            TempVector.Set(X, Y, Z);
+        }
     }
 
-    TempVector *= scalar;
+    TempVector *= Scalar;
 
     RotationRate = TempVector;
 }
+
+const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::CorrectionQuaternions = []
+{
+    TMap<EUkatonDeviceType, FQuat> Quaternions;
+    return Quaternions;
+}();
+const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InsoleCorrectionQuaternions = []
+{
+    TMap<EUkatonDeviceType, FQuat> Quaternions;
+    return Quaternions;
+}();
+
 void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 Offset)
 {
     auto scalar = ScalarMap[EUkatonMotionDataType::QUATERNION];
 
-    if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
-    {
-        // FILL
-    }
-    else
-    {
-        // FILL
-    }
+    auto W = ByteParser::GetInt16(Data, Offset);
+    auto X = ByteParser::GetInt16(Data, Offset + 2);
+    auto Y = ByteParser::GetInt16(Data, Offset + 4);
+    auto Z = ByteParser::GetInt16(Data, Offset + 6);
+
+    // FIX
+    SetQuat(TempQuaternion, W, X, Y, Z);
+
+    TempQuaternion *= CorrectionQuaternion;
 
     TempQuaternion *= scalar;
 
     Quaternion = TempQuaternion;
+}
+
+void FUkatonMotionData::SetQuat(FQuat &Quat, float W, float X, float Y, float Z)
+{
+    Quat.W = W;
+    Quat.X = X;
+    Quat.Y = Y;
+    Quat.Z = Z;
 }

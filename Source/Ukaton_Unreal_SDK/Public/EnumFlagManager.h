@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 
 template <typename TEnum>
-struct EnumFlagManager
+struct UEnumFlagManager
 {
 public:
     // Set a flag

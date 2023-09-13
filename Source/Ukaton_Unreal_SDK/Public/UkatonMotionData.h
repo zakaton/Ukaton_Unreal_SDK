@@ -37,8 +37,9 @@ struct FUkatonMotionData
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
 	FVector Euler;
 
-	void SetDeviceType(EUkatonDeviceType DeviceType);
+	void SetDeviceType(EUkatonDeviceType NewDeviceType);
 	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset);
+	UEnumFlagManager<EUkatonMotionDataType> DataUpdateFlags;
 
 private:
 	static const TMap<EUkatonMotionDataType, float> ScalarMap;
@@ -51,5 +52,9 @@ private:
 	void ParseEuler(const TArray<uint8> &Data, uint8 Offset);
 	void ParseQuaternion(const TArray<uint8> &Data, uint8 Offset);
 
-	EnumFlagManager<EUkatonMotionDataType> UpdateFlags;
+	void SetQuat(FQuat &Quat, float W, float X, float Y, float Z);
+
+	static const TMap<EUkatonDeviceType, FQuat> CorrectionQuaternions;
+	static const TMap<EUkatonDeviceType, FQuat> InsoleCorrectionQuaternions;
+	FQuat CorrectionQuaternion;
 };
