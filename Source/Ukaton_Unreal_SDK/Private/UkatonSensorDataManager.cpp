@@ -6,7 +6,7 @@
 #include "GenericPlatform/GenericPlatformTime.h"
 #include <limits>
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorData, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataManager, Log, All);
 
 void FUkatonSensorDataManager::SetDeviceType(EUkatonDeviceType NewDeviceType)
 {
@@ -43,7 +43,7 @@ uint8 FUkatonSensorDataManager::ParseSensorData(const TArray<uint8> &Data, uint8
             Offset = PressureData.ParseData(Data, Offset, FinalOffset);
             break;
         default:
-            UE_LOGFMT(UkatonSensorData, Error, "Uncaught handler for SensorType: {0}", static_cast<uint8>(SensorType));
+            UE_LOGFMT(UkatonSensorDataManager, Error, "Uncaught handler for SensorType: {0}", static_cast<uint8>(SensorType));
             break;
         }
     }

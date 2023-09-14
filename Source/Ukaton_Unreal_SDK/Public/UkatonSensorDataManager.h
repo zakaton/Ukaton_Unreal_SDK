@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Math/Vector2D.h"
 #include "UkatonDeviceType.h"
 #include "UkatonMotionData.h"
 #include "UkatonPressureData.h"

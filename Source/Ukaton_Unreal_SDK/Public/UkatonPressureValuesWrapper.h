@@ -23,7 +23,7 @@ struct FUkatonPressureValuesWrapper
 
 	FUkatonPressureValuesWrapper()
 	{
-		PressureValues.SetNum(NumberOfPressureSensors);
+		PressureValues.Reserve(NumberOfPressureSensors);
 		DeviceType = EUkatonDeviceType::LEFT_INSOLE;
 		UpdatePressureValuePositions();
 	};

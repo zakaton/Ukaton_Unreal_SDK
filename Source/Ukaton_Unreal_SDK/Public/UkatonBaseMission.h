@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "UkatonDeviceType.h"
 #include "UkatonSensorDataManager.h"
+#include "UkatonSensorDataConfigurationsManager.h"
 #include "UkatonBaseMission.generated.h"
 
 UCLASS()
@@ -28,6 +29,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
 	FUkatonSensorDataManager UkatonSensorDataManager;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
+	FUkatonSensorDataConfigurationsManager UkatonSensorDataConfigurationsManager;
 
 protected:
 	// Called when the game starts or when spawned
