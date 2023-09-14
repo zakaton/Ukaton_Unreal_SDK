@@ -1,9 +1,9 @@
 // Copyright (c) 2023 Zack Qattan
 
-#include "UkatonBaseMission.h"
+#include "UkatonMissionBase.h"
 
 // Sets default values
-AUkatonBaseMission::AUkatonBaseMission()
+AUkatonMissionBase::AUkatonMissionBase()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
@@ -12,13 +12,13 @@ AUkatonBaseMission::AUkatonBaseMission()
 }
 
 // Called when the game starts or when spawned
-void AUkatonBaseMission::BeginPlay()
+void AUkatonMissionBase::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
 // Called every frame
-void AUkatonBaseMission::Tick(float DeltaTime)
+void AUkatonMissionBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }

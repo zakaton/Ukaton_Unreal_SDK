@@ -8,16 +8,16 @@
 #include "UkatonSensorDataManager.h"
 #include "UkatonSensorDataConfigurationsManager.h"
 #include "UkatonHapticsManager.h"
-#include "UkatonBaseMission.generated.h"
+#include "UkatonMissionBase.generated.h"
 
 UCLASS()
-class UKATON_UNREAL_SDK_API AUkatonBaseMission : public AActor
+class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AUkatonBaseMission();
+	AUkatonMissionBase();
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton")
 	EUkatonDeviceType DeviceType;
