@@ -19,9 +19,9 @@ void FUkatonPressureData::SetDeviceType(EUkatonDeviceType NewDeviceType)
     PressureValuesWrapper.SetDeviceType(DeviceType);
 }
 
-uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset)
+uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset)
 {
-    while (Offset < FinalByteOffset)
+    while (Offset < FinalOffset)
     {
         auto PressureDataType = (EUkatonPressureDataType)Data[Offset++];
         UE_LOGFMT(UkatonPressureData, Log, "PressureDataType {0}", static_cast<uint8>(PressureDataType));

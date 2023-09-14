@@ -28,7 +28,7 @@ struct FUkatonPressureData
 	double HeelToToe;
 
 	void SetDeviceType(EUkatonDeviceType NewDeviceType);
-	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset);
+	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset);
 	UEnumFlagManager<EUkatonPressureDataType> DataUpdateFlags;
 
 	static const TMap<EUkatonPressureDataType, double> ScalarMap;

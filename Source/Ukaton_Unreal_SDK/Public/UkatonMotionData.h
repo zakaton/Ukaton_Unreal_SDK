@@ -38,7 +38,7 @@ struct FUkatonMotionData
 	FVector Euler;
 
 	void SetDeviceType(EUkatonDeviceType NewDeviceType);
-	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset);
+	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset);
 	UEnumFlagManager<EUkatonMotionDataType> DataUpdateFlags;
 
 	static const TMap<EUkatonMotionDataType, double> ScalarMap;

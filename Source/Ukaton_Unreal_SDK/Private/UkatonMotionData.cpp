@@ -27,9 +27,9 @@ void FUkatonMotionData::SetDeviceType(EUkatonDeviceType NewDeviceType)
     }
 }
 
-uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalByteOffset)
+uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset)
 {
-    while (Offset < FinalByteOffset)
+    while (Offset < FinalOffset)
     {
         auto MotionDataType = (EUkatonMotionDataType)Data[Offset++];
         UE_LOGFMT(UkatonMotionData, Log, "MotionDataType {0}", static_cast<uint8>(MotionDataType));

@@ -16,20 +16,37 @@ void FUkatonSensorDataManager::SetDeviceType(EUkatonDeviceType NewDeviceType)
     PressureData.SetDeviceType(NewDeviceType);
 }
 
-uint8 FUkatonSensorDataManager::ParseData(const TArray<uint8> &Data, uint8 Offset)
+uint8 FUkatonSensorDataManager::ParseSensorData(const TArray<uint8> &Data, uint8 Offset)
 {
-    LastTimeReceivedData = FGenericPlatformTime::Seconds();
+    LastTimeReceivedSensorData = FGenericPlatformTime::Seconds();
 
     uint16 RawTimestamp = ByteParser::GetUint16(Data, Offset);
     Offset += 2;
-    if (RawTimestamp < LastRawDataTimestamp)
+    if (RawTimestamp < LastRawTimestamp)
     {
-        DataTimestampOffset += UINT16_MAX + 1;
+        TimestampOffset += UINT16_MAX + 1;
     }
     Timestamp = RawTimestamp + Offset;
-    LastRawDataTimestamp = RawTimestamp;
+    LastRawTimestamp = RawTimestamp;
 
-    // FILL
+    while (Offset < Data.Num())
+    {
+        auto SensorType = (EUkatonSensorType)Data[Offset++];
+        auto SensorDataSize = Data[Offset++];
+        auto FinalOffset = Offset + SensorDataSize;
+        switch (SensorType)
+        {
+        case EUkatonSensorType::MOTION:
+            Offset = MotionData.ParseData(Data, Offset, FinalOffset);
+            break;
+        case EUkatonSensorType::PRESSURE:
+            Offset = PressureData.ParseData(Data, Offset, FinalOffset);
+            break;
+        default:
+            UE_LOGFMT(UkatonSensorData, Error, "Uncaught handler for SensorType: {0}", static_cast<uint8>(SensorType));
+            break;
+        }
+    }
 
     return Offset;
 }
