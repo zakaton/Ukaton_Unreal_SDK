@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Zack Qattan + ChatGPT
+// Copyright (c) 2023 Zack Qattan
 
 #pragma once
 

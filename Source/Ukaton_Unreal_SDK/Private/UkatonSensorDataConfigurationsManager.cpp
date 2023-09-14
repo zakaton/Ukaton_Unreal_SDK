@@ -1,7 +1,6 @@
 // Copyright (c) 2023 Zack Qattan
 
 #include "UkatonSensorDataConfigurationsManager.h"
-#include "ByteParser.h"
 #include "Logging/StructuredLog.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataConfigurationsManager, Log, All);
