@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Zack Qattan
+// Copyright (c) 2023 Zack Qattan + ChatGPT
 
 #pragma once
 
@@ -17,7 +17,7 @@ struct FUkatonSensorDataConfigurationsManager
 
     void SetDeviceType(EUkatonDeviceType NewDeviceType);
 
-    const TArray<uint8> &SerializeConfigurations() const;
+    const TArray<uint8> &SerializeConfigurations();
 
     UPROPERTY(BlueprintReadWrite, Category = "Ukaton Sensor Data Configuration")
     TMap<EUkatonMotionDataType, EUkatonSensorDataRate> MotionDataRates;
@@ -27,11 +27,16 @@ struct FUkatonSensorDataConfigurationsManager
 
     FUkatonSensorDataConfigurationsManager()
     {
-        SerializedConfigurations.Reserve(MaxSerializedConfigurationsLength);
+        SerializedConfigurations.Empty(MaxSerializedConfigurationsLength);
+        TempSerializedConfiguration.Empty(MaxSerializedConfigurationLength);
     };
 
 private:
     static const uint8 MaxSerializedConfigurationsLength = (2 * 2) + (3 * ((uint8)EUkatonMotionDataType::COUNT + (uint8)EUkatonPressureDataType::COUNT));
+    static const uint8 MaxSerializedConfigurationLength = 2 + (3 * FMath::Max((uint8)EUkatonMotionDataType::COUNT, (uint8)EUkatonPressureDataType::COUNT));
     EUkatonDeviceType DeviceType;
+    TArray<uint8> TempSerializedConfiguration;
     TArray<uint8> SerializedConfigurations;
+
+    void SerializeConfiguration(EUkatonSensorType SensorType);
 };
