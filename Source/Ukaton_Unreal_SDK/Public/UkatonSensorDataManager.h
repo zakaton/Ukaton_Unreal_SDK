@@ -24,6 +24,12 @@ struct FUkatonSensorDataManager
 
     uint8 ParseData(const TArray<uint8> &Data, uint8 Offset);
 
+    uint32 Timestamp;
+    double LastTimeReceivedData;
+
 private:
     EUkatonDeviceType DeviceType;
+
+    uint16 LastRawDataTimestamp;
+    uint32 DataTimestampOffset;
 };

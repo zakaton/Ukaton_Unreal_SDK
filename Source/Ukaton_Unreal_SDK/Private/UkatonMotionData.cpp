@@ -32,7 +32,7 @@ uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint
     while (Offset < FinalByteOffset)
     {
         auto MotionDataType = (EUkatonMotionDataType)Data[Offset++];
-        UE_LOG(UkatonMotionData, Log, TEXT("MotionDataType: %d"), static_cast<uint8>(MotionDataType));
+        UE_LOGFMT(UkatonMotionData, Log, "MotionDataType {0}", static_cast<uint8>(MotionDataType));
 
         switch (MotionDataType)
         {
@@ -52,7 +52,7 @@ uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint
             Offset += 8;
             break;
         default:
-            // UE_LOG(UkatonMotionData, Error, TEXT("Uncaught handler for MotionDataType: %d"), static_cast<uint8>(MotionDataType));
+            UE_LOGFMT(UkatonMotionData, Error, "Uncaught handler for MotionDataType: {0}", static_cast<uint8>(MotionDataType));
             break;
         }
 
