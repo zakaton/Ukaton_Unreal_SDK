@@ -14,7 +14,7 @@ struct FUkatonSensorDataManager
 {
     GENERATED_BODY()
 
-    void SetDeviceType(EUkatonDeviceType NewDeviceType);
+    void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 
     UPROPERTY(BlueprintReadOnly, Category = "Ukaton Sensor Data")
     FUkatonMotionData MotionData;

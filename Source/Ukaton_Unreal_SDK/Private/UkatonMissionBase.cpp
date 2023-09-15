@@ -22,3 +22,13 @@ void AUkatonMissionBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+void AUkatonMissionBase::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
+{
+	if (NewDeviceType != DeviceType)
+	{
+		DeviceType = NewDeviceType;
+		SensorDataConfigurationsManager.UpdateDeviceType(DeviceType);
+		SensorDataManager.UpdateDeviceType(DeviceType);
+	}
+}

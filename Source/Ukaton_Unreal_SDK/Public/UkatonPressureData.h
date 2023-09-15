@@ -27,7 +27,7 @@ struct FUkatonPressureData
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Pressure Data")
 	double HeelToToe;
 
-	void SetDeviceType(EUkatonDeviceType NewDeviceType);
+	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset);
 	UEnumFlagManager<EUkatonPressureDataType> DataUpdateFlags;
 

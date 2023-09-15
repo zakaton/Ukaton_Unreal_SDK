@@ -16,7 +16,7 @@ const TMap<EUkatonMotionDataType, double> FUkatonMotionData::ScalarMap = {
     {EUkatonMotionDataType::QUATERNION, FMath::Pow(2.0f, -14.0f)},
 };
 
-void FUkatonMotionData::SetDeviceType(EUkatonDeviceType NewDeviceType)
+void FUkatonMotionData::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
     DeviceType = NewDeviceType;
 

@@ -6,12 +6,8 @@
 #include "UkatonMissionBase.h"
 #include "UkatonMissionUDP.generated.h"
 
-/**
- * 
- */
-UCLASS()
+UCLASS(Blueprintable)
 class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase
 {
 	GENERATED_BODY()
-	
 };

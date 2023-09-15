@@ -21,13 +21,10 @@ const FVector2D FUkatonPressureValuesWrapper::PressurePositions[NumberOfPressure
     FVector2D(0.46645292042420405, 0.9129698304969649),
     FVector2D(0.19891268215790772, 0.9133470907575008)};
 
-void FUkatonPressureValuesWrapper::SetDeviceType(EUkatonDeviceType NewDeviceType)
+void FUkatonPressureValuesWrapper::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
-    if (DeviceType != NewDeviceType)
-    {
-        DeviceType = NewDeviceType;
-        UpdatePressureValuePositions();
-    }
+    DeviceType = NewDeviceType;
+    UpdatePressureValuePositions();
 }
 
 void FUkatonPressureValuesWrapper::UpdatePressureValuePositions()

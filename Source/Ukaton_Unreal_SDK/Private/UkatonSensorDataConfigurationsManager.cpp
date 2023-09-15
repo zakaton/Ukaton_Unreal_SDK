@@ -5,7 +5,7 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataConfigurationsManager, Log, All);
 
-void FUkatonSensorDataConfigurationsManager::SetDeviceType(EUkatonDeviceType NewDeviceType)
+void FUkatonSensorDataConfigurationsManager::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
     DeviceType = NewDeviceType;
 }

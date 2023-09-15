@@ -13,10 +13,10 @@ const TMap<EUkatonPressureDataType, double> FUkatonPressureData::ScalarMap = {
     {EUkatonPressureDataType::MASS, 1 / FMath::Pow(2.0f, 16.0f)},
     {EUkatonPressureDataType::HEEL_TO_TOE, 1}};
 
-void FUkatonPressureData::SetDeviceType(EUkatonDeviceType NewDeviceType)
+void FUkatonPressureData::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
     DeviceType = NewDeviceType;
-    PressureValuesWrapper.SetDeviceType(DeviceType);
+    PressureValuesWrapper.UpdateDeviceType(DeviceType);
 }
 
 uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset)

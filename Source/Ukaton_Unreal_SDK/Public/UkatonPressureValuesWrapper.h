@@ -24,12 +24,10 @@ struct FUkatonPressureValuesWrapper
 	FUkatonPressureValuesWrapper()
 	{
 		PressureValues.SetNum(NumberOfPressureSensors);
-		DeviceType = EUkatonDeviceType::LEFT_INSOLE;
-		UpdatePressureValuePositions();
 	};
 
 	EUkatonDeviceType DeviceType;
-	void SetDeviceType(EUkatonDeviceType NewDeviceType);
+	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 
 	uint32 RawValueSum;
 	FVector2D CenterOfMass;

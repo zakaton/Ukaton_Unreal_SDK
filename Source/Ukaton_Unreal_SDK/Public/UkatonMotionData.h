@@ -37,7 +37,7 @@ struct FUkatonMotionData
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
 	FVector Euler;
 
-	void SetDeviceType(EUkatonDeviceType NewDeviceType);
+	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset);
 	UEnumFlagManager<EUkatonMotionDataType> DataUpdateFlags;
 

@@ -8,12 +8,12 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataManager, Log, All);
 
-void FUkatonSensorDataManager::SetDeviceType(EUkatonDeviceType NewDeviceType)
+void FUkatonSensorDataManager::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
     DeviceType = NewDeviceType;
 
-    MotionData.SetDeviceType(NewDeviceType);
-    PressureData.SetDeviceType(NewDeviceType);
+    MotionData.UpdateDeviceType(DeviceType);
+    PressureData.UpdateDeviceType(DeviceType);
 }
 
 uint8 FUkatonSensorDataManager::ParseSensorData(const TArray<uint8> &Data, uint8 Offset)

@@ -15,7 +15,7 @@ struct FUkatonSensorDataConfigurationsManager
 {
     GENERATED_BODY()
 
-    void SetDeviceType(EUkatonDeviceType NewDeviceType);
+    void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 
     const TArray<uint8> &SerializeConfigurations();
 
