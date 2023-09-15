@@ -25,6 +25,12 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	bool bIsConnected;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Ukaton Mission")
+	bool bAutoConnect;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Ukaton Mission")
+	FString AutoConnectDeviceIdentifier;
+
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	FString DeviceName;
 

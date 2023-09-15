@@ -15,6 +15,10 @@ AUkatonMissionBase::AUkatonMissionBase()
 void AUkatonMissionBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (bAutoConnect) {
+		Connect(AutoConnectDeviceIdentifier);
+	}
 }
 
 // Called every frame
