@@ -33,7 +33,7 @@ FString AUkatonMissionUDP::GetAutoConnectDeviceIdentifier() const
     return DeviceIPAddress;
 };
 
-void AUkatonMissionUDP::ParseMessage(TArray<uint8> Data)
+void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
 {
     // FILL
 }

@@ -22,7 +22,7 @@ public:
 	FString DeviceIPAddress = "0.0.0.0";
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission UDP")
-	void ParseMessage(TArray<uint8> Data);
+	void ParseMessage(const TArray<uint8> &Data);
 
 	virtual FString GetAutoConnectDeviceIdentifier() const override;
 };
