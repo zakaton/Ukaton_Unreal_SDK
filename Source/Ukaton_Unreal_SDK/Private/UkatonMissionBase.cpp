@@ -8,7 +8,7 @@ AUkatonMissionBase::AUkatonMissionBase()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	bIsConnected = false;
+	bAutoConnect = false;
 }
 
 // Called when the game starts or when spawned
@@ -16,10 +16,16 @@ void AUkatonMissionBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (bAutoConnect) {
-		Connect(AutoConnectDeviceIdentifier);
+	if (bAutoConnect)
+	{
+		Connect(GetAutoConnectDeviceIdentifier());
 	}
 }
+
+FString AUkatonMissionBase::GetAutoConnectDeviceIdentifier() const
+{
+	return TEXT("Default Device Identifier");
+};
 
 // Called every frame
 void AUkatonMissionBase::Tick(float DeltaTime)
@@ -44,9 +50,7 @@ void AUkatonMissionBase::UpdateDeviceName(FString NewDeviceName)
 
 void AUkatonMissionBase::Connect(const FString &DeviceIdentifier)
 {
-	
 }
 void AUkatonMissionBase::Disconnect()
 {
-	
 }

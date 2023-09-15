@@ -25,11 +25,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	bool bIsConnected;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Ukaton Mission")
-	bool bAutoConnect;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Ukaton Mission")
-	FString AutoConnectDeviceIdentifier;
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
+	bool bIsConnecting;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	FString DeviceName;
@@ -47,6 +44,12 @@ public:
 
 	virtual void Connect(const FString &DeviceIdentifier);
 	virtual void Disconnect();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
+	bool bAutoConnect;
+
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	virtual FString GetAutoConnectDeviceIdentifier() const;
 
 protected:
 	// Called when the game starts or when spawned

@@ -13,8 +13,16 @@ class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
-	virtual void Connect(const FString &DeviceIPAddress) override;
+	virtual void Connect(const FString &IPAddress) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
 	virtual void Disconnect() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission")
+	FString DeviceIPAddress = "0.0.0.0";
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission UDP")
+	void ParseMessage(TArray<uint8> Data);
+
+	virtual FString GetAutoConnectDeviceIdentifier() const override;
 };
