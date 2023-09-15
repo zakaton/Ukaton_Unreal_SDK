@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "UkatonMissionBase.h"
-#include "UkatonMissionBaseUDP.generated.h"
+#include "UkatonMissionUDP.generated.h"
 
 UCLASS()
-class UKATON_UNREAL_SDK_API AUkatonMissionBaseUDP : public AUkatonMissionBase
+class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase
 {
 	GENERATED_BODY()
 
