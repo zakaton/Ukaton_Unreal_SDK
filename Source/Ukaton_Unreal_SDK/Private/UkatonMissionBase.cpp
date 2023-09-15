@@ -32,3 +32,17 @@ void AUkatonMissionBase::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 		SensorDataManager.UpdateDeviceType(DeviceType);
 	}
 }
+
+void AUkatonMissionBase::UpdateDeviceName(FString NewDeviceName)
+{
+	DeviceName = NewDeviceName;
+}
+
+void AUkatonMissionBase::Connect(const FString &DeviceIdentifier)
+{
+	
+}
+void AUkatonMissionBase::Disconnect()
+{
+	
+}

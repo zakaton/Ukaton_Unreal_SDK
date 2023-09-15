@@ -39,12 +39,16 @@ public:
 
 	FUkatonHapticsManager HapticsManager;
 
+	virtual void Connect(const FString &DeviceIdentifier);
+	virtual void Disconnect();
+
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 private:
 	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
+	void UpdateDeviceName(FString NewDeviceName);
 
 public:
 	// Called every frame
