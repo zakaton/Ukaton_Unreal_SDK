@@ -11,7 +11,9 @@
 #include "UkatonMissionBase.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonMissionBase, Log, All);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateWithNoParams);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, uint8, BatteryLevel);
 
 UCLASS(Abstract)
 class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
@@ -28,8 +30,11 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	FString DeviceName;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
-	uint8 BatteryLevel;
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	uint8 GetBatteryLevel() const { return BatteryLevel; };
+
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission")
+	FBatteryLevelUpdatedDelegate OnBatteryLevelUpdated;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission")
 	FUkatonSensorDataConfigurationsManager SensorDataConfigurationsManager;
@@ -62,9 +67,17 @@ protected:
 	// Called when the game starts or when spawned
 	void BeginPlay() override;
 
-private:
 	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 	void UpdateDeviceName(FString NewDeviceName);
+
+	void SetBatteryLevel(uint8 NewBatteryLevel)
+	{
+		BatteryLevel = NewBatteryLevel;
+		OnBatteryLevelUpdated.Broadcast(NewBatteryLevel);
+	};
+
+private:
+	uint8 BatteryLevel;
 
 public:
 	// Called every frame
