@@ -30,7 +30,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	uint8 BatteryLevel;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission")
 	FUkatonSensorDataConfigurationsManager SensorDataConfigurationsManager;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")

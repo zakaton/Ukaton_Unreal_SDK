@@ -28,8 +28,8 @@ int32 AUkatonMissionUDP::SetInListenPort(int32 NewInListenPort)
     if (InListenPort != NewInListenPort)
     {
         InListenPort = NewInListenPort;
-        SetInListenPortMessage[1] = static_cast<uint8>((InListenPort >> 8) & 0xFF);
-        SetInListenPortMessage[2] = static_cast<uint8>(InListenPort & 0xFF);
+        SetInListenPortMessage[1] = static_cast<uint8>(InListenPort & 0xFF);
+        SetInListenPortMessage[2] = static_cast<uint8>((InListenPort >> 8) & 0xFF);
     }
     return InListenPort;
 }

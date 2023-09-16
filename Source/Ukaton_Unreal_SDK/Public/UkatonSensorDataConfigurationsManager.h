@@ -19,10 +19,10 @@ struct FUkatonSensorDataConfigurationsManager
 
     const TArray<uint8> &SerializeConfigurations();
 
-    UPROPERTY(BlueprintReadWrite, Category = "Ukaton Sensor Data Configuration")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Sensor Data Configuration")
     TMap<EUkatonMotionDataType, EUkatonSensorDataRate> MotionDataRates;
 
-    UPROPERTY(BlueprintReadWrite, Category = "Ukaton Sensor Data Configuration")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Sensor Data Configuration")
     TMap<EUkatonPressureDataType, EUkatonSensorDataRate> PressureDataRates;
 
     FUkatonSensorDataConfigurationsManager()

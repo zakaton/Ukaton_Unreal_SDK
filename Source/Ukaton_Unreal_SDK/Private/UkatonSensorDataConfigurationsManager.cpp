@@ -48,8 +48,8 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
         for (auto &SensorDataRate : *SensorDataRates)
         {
             TempSerializedConfiguration.Emplace(SensorDataRate.Key);
-            TempSerializedConfiguration.Emplace(static_cast<uint8>((SensorDataRate.Value >> 8) & 0xFF));
             TempSerializedConfiguration.Emplace(static_cast<uint8>(SensorDataRate.Value & 0xFF));
+            TempSerializedConfiguration.Emplace(static_cast<uint8>((SensorDataRate.Value >> 8) & 0xFF));
         }
         if (TempSerializedConfiguration.Num() > 0)
         {
