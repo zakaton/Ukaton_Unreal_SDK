@@ -3,9 +3,9 @@
 
 #include "UkatonMissionBLE.h"
 
-void AUkatonMissionBLE::Connect(const FString &BLEDeviceName) {
+void AUkatonMissionBLE::Connect_Implementation(const FString &TargetBLEDeviceName) {
 
 }
-void AUkatonMissionBLE::Disconnect() {
+void AUkatonMissionBLE::Disconnect_Implementation() {
 
 }

@@ -5,33 +5,12 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonMissionUDP, Log, All);
 
-void AUkatonMissionUDP::Connect(const FString &IPAddress)
+void AUkatonMissionUDP::Connect_Implementation(const FString &TargetDeviceIPAddress)
 {
-    if (bIsConnecting)
-    {
-        Disconnect();
-    }
-
-    bIsConnecting = true;
-    // FILL
 }
-void AUkatonMissionUDP::Disconnect()
+void AUkatonMissionUDP::Disconnect_Implementation()
 {
-    // FILL
-    if (bIsConnecting)
-    {
-        bIsConnecting = false;
-    }
-    else if (bIsConnected)
-    {
-        bIsConnected = false;
-    }
 }
-
-FString AUkatonMissionUDP::GetAutoConnectDeviceIdentifier() const
-{
-    return DeviceIPAddress;
-};
 
 void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
 {

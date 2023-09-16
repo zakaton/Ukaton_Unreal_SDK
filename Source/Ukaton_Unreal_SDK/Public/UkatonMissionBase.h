@@ -23,12 +23,6 @@ public:
 	EUkatonDeviceType DeviceType;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
-	bool bIsConnected;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
-	bool bIsConnecting;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	FString DeviceName;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
@@ -42,8 +36,8 @@ public:
 
 	FUkatonHapticsManager HapticsManager;
 
-	virtual void Connect(const FString &DeviceIdentifier);
-	virtual void Disconnect();
+	void Connect(const FString &DeviceIdentifier);
+	void Disconnect();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
 	bool bAutoConnect;

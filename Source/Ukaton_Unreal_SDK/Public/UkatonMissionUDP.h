@@ -12,19 +12,22 @@ class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
-	virtual void Connect(const FString &IPAddress) override;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
+	void Connect(const FString &TargetDeviceIPAddress);
 
-	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
-	virtual void Disconnect() override;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
+	void Disconnect();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission UDP")
-	FString DeviceIPAddress = "0.0.0.0";
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission UDP", DisplayName = "IP Address")
+	FString AutoConnectDeviceIPAddress = "0.0.0.0";
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission UDP")
 	void ParseMessage(const TArray<uint8> &Data);
 
-	virtual FString GetAutoConnectDeviceIdentifier() const override;
+	virtual FString GetAutoConnectDeviceIdentifier() const override
+	{
+		return AutoConnectDeviceIPAddress;
+	};
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission UDP")
 	static const int32 GetSendPort()
