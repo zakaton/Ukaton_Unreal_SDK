@@ -21,6 +21,13 @@ void AUkatonMissionUDP::Disconnect_Implementation()
 void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
 {
     // FILL
+    uint8 Offset = 0;
+    while (Offset < Data.Num())
+    {
+        auto Value = Data[Offset];
+        UE_LOGFMT(UkatonMissionUDP, Warning, "Value #{0}: {1}", Offset, Value);
+        Offset++;
+    }
 }
 
 int32 AUkatonMissionUDP::SetInListenPort(int32 NewInListenPort)
