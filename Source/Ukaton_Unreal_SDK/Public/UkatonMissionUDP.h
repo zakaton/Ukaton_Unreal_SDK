@@ -21,6 +21,11 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
 	void Disconnect() override;
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission UDP")
+	void Disconnect_Implementation();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
+	void EmitBytes(const TArray<uint8> &Data);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission UDP", DisplayName = "IP Address")
 	FString AutoConnectDeviceIPAddress = "0.0.0.0";
@@ -39,29 +44,29 @@ public:
 		return SendPort;
 	};
 
-	UPROPERTY(BlueprintReadWrite, Category = "Ukaton Mission UDP")
-	bool bDidReceiveDeviceInfo;
-	UPROPERTY(BlueprintReadWrite, Category = "Ukaton Mission UDP")
-	bool bDidSendSetInListenPortMessage;
-
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission UDP")
-	static const TArray<uint8> &GetPingMessage()
+	const TArray<uint8> &GetPingMessage()
 	{
-		return PingMessage;
+		return bDidSendSetInListenPortMessage ? PingMessage : SetInListenPortMessage;
 	};
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission UDP")
-	static const TArray<uint8> &GetRequestInfoMessage()
-	{
-		return RequestInfoMessage;
-	};
+	int32 GetInListenPort() { return InListenPort; };
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission UDP")
-	TArray<uint8> SetInListenPortMessage;
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission UDP")
+	UPARAM(DisplayName = "In Listen Port")
+	int32 SetInListenPort(int32 NewInListenPort);
 
 private:
 	static const int32 SendPort = 9999;
 
+	int32 InListenPort;
+
 	static TArray<uint8> PingMessage;
 	static TArray<uint8> RequestInfoMessage;
+
+	TArray<uint8> SetInListenPortMessage;
+
+	bool bDidSendSetInListenPortMessage;
+	bool bDidReceiveDeviceInfo;
 };

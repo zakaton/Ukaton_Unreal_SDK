@@ -8,12 +8,30 @@ DEFINE_LOG_CATEGORY(UkatonMissionUDP);
 
 AUkatonMissionUDP::AUkatonMissionUDP()
 {
-    // FILL
+    SetInListenPortMessage.SetNum(3);
+    SetInListenPortMessage[0] = static_cast<uint8>(EUkatonUDPMessageType::SET_REMOTE_RECEIVE_PORT);
+}
+
+void AUkatonMissionUDP::Disconnect_Implementation()
+{
+    bDidSendSetInListenPortMessage = false;
+    bDidReceiveDeviceInfo = false;
 }
 
 void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
 {
     // FILL
+}
+
+int32 AUkatonMissionUDP::SetInListenPort(int32 NewInListenPort)
+{
+    if (InListenPort != NewInListenPort)
+    {
+        InListenPort = NewInListenPort;
+        SetInListenPortMessage[1] = static_cast<uint8>((InListenPort >> 8) & 0xFF);
+        SetInListenPortMessage[2] = static_cast<uint8>(InListenPort & 0xFF);
+    }
+    return InListenPort;
 }
 
 TArray<uint8> AUkatonMissionUDP::PingMessage = {static_cast<uint8>(EUkatonUDPMessageType::PING)};
