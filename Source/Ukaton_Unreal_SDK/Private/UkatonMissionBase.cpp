@@ -19,7 +19,7 @@ void AUkatonMissionBase::BeginPlay()
 
 	if (bAutoConnect)
 	{
-		Connect(GetAutoConnectDeviceIdentifier());
+		Connect();
 	}
 }
 
@@ -51,7 +51,10 @@ void AUkatonMissionBase::UpdateDeviceName(FString NewDeviceName)
 
 void AUkatonMissionBase::Connect(const FString &DeviceIdentifier)
 {
-	UE_LOGFMT(UkatonMissionBase, Log, "bAutoConnect {0}", bAutoConnect);
+}
+void AUkatonMissionBase::Connect()
+{
+	Connect(GetAutoConnectDeviceIdentifier());
 }
 void AUkatonMissionBase::Disconnect()
 {

@@ -39,6 +39,7 @@ public:
 	FUkatonHapticsManager HapticsManager;
 
 	virtual void Connect(const FString &DeviceIdentifier);
+	void Connect();
 	virtual void Disconnect();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
