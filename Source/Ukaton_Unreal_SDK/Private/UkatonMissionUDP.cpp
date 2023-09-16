@@ -20,13 +20,41 @@ void AUkatonMissionUDP::Disconnect_Implementation()
 
 void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
 {
-    // FILL
     uint8 Offset = 0;
     while (Offset < Data.Num())
     {
-        auto Value = Data[Offset];
-        UE_LOGFMT(UkatonMissionUDP, Warning, "Value #{0}: {1}", Offset, Value);
-        Offset++;
+        auto MessageType = (EUkatonUDPMessageType)Data[Offset++];
+
+        switch (MessageType)
+        {
+        case EUkatonUDPMessageType::BATTERY_LEVEL:
+            // FILL
+            break;
+        case EUkatonUDPMessageType::GET_TYPE:
+        case EUkatonUDPMessageType::SET_TYPE:
+            // FILL
+            break;
+        case EUkatonUDPMessageType::GET_NAME:
+        case EUkatonUDPMessageType::SET_NAME:
+            // FILL
+            break;
+        case EUkatonUDPMessageType::MOTION_CALIBRATION:
+            // FILL
+            break;
+        case EUkatonUDPMessageType::GET_SENSOR_DATA_CONFIGURATIONS:
+        case EUkatonUDPMessageType::SET_SENSOR_DATA_CONFIGURATIONS:
+            // FILL
+            break;
+        case EUkatonUDPMessageType::SENSOR_DATA:
+            // FILL
+            break;
+        case EUkatonUDPMessageType::SET_REMOTE_RECEIVE_PORT:
+            // FILL
+            break;
+        default:
+            UE_LOGFMT(UkatonMissionUDP, Error, "Uncaught handler for MessageType: {0}", static_cast<uint8>(MessageType));
+            break;
+        }
     }
 }
 

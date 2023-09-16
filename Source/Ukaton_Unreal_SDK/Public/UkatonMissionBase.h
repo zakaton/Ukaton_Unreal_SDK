@@ -11,6 +11,7 @@
 #include "UkatonMissionBase.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonMissionBase, Log, All);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateWithNoParams);
 
 UCLASS(Abstract)
 class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
@@ -38,9 +39,18 @@ public:
 
 	FUkatonHapticsManager HapticsManager;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
+	bool bIsConnected = false;
+
 	virtual void Connect(const FString &DeviceIdentifier);
 	void Connect();
 	virtual void Disconnect();
+
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission")
+	FDelegateWithNoParams OnConnected;
+
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission")
+	FDelegateWithNoParams OnDisconnected;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
 	bool bAutoConnect;
