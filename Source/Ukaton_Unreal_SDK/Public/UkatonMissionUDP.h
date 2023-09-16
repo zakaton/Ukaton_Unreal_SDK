@@ -12,11 +12,11 @@ class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
-	void Connect(const FString &TargetDeviceIPAddress);
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
+	void Connect(const FString &IPAddress) override;
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
-	void Disconnect();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
+	void Disconnect() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission UDP", DisplayName = "IP Address")
 	FString AutoConnectDeviceIPAddress = "0.0.0.0";

@@ -10,6 +10,8 @@
 #include "UkatonHapticsManager.h"
 #include "UkatonMissionBase.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(UkatonMissionBase, Log, All);
+
 UCLASS(Abstract)
 class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
 {
@@ -36,8 +38,8 @@ public:
 
 	FUkatonHapticsManager HapticsManager;
 
-	void Connect(const FString &DeviceIdentifier);
-	void Disconnect();
+	virtual void Connect(const FString &DeviceIdentifier);
+	virtual void Disconnect();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
 	bool bAutoConnect;

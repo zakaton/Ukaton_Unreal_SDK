@@ -1,14 +1,15 @@
 // Copyright (c) 2023 Zack Qattan
 
 #include "UkatonMissionBase.h"
+#include "Logging/StructuredLog.h"
+
+DEFINE_LOG_CATEGORY(UkatonMissionBase);
 
 // Sets default values
 AUkatonMissionBase::AUkatonMissionBase()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	bAutoConnect = false;
 }
 
 // Called when the game starts or when spawned
@@ -50,6 +51,7 @@ void AUkatonMissionBase::UpdateDeviceName(FString NewDeviceName)
 
 void AUkatonMissionBase::Connect(const FString &DeviceIdentifier)
 {
+	UE_LOGFMT(UkatonMissionBase, Log, "bAutoConnect {0}", bAutoConnect);
 }
 void AUkatonMissionBase::Disconnect()
 {

@@ -12,11 +12,11 @@ class UKATON_UNREAL_SDK_API AUkatonMissionBLE : public AUkatonMissionBase
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ukaton Mission BLE")
-	void Connect(const FString &TargetBLEDeviceName);
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission BLE")
+	void Connect(const FString &BLEName) override;
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ukaton Mission BLE")
-	void Disconnect();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission BLE")
+	void Disconnect() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission BLE", DisplayName = "Device Name")
 	FString AutoConnectBLEDeviceName = "";
