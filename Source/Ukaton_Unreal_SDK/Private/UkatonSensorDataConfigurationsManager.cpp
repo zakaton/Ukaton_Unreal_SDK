@@ -3,7 +3,7 @@
 #include "UkatonSensorDataConfigurationsManager.h"
 #include "Logging/StructuredLog.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataConfigurationsManager, Log, All);
+DEFINE_LOG_CATEGORY(UkatonSensorDataConfigurationsManager);
 
 void FUkatonSensorDataConfigurationsManager::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
@@ -63,4 +63,5 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
 void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<uint8> &Data, uint8 &Offset)
 {
     // FILL
+
 }
