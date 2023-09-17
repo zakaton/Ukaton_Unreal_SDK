@@ -95,3 +95,8 @@ void AUkatonMissionBase::ParseSensorData(const TArray<uint8> &Data, uint8 &Offse
 	SensorDataManager.ParseSensorData(Data, Offset);
 	// FILL - check flags and trigger events
 }
+
+void AUkatonMissionBase::ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset)
+{
+	// FILL
+}

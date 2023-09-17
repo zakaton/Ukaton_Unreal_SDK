@@ -40,11 +40,11 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
             ParseDeviceName(Data, Offset);
             break;
         case EUkatonUDPMessageType::MOTION_CALIBRATION:
-            // FILL
+            ParseMotionCalibration(Data, Offset);
             break;
         case EUkatonUDPMessageType::GET_SENSOR_DATA_CONFIGURATIONS:
         case EUkatonUDPMessageType::SET_SENSOR_DATA_CONFIGURATIONS:
-            // FILL
+            SensorDataConfigurationsManager.ParseConfigurations(Data, Offset);
             break;
         case EUkatonUDPMessageType::SENSOR_DATA:
             ParseSensorData(Data, Offset);

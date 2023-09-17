@@ -74,6 +74,7 @@ protected:
 	void ParseDeviceType(const TArray<uint8> &Data, uint8 &Offset);
 	void ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset);
 	void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset);
 
 private:
 	EUkatonDeviceType DeviceType;
