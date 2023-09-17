@@ -67,7 +67,7 @@ private:
 
 	TArray<uint8> SetInListenPortMessage;
 
-	void ParseSetRemoteReceivePortMessage(const TArray<uint8> &Data, uint8& Offset);
+	void ParseSetRemoteReceivePortMessage(const TArray<uint8> &Data, uint8 &Offset);
 
 	bool bDidSendSetInListenPortMessage;
 	bool bDidReceiveDeviceInfo;

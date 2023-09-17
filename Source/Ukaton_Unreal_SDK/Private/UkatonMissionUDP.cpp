@@ -26,6 +26,7 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
     {
         auto MessageType = (EUkatonUDPMessageType)Data[Offset++];
 
+        UE_LOGFMT(UkatonMissionUDP, Log, "Offset: {0}", static_cast<uint8>(Offset));
         UE_LOGFMT(UkatonMissionUDP, Log, "MessageType: {0}", static_cast<uint8>(MessageType));
 
         switch (MessageType)
@@ -81,8 +82,9 @@ void AUkatonMissionUDP::ParseSetRemoteReceivePortMessage(const TArray<uint8> &Da
     {
         UE_LOGFMT(UkatonMissionUDP, Log, "Successfully set InListenPort!");
         bDidSendSetInListenPortMessage = true;
+        EmitBytes(RequestInfoMessage);
     }
 }
 
 TArray<uint8> AUkatonMissionUDP::PingMessage = {static_cast<uint8>(EUkatonUDPMessageType::PING)};
-TArray<uint8> AUkatonMissionUDP::RequestInfoMessage = {static_cast<uint8>(EUkatonUDPMessageType::GET_NAME), static_cast<uint8>(EUkatonUDPMessageType::GET_TYPE)};
+TArray<uint8> AUkatonMissionUDP::RequestInfoMessage = {static_cast<uint8>(EUkatonUDPMessageType::GET_TYPE), static_cast<uint8>(EUkatonUDPMessageType::GET_NAME)};

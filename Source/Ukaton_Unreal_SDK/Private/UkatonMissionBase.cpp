@@ -83,7 +83,7 @@ void AUkatonMissionBase::ParseDeviceName(const TArray<uint8> &Data, uint8 &Offse
 	auto NameLength = Data[Offset++];
 	FString NewName;
 	NewName.Empty(NameLength);
-	for (uint8 i = 0; i <= NameLength; i++)
+	for (uint8 i = 0; i < NameLength; i++)
 	{
 		NewName.AppendChar(static_cast<TCHAR>(Data[Offset++]));
 	}
