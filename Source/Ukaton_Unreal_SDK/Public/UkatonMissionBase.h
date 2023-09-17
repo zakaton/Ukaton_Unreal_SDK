@@ -24,11 +24,11 @@ public:
 	// Sets default values for this actor's properties
 	AUkatonMissionBase();
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
-	EUkatonDeviceType DeviceType;
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	EUkatonDeviceType GetDeviceType() const { return DeviceType; };
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
-	FString DeviceName;
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	FString GetDeviceName() const { return DeviceName; };
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
 	uint8 GetBatteryLevel() const { return BatteryLevel; };
@@ -70,12 +70,20 @@ protected:
 	// Called when the game starts or when spawned
 	void BeginPlay() override;
 
-	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
-	void UpdateDeviceName(FString NewDeviceName);
-	void UpdateBatteryLevel(uint8 NewBatteryLevel);
+	void ParseBatteryLevel(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseDeviceType(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
 
 private:
+	EUkatonDeviceType DeviceType;
+	void UpdateDeviceType(const EUkatonDeviceType NewDeviceType);
+
+	FString DeviceName;
+	void UpdateDeviceName(const FString &NewDeviceName);
+
 	uint8 BatteryLevel;
+	void UpdateBatteryLevel(const uint8 NewBatteryLevel);
 
 public:
 	// Called every frame

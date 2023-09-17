@@ -28,21 +28,15 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
         switch (MessageType)
         {
         case EUkatonUDPMessageType::BATTERY_LEVEL:
-        {
-            uint8 NewBatteryLevel = Data[Offset++];
-            UpdateBatteryLevel(NewBatteryLevel);
-        }
-        break;
+            ParseBatteryLevel(Data, Offset);
+            break;
         case EUkatonUDPMessageType::GET_TYPE:
         case EUkatonUDPMessageType::SET_TYPE:
-        {
-            auto NewDeviceType = (EUkatonDeviceType)Data[Offset++];
-            UpdateDeviceType(NewDeviceType);
-        }
-        break;
+            ParseDeviceType(Data, Offset);
+            break;
         case EUkatonUDPMessageType::GET_NAME:
         case EUkatonUDPMessageType::SET_NAME:
-            // FILL
+            ParseDeviceName(Data, Offset);
             break;
         case EUkatonUDPMessageType::MOTION_CALIBRATION:
             // FILL
@@ -52,7 +46,7 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
             // FILL
             break;
         case EUkatonUDPMessageType::SENSOR_DATA:
-            // FILL
+            ParseSensorData(Data, Offset);
             break;
         case EUkatonUDPMessageType::SET_REMOTE_RECEIVE_PORT:
             // FILL

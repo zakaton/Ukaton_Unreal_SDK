@@ -41,7 +41,7 @@ void FUkatonPressureValuesWrapper::UpdatePressureValuePositions()
     }
 }
 
-uint8 FUkatonPressureValuesWrapper::ParseData(const TArray<uint8> &Data, uint8 Offset, EUkatonPressureDataType PressureDataType)
+void FUkatonPressureValuesWrapper::ParseData(const TArray<uint8> &Data, uint8 &Offset, const EUkatonPressureDataType PressureDataType)
 {
     RawValueSum = 0;
 
@@ -82,6 +82,4 @@ uint8 FUkatonPressureValuesWrapper::ParseData(const TArray<uint8> &Data, uint8 O
     }
 
     Mass = RawValueSum * Scalar / NumberOfPressureSensors;
-
-    return Offset;
 }

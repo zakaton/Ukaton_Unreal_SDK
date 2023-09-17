@@ -11,6 +11,8 @@
 #include "EnumFlagManager.h"
 #include "UkatonMotionData.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(UkatonMotionData, Log, All);
+
 USTRUCT(BlueprintType)
 struct FUkatonMotionData
 {
@@ -38,7 +40,7 @@ struct FUkatonMotionData
 	FVector Euler;
 
 	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
-	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset);
+	void ParseData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset);
 	UEnumFlagManager<EUkatonMotionDataType> DataUpdateFlags;
 
 	static const TMap<EUkatonMotionDataType, double> ScalarMap;
@@ -47,12 +49,12 @@ private:
 	EUkatonDeviceType DeviceType;
 
 	FVector TempVector;
-	void ParseVector(const TArray<uint8> &Data, uint8 Offset, EUkatonMotionDataType MotionDataType);
-	void ParseEuler(const TArray<uint8> &Data, uint8 Offset);
+	void ParseVector(const TArray<uint8> &Data, uint8 &Offset, EUkatonMotionDataType MotionDataType);
+	void ParseEuler(const TArray<uint8> &Data, uint8 &Offset);
 
 	FQuat TempQuaternion;
 	FQuat CorrectionQuaternion;
-	void ParseQuaternion(const TArray<uint8> &Data, uint8 Offset);
+	void ParseQuaternion(const TArray<uint8> &Data, uint8 &Offset);
 
 	void SetQuat(FQuat &Quat, float W, float X, float Y, float Z);
 

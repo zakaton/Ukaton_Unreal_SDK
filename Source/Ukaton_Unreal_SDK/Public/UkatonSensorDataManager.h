@@ -9,6 +9,8 @@
 #include "UkatonSensorType.h"
 #include "UkatonSensorDataManager.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataManager, Log, All);
+
 USTRUCT(BlueprintType)
 struct FUkatonSensorDataManager
 {
@@ -22,7 +24,7 @@ struct FUkatonSensorDataManager
     UPROPERTY(BlueprintReadOnly, Category = "Ukaton Sensor Data")
     FUkatonPressureData PressureData;
 
-    uint8 ParseSensorData(const TArray<uint8> &Data, uint8 Offset);
+    void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
 
     uint32 Timestamp;
     double LastTimeReceivedSensorData;
@@ -32,6 +34,4 @@ private:
 
     uint16 LastRawTimestamp;
     uint32 TimestampOffset;
-
-    uint8 ParseSensorDataType(const TArray<uint8> &Data, uint8 Offset, EUkatonSensorType SensorType);
 };

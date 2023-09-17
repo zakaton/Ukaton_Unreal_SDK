@@ -34,7 +34,7 @@ struct FUkatonPressureValuesWrapper
 	float Mass;
 	double HeelToToe;
 
-	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, EUkatonPressureDataType PressureDataType);
+	void ParseData(const TArray<uint8> &Data, uint8 &Offset, const EUkatonPressureDataType PressureDataType);
 
 private:
 	void UpdatePressureValuePositions();

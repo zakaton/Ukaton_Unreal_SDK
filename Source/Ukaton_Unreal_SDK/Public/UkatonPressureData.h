@@ -10,6 +10,8 @@
 #include "EnumFlagManager.h"
 #include "UkatonPressureData.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(UkatonPressureData, Log, All);
+
 USTRUCT(BlueprintType)
 struct FUkatonPressureData
 {
@@ -28,7 +30,7 @@ struct FUkatonPressureData
 	double HeelToToe;
 
 	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
-	uint8 ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset);
+	void ParseData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset);
 	UEnumFlagManager<EUkatonPressureDataType> DataUpdateFlags;
 
 	static const TMap<EUkatonPressureDataType, double> ScalarMap;

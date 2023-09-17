@@ -5,7 +5,7 @@
 #include "Math/UnrealMathUtility.h"
 #include "Logging/StructuredLog.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonMotionData, Log, All);
+DEFINE_LOG_CATEGORY(UkatonMotionData);
 
 const TMap<EUkatonMotionDataType, double> FUkatonMotionData::ScalarMap = {
     {EUkatonMotionDataType::ACCELERATION, FMath::Pow(2.0f, -8.0f)},
@@ -27,7 +27,7 @@ void FUkatonMotionData::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
     }
 }
 
-uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset)
+void FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset)
 {
     while (Offset < FinalOffset)
     {
@@ -41,15 +41,12 @@ uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint
         case EUkatonMotionDataType::LINEAR_ACCELERATION:
         case EUkatonMotionDataType::MAGNETOMETER:
             ParseVector(Data, Offset, MotionDataType);
-            Offset += 6;
             break;
         case EUkatonMotionDataType::ROTATION_RATE:
             ParseEuler(Data, Offset);
-            Offset += 6;
             break;
         case EUkatonMotionDataType::QUATERNION:
             ParseQuaternion(Data, Offset);
-            Offset += 8;
             break;
         default:
             UE_LOGFMT(UkatonMotionData, Error, "Uncaught handler for MotionDataType: {0}", static_cast<uint8>(MotionDataType));
@@ -58,15 +55,15 @@ uint8 FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint
 
         DataUpdateFlags.SetFlag(MotionDataType);
     }
-    return Offset;
 }
 
-void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 Offset, EUkatonMotionDataType MotionDataType)
+void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 &Offset, EUkatonMotionDataType MotionDataType)
 {
     auto Scalar = ScalarMap[MotionDataType];
     auto X = ByteParser::GetInt16(Data, Offset);
     auto Y = ByteParser::GetInt16(Data, Offset + 2);
     auto Z = ByteParser::GetInt16(Data, Offset + 4);
+    Offset += 6;
 
     // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
@@ -108,12 +105,13 @@ void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 Offset, EUk
         break;
     }
 }
-void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 Offset)
+void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
 {
     auto Scalar = ScalarMap[EUkatonMotionDataType::ROTATION_RATE];
     auto X = ByteParser::GetInt16(Data, Offset);
     auto Y = ByteParser::GetInt16(Data, Offset + 2);
     auto Z = ByteParser::GetInt16(Data, Offset + 4);
+    Offset += 6;
 
     // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
@@ -179,7 +177,7 @@ const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeInsoleCorrecti
 const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::CorrectionQuaternions = FUkatonMotionData::InitializeCorrectionQuaternions();
 const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InsoleCorrectionQuaternions = FUkatonMotionData::InitializeInsoleCorrectionQuaternions();
 
-void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 Offset)
+void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 &Offset)
 {
     auto Scalar = ScalarMap[EUkatonMotionDataType::QUATERNION];
 
@@ -187,6 +185,7 @@ void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 Offset)
     auto X = ByteParser::GetInt16(Data, Offset + 2);
     auto Y = ByteParser::GetInt16(Data, Offset + 4);
     auto Z = ByteParser::GetInt16(Data, Offset + 6);
+    Offset += 8;
 
     // FIX
     SetQuat(TempQuaternion, W, X, Y, Z);

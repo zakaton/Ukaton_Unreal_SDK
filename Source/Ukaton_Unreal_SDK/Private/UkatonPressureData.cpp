@@ -4,7 +4,7 @@
 #include "ByteParser.h"
 #include "Logging/StructuredLog.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonPressureData, Log, All);
+DEFINE_LOG_CATEGORY(UkatonPressureData);
 
 const TMap<EUkatonPressureDataType, double> FUkatonPressureData::ScalarMap = {
     {EUkatonPressureDataType::PRESSURE_SINGLE_BYTE, 1 / FMath::Pow(2.0f, 8.0f)},
@@ -19,7 +19,7 @@ void FUkatonPressureData::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
     PressureValuesWrapper.UpdateDeviceType(DeviceType);
 }
 
-uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, uint8 FinalOffset)
+void FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset)
 {
     while (Offset < FinalOffset)
     {
@@ -30,7 +30,7 @@ uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, ui
         {
         case EUkatonPressureDataType::PRESSURE_SINGLE_BYTE:
         case EUkatonPressureDataType::PRESSURE_DOUBLE_BYTE:
-            Offset = PressureValuesWrapper.ParseData(Data, Offset, PressureDataType);
+            PressureValuesWrapper.ParseData(Data, Offset, PressureDataType);
 
             CenterOfMass = PressureValuesWrapper.CenterOfMass;
             DataUpdateFlags.SetFlag(EUkatonPressureDataType::CENTER_OF_MASS);
@@ -62,5 +62,4 @@ uint8 FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 Offset, ui
 
         DataUpdateFlags.SetFlag(PressureDataType);
     }
-    return Offset;
 }
