@@ -8,6 +8,8 @@
 #include "Math/Rotator.h"
 #include "UkatonDeviceType.h"
 #include "UkatonMotionDataType.h"
+#include "UkatonMotionCalibrationType.h"
+#include "UkatonMotionCalibrationStatusType.h"
 #include "EnumFlagManager.h"
 #include "UkatonMotionData.generated.h"
 
@@ -42,6 +44,13 @@ struct FUkatonMotionData
 	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 	void ParseData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset);
 	UEnumFlagManager<EUkatonMotionDataType> DataUpdateFlags;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
+	TMap<EUkatonMotionCalibrationType, EUkatonMotionCalibrationStatusType> Calibration;
+	void ParseCalibration(const TArray<uint8> &Data, uint8 &Offset);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
+	bool bIsFullyCalibrated;
 
 	static const TMap<EUkatonMotionDataType, double> ScalarMap;
 

@@ -57,6 +57,20 @@ void FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 &Offset, cons
     }
 }
 
+void FUkatonMotionData::ParseCalibration(const TArray<uint8> &Data, uint8 &Offset)
+{
+    bool bNewIsFullyCalibrated = true;
+    for (uint8 CalibrationTypeIndex = 0; CalibrationTypeIndex < static_cast<uint8>(EUkatonMotionCalibrationType::COUNT); CalibrationTypeIndex++)
+    {
+        auto CalibrationType = static_cast<EUkatonMotionCalibrationType>(CalibrationTypeIndex);
+        auto CalibrationStatusValue = Data[Offset++];
+        auto CalibrationStatus = static_cast<EUkatonMotionCalibrationStatusType>(CalibrationStatusValue);
+        Calibration.Emplace(CalibrationType, CalibrationStatus);
+        bNewIsFullyCalibrated = bNewIsFullyCalibrated && CalibrationStatus == EUkatonMotionCalibrationStatusType::ACCURACY_HIGH;
+    }
+    bIsFullyCalibrated = bNewIsFullyCalibrated;
+}
+
 void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 &Offset, EUkatonMotionDataType MotionDataType)
 {
     auto Scalar = ScalarMap[MotionDataType];
