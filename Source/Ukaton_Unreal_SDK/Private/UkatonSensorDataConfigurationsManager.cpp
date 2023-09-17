@@ -2,6 +2,7 @@
 
 #include "UkatonSensorDataConfigurationsManager.h"
 #include "Logging/StructuredLog.h"
+#include "ByteParser.h"
 
 DEFINE_LOG_CATEGORY(UkatonSensorDataConfigurationsManager);
 
@@ -62,6 +63,32 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
 
 void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<uint8> &Data, uint8 &Offset)
 {
-    // FILL
-
+    for (uint8 SensorTypeIndex = 0; SensorTypeIndex < static_cast<uint8>(EUkatonSensorType::COUNT); SensorTypeIndex++)
+    {
+        auto SensorType = static_cast<EUkatonSensorType>(SensorTypeIndex);
+        switch (SensorType)
+        {
+        case EUkatonSensorType::MOTION:
+            for (uint8 MotionDataTypeIndex = 0; MotionDataTypeIndex < static_cast<uint8>(EUkatonMotionDataType::COUNT); MotionDataTypeIndex++)
+            {
+                auto MotionDataType = static_cast<EUkatonMotionDataType>(MotionDataTypeIndex);
+                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(ByteParser::GetUint16(Data, Offset));
+                Offset += 2;
+                MotionDataRates.Emplace(MotionDataType, SensorDataRate);
+            }
+            break;
+        case EUkatonSensorType::PRESSURE:
+            for (uint8 PressureDataTypeIndex = 0; PressureDataTypeIndex < static_cast<uint8>(EUkatonPressureDataType::COUNT); PressureDataTypeIndex++)
+            {
+                auto PressureDataType = static_cast<EUkatonPressureDataType>(PressureDataTypeIndex);
+                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(ByteParser::GetUint16(Data, Offset));
+                Offset += 2;
+                PressureDataRates.Emplace(PressureDataType, SensorDataRate);
+            }
+            break;
+        default:
+            UE_LOGFMT(UkatonSensorDataConfigurationsManager, Error, "Uncaught handler for SensorType {0}", static_cast<uint8>(SensorType));
+            break;
+        }
+    }
 }
