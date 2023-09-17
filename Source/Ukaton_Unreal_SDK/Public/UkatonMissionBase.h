@@ -57,8 +57,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission")
 	FDelegateWithNoParams OnDisconnected;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
+	UPROPERTY(EditAnywhere, Category = "Ukaton Mission")
 	bool bAutoConnect;
+
+	UPROPERTY(EditAnywhere, Category = "Ukaton Mission")
+	bool bRotateActor;
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
 	virtual FString GetAutoConnectDeviceIdentifier() const;
@@ -69,12 +72,7 @@ protected:
 
 	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 	void UpdateDeviceName(FString NewDeviceName);
-
-	void SetBatteryLevel(uint8 NewBatteryLevel)
-	{
-		BatteryLevel = NewBatteryLevel;
-		OnBatteryLevelUpdated.Broadcast(NewBatteryLevel);
-	};
+	void UpdateBatteryLevel(uint8 NewBatteryLevel);
 
 private:
 	uint8 BatteryLevel;

@@ -49,6 +49,12 @@ void AUkatonMissionBase::UpdateDeviceName(FString NewDeviceName)
 	DeviceName = NewDeviceName;
 }
 
+void AUkatonMissionBase::UpdateBatteryLevel(uint8 NewBatteryLevel)
+{
+	BatteryLevel = NewBatteryLevel;
+	OnBatteryLevelUpdated.Broadcast(NewBatteryLevel);
+}
+
 void AUkatonMissionBase::Connect(const FString &DeviceIdentifier)
 {
 }

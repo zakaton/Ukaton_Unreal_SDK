@@ -28,12 +28,18 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
         switch (MessageType)
         {
         case EUkatonUDPMessageType::BATTERY_LEVEL:
-            // FILL
-            break;
+        {
+            uint8 NewBatteryLevel = Data[Offset++];
+            UpdateBatteryLevel(NewBatteryLevel);
+        }
+        break;
         case EUkatonUDPMessageType::GET_TYPE:
         case EUkatonUDPMessageType::SET_TYPE:
-            // FILL
-            break;
+        {
+            auto NewDeviceType = (EUkatonDeviceType)Data[Offset++];
+            UpdateDeviceType(NewDeviceType);
+        }
+        break;
         case EUkatonUDPMessageType::GET_NAME:
         case EUkatonUDPMessageType::SET_NAME:
             // FILL
