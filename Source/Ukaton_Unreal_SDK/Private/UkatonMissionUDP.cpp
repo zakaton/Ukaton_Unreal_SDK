@@ -2,6 +2,7 @@
 
 #include "UkatonMissionUDP.h"
 #include "Logging/StructuredLog.h"
+#include "ByteParser.h"
 #include "UkatonUDPMessageType.h"
 
 DEFINE_LOG_CATEGORY(UkatonMissionUDP);
@@ -49,7 +50,7 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
             ParseSensorData(Data, Offset);
             break;
         case EUkatonUDPMessageType::SET_REMOTE_RECEIVE_PORT:
-            // FILL
+            ParseSetRemoteReceivePortMessage(Data, Offset);
             break;
         default:
             UE_LOGFMT(UkatonMissionUDP, Error, "Uncaught handler for MessageType: {0}", static_cast<uint8>(MessageType));
@@ -67,6 +68,18 @@ int32 AUkatonMissionUDP::SetInListenPort(int32 NewInListenPort)
         SetInListenPortMessage[2] = static_cast<uint8>((InListenPort >> 8) & 0xFF);
     }
     return InListenPort;
+}
+
+void AUkatonMissionUDP::ParseSetRemoteReceivePortMessage(const TArray<uint8> &Data, uint8 &Offset)
+{
+    auto UpdatedInListenPort = ByteParser::GetUint16(Data, Offset);
+    Offset += 2;
+
+    if (UpdatedInListenPort == InListenPort)
+    {
+        UE_LOGFMT(UkatonMissionUDP, Log, "Successfully set InListenPort!");
+        bDidSendSetInListenPortMessage = true;
+    }
 }
 
 TArray<uint8> AUkatonMissionUDP::PingMessage = {static_cast<uint8>(EUkatonUDPMessageType::PING)};
