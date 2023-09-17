@@ -93,7 +93,21 @@ void AUkatonMissionBase::ParseDeviceName(const TArray<uint8> &Data, uint8 &Offse
 void AUkatonMissionBase::ParseSensorData(const TArray<uint8> &Data, uint8 &Offset)
 {
 	SensorDataManager.ParseSensorData(Data, Offset);
-	// FILL - check flags and trigger events
+	SensorDataManager.MotionData.DataUpdateFlags.IterateSetFlags([this](EUkatonMotionDataType MotionDataType)
+																 { OnMotionDataUpdate(MotionDataType); },
+																 true);
+	SensorDataManager.PressureData.DataUpdateFlags.IterateSetFlags([this](EUkatonPressureDataType PressureDataType)
+																   { OnPressureDataUpdate(PressureDataType); },
+																   true);
+}
+
+void AUkatonMissionBase::OnMotionDataUpdate(EUkatonMotionDataType MotionDataType)
+{
+	// FILL
+}
+void AUkatonMissionBase::OnPressureDataUpdate(EUkatonPressureDataType PressureDataType)
+{
+	// FILL
 }
 
 void AUkatonMissionBase::ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset)

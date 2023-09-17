@@ -33,7 +33,7 @@ public:
     }
 
     // Iterate through set flags and perform an action on each one
-    void IterateSetFlags(std::function<void(TEnum)> Action, bool ResetAfterIteration = false) const
+    void IterateSetFlags(TFunction<void(TEnum)> Action, bool ResetAfterIteration = false)
     {
         int32 FlagToCheck = 1;
         int32 BitIndex = 0;

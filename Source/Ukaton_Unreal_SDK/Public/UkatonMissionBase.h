@@ -8,6 +8,8 @@
 #include "UkatonSensorDataConfigurationsManager.h"
 #include "UkatonSensorDataManager.h"
 #include "UkatonHapticsManager.h"
+#include "UkatonMotionDataType.h"
+#include "UkatonPressureDataType.h"
 #include "UkatonMissionBase.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(UkatonMissionBase, Log, All);
@@ -75,6 +77,9 @@ protected:
 	void ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset);
 	void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
 	void ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset);
+
+	void OnMotionDataUpdate(EUkatonMotionDataType MotionDataType);
+	void OnPressureDataUpdate(EUkatonPressureDataType PressureDataType);
 
 private:
 	EUkatonDeviceType DeviceType;

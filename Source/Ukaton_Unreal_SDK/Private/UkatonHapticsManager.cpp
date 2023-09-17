@@ -2,4 +2,4 @@
 
 #include "UkatonHapticsManager.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonHapticsManager, Log, All);
+DEFINE_LOG_CATEGORY(UkatonHapticsManager);
