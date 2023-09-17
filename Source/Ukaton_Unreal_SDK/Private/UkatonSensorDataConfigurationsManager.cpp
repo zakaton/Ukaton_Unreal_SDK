@@ -62,5 +62,5 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
 
 void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<uint8> &Data, uint8 &Offset)
 {
-	// FILL
+    // FILL
 }
