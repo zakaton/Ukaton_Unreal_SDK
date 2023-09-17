@@ -26,8 +26,7 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
     {
         auto MessageType = (EUkatonUDPMessageType)Data[Offset++];
 
-        UE_LOGFMT(UkatonMissionUDP, Log, "Offset: {0}", static_cast<uint8>(Offset));
-        UE_LOGFMT(UkatonMissionUDP, Log, "MessageType: {0}", static_cast<uint8>(MessageType));
+        UE_LOGFMT(UkatonMissionUDP, Log, "MessageType: {0}", UEnum::GetValueAsString(MessageType));
 
         switch (MessageType)
         {

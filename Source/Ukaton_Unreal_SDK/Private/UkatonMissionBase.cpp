@@ -39,6 +39,7 @@ void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 	if (NewDeviceType != DeviceType)
 	{
 		DeviceType = NewDeviceType;
+		UE_LOGFMT(UkatonMissionBase, Log, "DeviceType: {0}", UEnum::GetValueAsString(DeviceType));
 		SensorDataConfigurationsManager.UpdateDeviceType(DeviceType);
 		SensorDataManager.UpdateDeviceType(DeviceType);
 	}
@@ -47,11 +48,13 @@ void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 void AUkatonMissionBase::UpdateDeviceName(const FString &NewDeviceName)
 {
 	DeviceName = NewDeviceName;
+	UE_LOGFMT(UkatonMissionBase, Log, "DeviceName: {0}", DeviceName);
 }
 
 void AUkatonMissionBase::UpdateBatteryLevel(const uint8 NewBatteryLevel)
 {
 	BatteryLevel = NewBatteryLevel;
+	UE_LOGFMT(UkatonMissionBase, Log, "BatteryLevel: {0}", BatteryLevel);
 	OnBatteryLevelUpdated.Broadcast(NewBatteryLevel);
 }
 
