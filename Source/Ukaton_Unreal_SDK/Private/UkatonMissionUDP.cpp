@@ -3,6 +3,7 @@
 #include "UkatonMissionUDP.h"
 #include "Logging/StructuredLog.h"
 #include "ByteParser.h"
+#include "GenericPlatform/GenericPlatformTime.h"
 #include "UkatonUDPMessageType.h"
 
 DEFINE_LOG_CATEGORY(UkatonMissionUDP);
