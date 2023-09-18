@@ -36,7 +36,6 @@ struct FUkatonSensorDataConfigurationsManager
 
     void ParseConfigurations(const TArray<uint8> &Data, uint8 &Offset);
 
-
 private:
     static const uint8 MaxSerializedConfigurationsLength = (2 * 2) + (3 * ((uint8)EUkatonMotionDataType::COUNT + (uint8)EUkatonPressureDataType::COUNT));
     static const uint8 MaxSerializedConfigurationLength = 2 + (3 * FMath::Max((uint8)EUkatonMotionDataType::COUNT, (uint8)EUkatonPressureDataType::COUNT));
@@ -44,4 +43,6 @@ private:
     TArray<uint8> TempSerializedConfiguration;
 
     void SerializeConfiguration(EUkatonSensorType SensorType);
+
+    static const TArray<uint16> SensorDataRatesMapping;
 };

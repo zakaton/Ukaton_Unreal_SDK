@@ -6,6 +6,14 @@
 
 DEFINE_LOG_CATEGORY(UkatonSensorDataConfigurationsManager);
 
+const TArray<uint16> FUkatonSensorDataConfigurationsManager::SensorDataRatesMapping = {
+    0,
+    20,
+    40,
+    60,
+    80,
+    100};
+
 void FUkatonSensorDataConfigurationsManager::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
     DeviceType = NewDeviceType;
@@ -31,15 +39,15 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfigurations()
 
 void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSensorType SensorType)
 {
-    TMap<uint8, uint16> *SensorDataRates = nullptr;
+    TMap<uint8, uint8> *SensorDataRates = nullptr;
 
     switch (SensorType)
     {
     case EUkatonSensorType::MOTION:
-        SensorDataRates = reinterpret_cast<TMap<uint8, uint16> *>(&MotionDataRates);
+        SensorDataRates = reinterpret_cast<TMap<uint8, uint8> *>(&MotionDataRates);
         break;
     case EUkatonSensorType::PRESSURE:
-        SensorDataRates = reinterpret_cast<TMap<uint8, uint16> *>(&PressureDataRates);
+        SensorDataRates = reinterpret_cast<TMap<uint8, uint8> *>(&PressureDataRates);
         break;
     default:
         UE_LOGFMT(UkatonSensorDataConfigurationsManager, Error, "Uncaught handler for SensorType {0}", static_cast<uint8>(SensorType));
@@ -53,8 +61,9 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
         for (auto &SensorDataRate : *SensorDataRates)
         {
             TempSerializedConfiguration.Emplace(SensorDataRate.Key);
-            TempSerializedConfiguration.Emplace(static_cast<uint8>(SensorDataRate.Value & 0xFF));
-            TempSerializedConfiguration.Emplace(static_cast<uint8>((SensorDataRate.Value >> 8) & 0xFF));
+            auto Value = SensorDataRatesMapping[SensorDataRate.Value];
+            TempSerializedConfiguration.Emplace(static_cast<uint8>(Value & 0xFF));
+            TempSerializedConfiguration.Emplace(static_cast<uint8>((Value >> 8) & 0xFF));
         }
         if (TempSerializedConfiguration.Num() > 0)
         {
