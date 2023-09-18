@@ -43,6 +43,4 @@ private:
     TArray<uint8> TempSerializedConfiguration;
 
     void SerializeConfiguration(EUkatonSensorType SensorType);
-
-    static const TArray<uint16> SensorDataRatesMapping;
 };

@@ -30,6 +30,8 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
 
         switch (MessageType)
         {
+        case EUkatonUDPMessageType::PING:
+            break;
         case EUkatonUDPMessageType::BATTERY_LEVEL:
             ParseBatteryLevel(Data, Offset);
             break;

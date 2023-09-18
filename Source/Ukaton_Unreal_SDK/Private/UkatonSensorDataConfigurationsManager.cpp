@@ -6,14 +6,6 @@
 
 DEFINE_LOG_CATEGORY(UkatonSensorDataConfigurationsManager);
 
-const TArray<uint16> FUkatonSensorDataConfigurationsManager::SensorDataRatesMapping = {
-    0,
-    20,
-    40,
-    60,
-    80,
-    100};
-
 void FUkatonSensorDataConfigurationsManager::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
     DeviceType = NewDeviceType;
@@ -61,7 +53,7 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
         for (auto &SensorDataRate : *SensorDataRates)
         {
             TempSerializedConfiguration.Emplace(SensorDataRate.Key);
-            auto Value = SensorDataRatesMapping[SensorDataRate.Value];
+            uint16 Value = SensorDataRate.Value * 10;
             TempSerializedConfiguration.Emplace(static_cast<uint8>(Value & 0xFF));
             TempSerializedConfiguration.Emplace(static_cast<uint8>((Value >> 8) & 0xFF));
         }
@@ -85,7 +77,7 @@ void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<ui
             for (uint8 MotionDataTypeIndex = 0; MotionDataTypeIndex < static_cast<uint8>(EUkatonMotionDataType::COUNT); MotionDataTypeIndex++)
             {
                 auto MotionDataType = static_cast<EUkatonMotionDataType>(MotionDataTypeIndex);
-                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(ByteParser::GetUint16(Data, Offset));
+                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(ByteParser::GetUint16(Data, Offset) / 10);
                 Offset += 2;
                 MotionDataRates.Emplace(MotionDataType, SensorDataRate);
             }
