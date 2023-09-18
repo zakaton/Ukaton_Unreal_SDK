@@ -46,8 +46,8 @@ public:
 
 	FUkatonHapticsManager HapticsManager;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
-	bool bIsConnected = false;
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	bool GetIsConnected() const { return bIsConnected; };
 
 	virtual void Connect(const FString &DeviceIdentifier);
 	void Connect();
@@ -68,6 +68,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
 	virtual FString GetAutoConnectDeviceIdentifier() const;
 
+	virtual void SetSensorDataConfigurations();
+
 protected:
 	// Called when the game starts or when spawned
 	void BeginPlay() override;
@@ -81,7 +83,11 @@ protected:
 	void OnMotionDataUpdate(EUkatonMotionDataType MotionDataType);
 	void OnPressureDataUpdate(EUkatonPressureDataType PressureDataType);
 
+	void SetIsConnected(bool bNewIsConnected);
+
 private:
+	bool bIsConnected = false;
+
 	EUkatonDeviceType DeviceType;
 	void UpdateDeviceType(const EUkatonDeviceType NewDeviceType);
 
@@ -90,6 +96,11 @@ private:
 
 	uint8 BatteryLevel;
 	void UpdateBatteryLevel(const uint8 NewBatteryLevel);
+
+	bool bDidReceiveDeviceName;
+	bool bDidReceiveDeviceType;
+
+	void OnDeviceInformationUpdate();
 
 public:
 	// Called every frame

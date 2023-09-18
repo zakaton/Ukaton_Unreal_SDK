@@ -57,6 +57,9 @@ public:
 	UPARAM(DisplayName = "In Listen Port")
 	int32 SetInListenPort(int32 NewInListenPort);
 
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission UDP")
+	virtual void SetSensorDataConfigurations() override;
+
 private:
 	static const int32 SendPort = 9999;
 
@@ -70,5 +73,4 @@ private:
 	void ParseSetRemoteReceivePortMessage(const TArray<uint8> &Data, uint8 &Offset);
 
 	bool bDidSendSetInListenPortMessage;
-	bool bDidReceiveDeviceInfo;
 };

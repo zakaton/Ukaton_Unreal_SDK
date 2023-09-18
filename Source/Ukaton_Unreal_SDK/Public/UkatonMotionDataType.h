@@ -13,6 +13,6 @@ enum class EUkatonMotionDataType : uint8
 	ROTATION_RATE UMETA(DisplayName = "Rotation Rate"),
 	MAGNETOMETER UMETA(DisplayName = "Magnetometer"),
 	QUATERNION UMETA(DisplayName = "Quaternion"),
-	EULER UMETA(DisplayName = "Euler"),
+	EULER UMETA(Hidden, DisplayName = "Euler"),
 	COUNT UMETA(Hidden)
 };

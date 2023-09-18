@@ -42,6 +42,8 @@ void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 		UE_LOGFMT(UkatonMissionBase, Log, "DeviceType: {0}", UEnum::GetValueAsString(DeviceType));
 		SensorDataConfigurationsManager.UpdateDeviceType(DeviceType);
 		SensorDataManager.UpdateDeviceType(DeviceType);
+		bDidReceiveDeviceType = true;
+		OnDeviceInformationUpdate();
 	}
 }
 
@@ -49,6 +51,16 @@ void AUkatonMissionBase::UpdateDeviceName(const FString &NewDeviceName)
 {
 	DeviceName = NewDeviceName;
 	UE_LOGFMT(UkatonMissionBase, Log, "DeviceName: {0}", DeviceName);
+	bDidReceiveDeviceName = true;
+	OnDeviceInformationUpdate();
+}
+
+void AUkatonMissionBase::OnDeviceInformationUpdate()
+{
+	if (bDidReceiveDeviceType && bDidReceiveDeviceName)
+	{
+		SetIsConnected(true);
+	}
 }
 
 void AUkatonMissionBase::UpdateBatteryLevel(const uint8 NewBatteryLevel)
@@ -67,6 +79,8 @@ void AUkatonMissionBase::Connect()
 }
 void AUkatonMissionBase::Disconnect()
 {
+	bDidReceiveDeviceName = false;
+	bDidReceiveDeviceType = false;
 }
 
 void AUkatonMissionBase::ParseBatteryLevel(const TArray<uint8> &Data, uint8 &Offset)
@@ -116,5 +130,27 @@ void AUkatonMissionBase::OnPressureDataUpdate(EUkatonPressureDataType PressureDa
 void AUkatonMissionBase::ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset)
 {
 	SensorDataManager.MotionData.ParseCalibration(Data, Offset);
-	// FILL - trigger event
+}
+
+void AUkatonMissionBase::SetIsConnected(bool bNewIsConnected)
+{
+	if (bNewIsConnected != bIsConnected)
+	{
+		bIsConnected = bNewIsConnected;
+		UE_LOGFMT(UkatonMissionBase, Log, "bIsConnected? {0}", bIsConnected);
+		if (bIsConnected)
+		{
+			OnConnected.Broadcast();
+			SetSensorDataConfigurations();
+		}
+		else
+		{
+			OnDisconnected.Broadcast();
+		}
+	}
+}
+
+void AUkatonMissionBase::SetSensorDataConfigurations()
+{
+	SensorDataConfigurationsManager.SerializeConfigurations();
 }

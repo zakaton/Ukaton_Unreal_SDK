@@ -15,8 +15,8 @@ AUkatonMissionUDP::AUkatonMissionUDP()
 
 void AUkatonMissionUDP::Disconnect_Implementation()
 {
+    Super::Disconnect();
     bDidSendSetInListenPortMessage = false;
-    bDidReceiveDeviceInfo = false;
 }
 
 void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
@@ -83,6 +83,16 @@ void AUkatonMissionUDP::ParseSetRemoteReceivePortMessage(const TArray<uint8> &Da
         bDidSendSetInListenPortMessage = true;
         EmitBytes(RequestInfoMessage);
     }
+}
+
+void AUkatonMissionUDP::SetSensorDataConfigurations()
+{
+    Super::SetSensorDataConfigurations();
+    auto &configuration = SensorDataConfigurationsManager.SerializedConfigurations;
+    auto size = configuration.Num();
+    configuration.Insert(static_cast<uint8>(EUkatonUDPMessageType::SET_SENSOR_DATA_CONFIGURATIONS), 0);
+    configuration.Insert(static_cast<uint8>(size), 1);
+    EmitBytes(configuration);
 }
 
 TArray<uint8> AUkatonMissionUDP::PingMessage = {static_cast<uint8>(EUkatonUDPMessageType::PING)};

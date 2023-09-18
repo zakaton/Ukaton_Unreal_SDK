@@ -11,7 +11,7 @@ void FUkatonSensorDataConfigurationsManager::UpdateDeviceType(EUkatonDeviceType 
     DeviceType = NewDeviceType;
 }
 
-const TArray<uint8> &FUkatonSensorDataConfigurationsManager::SerializeConfigurations()
+void FUkatonSensorDataConfigurationsManager::SerializeConfigurations()
 {
     SerializedConfigurations.Reset();
 
@@ -22,7 +22,11 @@ const TArray<uint8> &FUkatonSensorDataConfigurationsManager::SerializeConfigurat
         SerializeConfiguration(EUkatonSensorType::PRESSURE);
     }
 
-    return SerializedConfigurations;
+    UE_LOGFMT(UkatonSensorDataConfigurationsManager, Log, "SerializedConfigurations {0}", SerializedConfigurations.Num());
+    for (uint8 Index = 0; Index < SerializedConfigurations.Num(); Index++)
+    {
+        UE_LOGFMT(UkatonSensorDataConfigurationsManager, Log, "{0}:{1}", Index, SerializedConfigurations[Index]);
+    }
 }
 
 void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSensorType SensorType)
