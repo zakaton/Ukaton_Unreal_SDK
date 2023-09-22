@@ -120,7 +120,31 @@ void AUkatonMissionBase::ParseSensorData(const TArray<uint8> &Data, uint8 &Offse
 
 void AUkatonMissionBase::OnMotionDataUpdate(EUkatonMotionDataType MotionDataType)
 {
-	// FILL
+	switch (MotionDataType)
+	{
+	case EUkatonMotionDataType::ACCELERATION:
+		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.Acceleration, SensorDataManager.Timestamp);
+		break;
+	case EUkatonMotionDataType::GRAVITY:
+		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.Gravity, SensorDataManager.Timestamp);
+		break;
+	case EUkatonMotionDataType::LINEAR_ACCELERATION:
+		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.LinearAcceleration, SensorDataManager.Timestamp);
+		break;
+	case EUkatonMotionDataType::ROTATION_RATE:
+		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.RotationRate, SensorDataManager.Timestamp);
+		break;
+	case EUkatonMotionDataType::MAGNETOMETER:
+		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.Magnetometer, SensorDataManager.Timestamp);
+		break;
+	case EUkatonMotionDataType::QUATERNION:
+		OnQuaternionUpdated.Broadcast(SensorDataManager.MotionData.Quaternion, SensorDataManager.Timestamp);
+		OnEulerUpdated.Broadcast(SensorDataManager.MotionData.Euler, SensorDataManager.Timestamp);
+		break;
+	default:
+		UE_LOGFMT(LogUkatonMissionBase, Error, "Uncaught handler for MotionDataType: {0}", static_cast<uint8>(MotionDataType));
+		break;
+	}
 }
 void AUkatonMissionBase::OnPressureDataUpdate(EUkatonPressureDataType PressureDataType)
 {

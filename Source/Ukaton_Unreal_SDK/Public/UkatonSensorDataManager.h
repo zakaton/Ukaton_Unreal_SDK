@@ -26,8 +26,9 @@ struct FUkatonSensorDataManager
 
     void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
 
-    uint32 Timestamp;
-    double LastTimeReceivedSensorData;
+    UPROPERTY(BlueprintReadOnly, Category = "Ukaton Sensor Data")
+    int64 Timestamp;
+    int64 LastTimeReceivedSensorData;
 
 private:
     EUkatonDeviceType DeviceType;

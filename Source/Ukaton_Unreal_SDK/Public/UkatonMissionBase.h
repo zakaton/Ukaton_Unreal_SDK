@@ -15,7 +15,16 @@
 DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionBase, Log, All);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateWithNoParams);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, uint8, BatteryLevel);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, const uint8, BatteryLevel);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionVectorUpdatedDelegate, const FVector &, Vector, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionEulerUpdatedDelegate, const FVector &, Euler, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionQuaternionUpdatedDelegate, const FQuat &, Quaternion, const int64, Timestamp);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureValuesUpdatedDelegate, const TArray<FUkatonPressureValue> &, PressureValues, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureCenterOfMassUpdatedDelegate, const FVector2D &, CenterOfMass, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureMassUpdatedDelegate, const float &, Mass, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureHeelToToeUpdatedDelegate, const double &, HeelToToe, const int64, Timestamp);
 
 UCLASS(Abstract)
 class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
@@ -69,6 +78,30 @@ public:
 	virtual FString GetAutoConnectDeviceIdentifier() const;
 
 	virtual void SetSensorDataConfigurations();
+
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
+	FMotionVectorUpdatedDelegate OnAccelerationUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
+	FMotionVectorUpdatedDelegate OnGravityUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
+	FMotionVectorUpdatedDelegate OnLinearAccelerationUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
+	FMotionVectorUpdatedDelegate OnRotationRateUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
+	FMotionVectorUpdatedDelegate OnMagnetometerUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
+	FMotionQuaternionUpdatedDelegate OnQuaternionUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
+	FMotionEulerUpdatedDelegate OnEulerUpdated;
+
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Pressure Data")
+	FPressureValuesUpdatedDelegate OnPressureValuesUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Pressure Data")
+	FPressureCenterOfMassUpdatedDelegate OnPressureCenterOfMassUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Pressure Data")
+	FPressureMassUpdatedDelegate OnPressureMassUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Pressure Data")
+	FPressureHeelToToeUpdatedDelegate OnPressureHeelToToeUpdated;
 
 protected:
 	// Called when the game starts or when spawned
