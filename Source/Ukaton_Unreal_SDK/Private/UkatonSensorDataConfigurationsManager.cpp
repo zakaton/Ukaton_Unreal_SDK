@@ -4,7 +4,7 @@
 #include "Logging/StructuredLog.h"
 #include "ByteParser.h"
 
-DEFINE_LOG_CATEGORY(UkatonSensorDataConfigurationsManager);
+DEFINE_LOG_CATEGORY(LogUkatonSensorDataConfigurationsManager);
 
 void FUkatonSensorDataConfigurationsManager::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
@@ -22,10 +22,10 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfigurations()
         SerializeConfiguration(EUkatonSensorType::PRESSURE);
     }
 
-    UE_LOGFMT(UkatonSensorDataConfigurationsManager, Log, "SerializedConfigurations {0}", SerializedConfigurations.Num());
+    UE_LOGFMT(LogUkatonSensorDataConfigurationsManager, Log, "SerializedConfigurations {0}", SerializedConfigurations.Num());
     for (uint8 Index = 0; Index < SerializedConfigurations.Num(); Index++)
     {
-        UE_LOGFMT(UkatonSensorDataConfigurationsManager, Log, "{0}:{1}", Index, SerializedConfigurations[Index]);
+        UE_LOGFMT(LogUkatonSensorDataConfigurationsManager, Log, "{0}:{1}", Index, SerializedConfigurations[Index]);
     }
 }
 
@@ -42,7 +42,7 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
         SensorDataRates = reinterpret_cast<TMap<uint8, uint8> *>(&PressureDataRates);
         break;
     default:
-        UE_LOGFMT(UkatonSensorDataConfigurationsManager, Error, "Uncaught handler for SensorType {0}", static_cast<uint8>(SensorType));
+        UE_LOGFMT(LogUkatonSensorDataConfigurationsManager, Error, "Uncaught handler for SensorType {0}", static_cast<uint8>(SensorType));
         break;
     }
 
@@ -92,7 +92,7 @@ void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<ui
             }
             break;
         default:
-            UE_LOGFMT(UkatonSensorDataConfigurationsManager, Error, "Uncaught handler for SensorType {0}", static_cast<uint8>(SensorType));
+            UE_LOGFMT(LogUkatonSensorDataConfigurationsManager, Error, "Uncaught handler for SensorType {0}", static_cast<uint8>(SensorType));
             break;
         }
     }

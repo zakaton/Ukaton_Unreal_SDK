@@ -10,7 +10,7 @@
 #include "EnumFlagManager.h"
 #include "UkatonPressureData.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonPressureData, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonPressureData, Log, All);
 
 USTRUCT(BlueprintType)
 struct FUkatonPressureData

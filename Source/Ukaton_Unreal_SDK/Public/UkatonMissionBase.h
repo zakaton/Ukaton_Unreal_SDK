@@ -12,7 +12,7 @@
 #include "UkatonPressureDataType.h"
 #include "UkatonMissionBase.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonMissionBase, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionBase, Log, All);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateWithNoParams);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, uint8, BatteryLevel);

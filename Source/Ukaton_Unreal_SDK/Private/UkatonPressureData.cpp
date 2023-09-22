@@ -4,7 +4,7 @@
 #include "ByteParser.h"
 #include "Logging/StructuredLog.h"
 
-DEFINE_LOG_CATEGORY(UkatonPressureData);
+DEFINE_LOG_CATEGORY(LogUkatonPressureData);
 
 const TMap<EUkatonPressureDataType, double> FUkatonPressureData::ScalarMap = {
     {EUkatonPressureDataType::PRESSURE_SINGLE_BYTE, 1 / FMath::Pow(2.0f, 8.0f)},
@@ -24,7 +24,7 @@ void FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 &Offset, co
     while (Offset < FinalOffset)
     {
         auto PressureDataType = (EUkatonPressureDataType)Data[Offset++];
-        UE_LOGFMT(UkatonPressureData, Log, "PressureDataType {0}", static_cast<uint8>(PressureDataType));
+        UE_LOGFMT(LogUkatonPressureData, Log, "PressureDataType {0}", static_cast<uint8>(PressureDataType));
 
         switch (PressureDataType)
         {
@@ -56,7 +56,7 @@ void FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 &Offset, co
             Offset += 8; // sizeof(double)
             break;
         default:
-            UE_LOGFMT(UkatonPressureData, Error, "Uncaught handler for PressureDataType {0}", static_cast<uint8>(PressureDataType));
+            UE_LOGFMT(LogUkatonPressureData, Error, "Uncaught handler for PressureDataType {0}", static_cast<uint8>(PressureDataType));
             break;
         }
 

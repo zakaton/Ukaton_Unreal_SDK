@@ -10,7 +10,7 @@
 #include "UkatonSensorDataRate.h"
 #include "UkatonSensorDataConfigurationsManager.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataConfigurationsManager, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonSensorDataConfigurationsManager, Log, All);
 
 USTRUCT(BlueprintType)
 struct FUkatonSensorDataConfigurationsManager

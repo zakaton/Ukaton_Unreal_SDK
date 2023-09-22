@@ -3,7 +3,7 @@
 #include "UkatonMissionBase.h"
 #include "Logging/StructuredLog.h"
 
-DEFINE_LOG_CATEGORY(UkatonMissionBase);
+DEFINE_LOG_CATEGORY(LogUkatonMissionBase);
 
 // Sets default values
 AUkatonMissionBase::AUkatonMissionBase()
@@ -39,7 +39,7 @@ void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 	if (NewDeviceType != DeviceType)
 	{
 		DeviceType = NewDeviceType;
-		UE_LOGFMT(UkatonMissionBase, Log, "DeviceType: {0}", UEnum::GetValueAsString(DeviceType));
+		UE_LOGFMT(LogUkatonMissionBase, Log, "DeviceType: {0}", UEnum::GetValueAsString(DeviceType));
 		SensorDataConfigurationsManager.UpdateDeviceType(DeviceType);
 		SensorDataManager.UpdateDeviceType(DeviceType);
 		bDidReceiveDeviceType = true;
@@ -50,7 +50,7 @@ void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 void AUkatonMissionBase::UpdateDeviceName(const FString &NewDeviceName)
 {
 	DeviceName = NewDeviceName;
-	UE_LOGFMT(UkatonMissionBase, Log, "DeviceName: {0}", DeviceName);
+	UE_LOGFMT(LogUkatonMissionBase, Log, "DeviceName: {0}", DeviceName);
 	bDidReceiveDeviceName = true;
 	OnDeviceInformationUpdate();
 }
@@ -66,7 +66,7 @@ void AUkatonMissionBase::OnDeviceInformationUpdate()
 void AUkatonMissionBase::UpdateBatteryLevel(const uint8 NewBatteryLevel)
 {
 	BatteryLevel = NewBatteryLevel;
-	UE_LOGFMT(UkatonMissionBase, Log, "BatteryLevel: {0}", BatteryLevel);
+	UE_LOGFMT(LogUkatonMissionBase, Log, "BatteryLevel: {0}", BatteryLevel);
 	OnBatteryLevelUpdated.Broadcast(NewBatteryLevel);
 }
 
@@ -137,7 +137,7 @@ void AUkatonMissionBase::SetIsConnected(bool bNewIsConnected)
 	if (bNewIsConnected != bIsConnected)
 	{
 		bIsConnected = bNewIsConnected;
-		UE_LOGFMT(UkatonMissionBase, Log, "bIsConnected? {0}", bIsConnected);
+		UE_LOGFMT(LogUkatonMissionBase, Log, "bIsConnected? {0}", bIsConnected);
 		if (bIsConnected)
 		{
 			OnConnected.Broadcast();

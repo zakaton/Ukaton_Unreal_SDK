@@ -9,7 +9,7 @@
 #include "UkatonSensorType.h"
 #include "UkatonSensorDataManager.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonSensorDataManager, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonSensorDataManager, Log, All);
 
 USTRUCT(BlueprintType)
 struct FUkatonSensorDataManager

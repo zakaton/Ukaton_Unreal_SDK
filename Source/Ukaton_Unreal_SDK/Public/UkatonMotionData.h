@@ -13,7 +13,7 @@
 #include "EnumFlagManager.h"
 #include "UkatonMotionData.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonMotionData, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMotionData, Log, Warning);
 
 USTRUCT(BlueprintType)
 struct FUkatonMotionData

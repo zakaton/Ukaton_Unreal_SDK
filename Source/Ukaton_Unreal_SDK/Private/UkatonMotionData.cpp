@@ -5,7 +5,7 @@
 #include "Math/UnrealMathUtility.h"
 #include "Logging/StructuredLog.h"
 
-DEFINE_LOG_CATEGORY(UkatonMotionData);
+DEFINE_LOG_CATEGORY(LogUkatonMotionData);
 
 const TMap<EUkatonMotionDataType, double> FUkatonMotionData::ScalarMap = {
     {EUkatonMotionDataType::ACCELERATION, FMath::Pow(2.0f, -8.0f)},
@@ -32,7 +32,7 @@ void FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 &Offset, cons
     while (Offset < FinalOffset)
     {
         auto MotionDataType = (EUkatonMotionDataType)Data[Offset++];
-        UE_LOGFMT(UkatonMotionData, Log, "MotionDataType {0}", static_cast<uint8>(MotionDataType));
+        UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0}", static_cast<uint8>(MotionDataType));
 
         switch (MotionDataType)
         {
@@ -49,7 +49,7 @@ void FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 &Offset, cons
             ParseQuaternion(Data, Offset);
             break;
         default:
-            UE_LOGFMT(UkatonMotionData, Error, "Uncaught handler for MotionDataType: {0}", static_cast<uint8>(MotionDataType));
+            UE_LOGFMT(LogUkatonMotionData, Error, "Uncaught handler for MotionDataType: {0}", static_cast<uint8>(MotionDataType));
             break;
         }
 
@@ -98,7 +98,7 @@ void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 &Offset, EU
 
     TempVector *= Scalar;
 
-    UE_LOGFMT(UkatonMotionData, Log, "MotionDataType {0} Vector: {1}", static_cast<uint8>(MotionDataType), *TempVector.ToString());
+    UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0} Vector: {1}", static_cast<uint8>(MotionDataType), *TempVector.ToString());
 
     switch (MotionDataType)
     {
@@ -115,7 +115,7 @@ void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 &Offset, EU
         Magnetometer = TempVector;
         break;
     default:
-        UE_LOGFMT(UkatonMotionData, Error, "Uncaught handler for MotionDataType {0}", static_cast<uint8>(MotionDataType));
+        UE_LOGFMT(LogUkatonMotionData, Error, "Uncaught handler for MotionDataType {0}", static_cast<uint8>(MotionDataType));
         break;
     }
 }
@@ -146,7 +146,7 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
 
     TempVector *= Scalar;
 
-    UE_LOGFMT(UkatonMotionData, Log, "MotionDataType {0} Vector: {1}", static_cast<uint8>(EUkatonMotionDataType::ROTATION_RATE), *TempVector.ToString());
+    UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0} Vector: {1}", static_cast<uint8>(EUkatonMotionDataType::ROTATION_RATE), *TempVector.ToString());
 
     RotationRate = TempVector;
 }
@@ -208,7 +208,7 @@ void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 &Offset
 
     TempQuaternion *= Scalar;
 
-    UE_LOGFMT(UkatonMotionData, Log, "MotionDataType {0} Quaternion: {1}", static_cast<uint8>(EUkatonMotionDataType::QUATERNION), *TempQuaternion.ToString());
+    UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0} Quaternion: {1}", static_cast<uint8>(EUkatonMotionDataType::QUATERNION), *TempQuaternion.ToString());
 
     Quaternion = TempQuaternion;
 }

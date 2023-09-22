@@ -6,7 +6,7 @@
 #include "UkatonMissionBase.h"
 #include "UkatonMissionUDP.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(UkatonMissionUDP, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionUDP, Log, All);
 
 UCLASS()
 class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase

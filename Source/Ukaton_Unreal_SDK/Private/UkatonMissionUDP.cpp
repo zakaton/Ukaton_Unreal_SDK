@@ -6,7 +6,7 @@
 #include "GenericPlatform/GenericPlatformTime.h"
 #include "UkatonUDPMessageType.h"
 
-DEFINE_LOG_CATEGORY(UkatonMissionUDP);
+DEFINE_LOG_CATEGORY(LogUkatonMissionUDP);
 
 AUkatonMissionUDP::AUkatonMissionUDP()
 {
@@ -27,7 +27,7 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
     {
         auto MessageType = (EUkatonUDPMessageType)Data[Offset++];
 
-        UE_LOGFMT(UkatonMissionUDP, Log, "MessageType: {0}", UEnum::GetValueAsString(MessageType));
+        UE_LOGFMT(LogUkatonMissionUDP, Log, "MessageType: {0}", UEnum::GetValueAsString(MessageType));
 
         switch (MessageType)
         {
@@ -58,7 +58,7 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
             ParseSetRemoteReceivePortMessage(Data, Offset);
             break;
         default:
-            UE_LOGFMT(UkatonMissionUDP, Error, "Uncaught handler for MessageType: {0}", static_cast<uint8>(MessageType));
+            UE_LOGFMT(LogUkatonMissionUDP, Error, "Uncaught handler for MessageType: {0}", static_cast<uint8>(MessageType));
             break;
         }
     }
@@ -82,7 +82,7 @@ void AUkatonMissionUDP::ParseSetRemoteReceivePortMessage(const TArray<uint8> &Da
 
     if (UpdatedInListenPort == InListenPort)
     {
-        UE_LOGFMT(UkatonMissionUDP, Log, "Successfully set InListenPort!");
+        UE_LOGFMT(LogUkatonMissionUDP, Log, "Successfully set InListenPort!");
         bDidSendSetInListenPortMessage = true;
         EmitBytes(RequestInfoMessage);
     }
