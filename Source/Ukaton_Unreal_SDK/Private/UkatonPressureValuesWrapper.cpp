@@ -3,6 +3,8 @@
 #include "UkatonPressureValuesWrapper.h"
 #include "UkatonPressureData.h"
 
+DEFINE_LOG_CATEGORY(LogUkatonPressureValuesWrapper);
+
 const FVector2D FUkatonPressureValuesWrapper::PressurePositions[NumberOfPressureSensors] = {
     FVector2D(0.6385579634772724, 0.12185506415310729),
     FVector2D(0.3549331417480725, 0.15901519981589698),

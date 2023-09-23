@@ -10,6 +10,8 @@
 #include "ByteParser.h"
 #include "UkatonPressureValuesWrapper.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonPressureValuesWrapper, Log, All);
+
 USTRUCT(BlueprintType)
 struct FUkatonPressureValuesWrapper
 {

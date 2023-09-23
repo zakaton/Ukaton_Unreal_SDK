@@ -34,25 +34,31 @@ void FUkatonPressureData::ParseData(const TArray<uint8> &Data, uint8 &Offset, co
 
             CenterOfMass = PressureValuesWrapper.CenterOfMass;
             DataUpdateFlags.SetFlag(EUkatonPressureDataType::CENTER_OF_MASS);
+            UE_LOGFMT(LogUkatonPressureData, Log, "CenterOfMass(pressure): {0}", *CenterOfMass.ToString());
 
             Mass = PressureValuesWrapper.Mass;
             DataUpdateFlags.SetFlag(EUkatonPressureDataType::MASS);
+            UE_LOGFMT(LogUkatonPressureData, Log, "Mass(pressure): {0}", Mass);
 
             HeelToToe = PressureValuesWrapper.HeelToToe;
             DataUpdateFlags.SetFlag(EUkatonPressureDataType::HEEL_TO_TOE);
+            UE_LOGFMT(LogUkatonPressureData, Log, "HeelToToe(pressure): {0}", HeelToToe);
             break;
         case EUkatonPressureDataType::CENTER_OF_MASS:
             CenterOfMass.Set(
                 ByteParser::GetFloat(Data, Offset),
                 ByteParser::GetFloat(Data, Offset + 4));
+            UE_LOGFMT(LogUkatonPressureData, Log, "CenterOfMass: {0}", *CenterOfMass.ToString());
             Offset += 2 * 4; // sizeof(float)
             break;
         case EUkatonPressureDataType::MASS:
             Mass = ByteParser::GetUint32(Data, Offset) * ScalarMap[PressureDataType];
+            UE_LOGFMT(LogUkatonPressureData, Log, "Mass: {0}", Mass);
             Offset += 4; // sizeof(uint32)
             break;
         case EUkatonPressureDataType::HEEL_TO_TOE:
             HeelToToe = ByteParser::GetDouble(Data, Offset);
+            UE_LOGFMT(LogUkatonPressureData, Log, "HeelToToe: {0}", HeelToToe);
             Offset += 8; // sizeof(double)
             break;
         default:
