@@ -2,6 +2,7 @@
 
 #include "UkatonPressureValuesWrapper.h"
 #include "UkatonPressureData.h"
+#include "Logging/StructuredLog.h"
 
 DEFINE_LOG_CATEGORY(LogUkatonPressureValuesWrapper);
 
@@ -40,6 +41,7 @@ void FUkatonPressureValuesWrapper::UpdatePressureValuePositions()
             PressureValue.Position.X = 1 - PressureValue.Position.X;
         }
         PressureValue.Position.Y = PressurePositions[i].Y;
+        UE_LOGFMT(LogUkatonPressureValuesWrapper, Log, "Pressure Position #{0}: {1}", i, *PressureValue.Position.ToString());
     }
 }
 
@@ -66,6 +68,7 @@ void FUkatonPressureValuesWrapper::ParseData(const TArray<uint8> &Data, uint8 &O
         RawValueSum += PressureValue.RawValue;
         Offset += OffsetIncrement;
     }
+    UE_LOGFMT(LogUkatonPressureValuesWrapper, Log, "RawValueSum={0}, Scalar={1}", RawValueSum, Scalar);
 
     CenterOfMass.Set(0, 0);
     HeelToToe = 0;
@@ -75,13 +78,17 @@ void FUkatonPressureValuesWrapper::ParseData(const TArray<uint8> &Data, uint8 &O
         for (uint8 i = 0; i < NumberOfPressureSensors; i++)
         {
             auto &PressureValue = PressureValues[i];
-            PressureValue.WeightedValue = PressureValue.RawValue / RawValueSum;
+            PressureValue.WeightedValue = (float)PressureValue.RawValue / (float)RawValueSum;
+            UE_LOGFMT(LogUkatonPressureValuesWrapper, Log, "Pressure {0}: RawValue={1}, NormalizedValue={2}, WeightedValue={3}", i, PressureValue.RawValue, PressureValue.NormalizedValue, PressureValue.WeightedValue);
             CenterOfMass += PressureValue.Position * PressureValue.WeightedValue;
         }
 
         CenterOfMass.Y = 1 - CenterOfMass.Y;
+        UE_LOGFMT(LogUkatonPressureValuesWrapper, Log, "CenterOfMass={0}", *CenterOfMass.ToString());
         HeelToToe = CenterOfMass.Y;
+        UE_LOGFMT(LogUkatonPressureValuesWrapper, Log, "HeelToToe={0}", HeelToToe);
     }
 
     Mass = RawValueSum * Scalar / NumberOfPressureSensors;
+    UE_LOGFMT(LogUkatonPressureValuesWrapper, Log, "Mass={0}", Mass);
 }
