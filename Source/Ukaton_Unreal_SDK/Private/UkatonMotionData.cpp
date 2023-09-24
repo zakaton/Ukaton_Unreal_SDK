@@ -129,24 +129,25 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
     // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
-        TempVector.Set(X, Y, Z);
+        TempVector.Set(-X, -Y, -Z);
     }
     else
     {
         if (DeviceType == EUkatonDeviceType::LEFT_INSOLE)
         {
-            TempVector.Set(X, Y, Z);
+            TempVector.Set(-Z, X, Y);
         }
         else
         {
-            TempVector.Set(X, Y, Z);
+            TempVector.Set(Z, -X, Y);
         }
     }
 
     TempVector *= Scalar;
-    TempRotator.MakeFromEuler(TempVector);
 
-    UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0} Vector: {1}", static_cast<uint8>(EUkatonMotionDataType::ROTATION_RATE), *TempVector.ToString());
+    SetRotator(TempRotator, TempVector);
+
+    UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0} Euler: {1}", static_cast<uint8>(EUkatonMotionDataType::ROTATION_RATE), *TempRotator.ToString());
 
     RotationRate = TempRotator;
 }
@@ -220,4 +221,10 @@ void FUkatonMotionData::SetQuat(FQuat &Quat, float W, float X, float Y, float Z)
     Quat.X = X;
     Quat.Y = Y;
     Quat.Z = Z;
+}
+void FUkatonMotionData::SetRotator(FRotator &Rotator, const FVector &Vector)
+{
+    Rotator.Pitch = Vector.X;
+    Rotator.Roll = Vector.Y;
+    Rotator.Yaw = Vector.Z;
 }

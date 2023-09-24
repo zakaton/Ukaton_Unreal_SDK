@@ -67,6 +67,7 @@ private:
 	void ParseQuaternion(const TArray<uint8> &Data, uint8 &Offset);
 
 	void SetQuat(FQuat &Quat, float W, float X, float Y, float Z);
+	void SetRotator(FRotator &Rotator, const FVector &Vector);
 
 	static const TMap<EUkatonDeviceType, FQuat> CorrectionQuaternions;
 	static const TMap<EUkatonDeviceType, FQuat> InsoleCorrectionQuaternions;
