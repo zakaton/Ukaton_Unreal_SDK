@@ -36,7 +36,7 @@ void AUkatonMissionBase::Tick(float DeltaTime)
 
 void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 {
-	if (NewDeviceType != DeviceType)
+	if (!bDidReceiveDeviceType || NewDeviceType != DeviceType)
 	{
 		DeviceType = NewDeviceType;
 		UE_LOGFMT(LogUkatonMissionBase, Log, "DeviceType: {0}", UEnum::GetValueAsString(DeviceType));
@@ -92,6 +92,7 @@ void AUkatonMissionBase::ParseBatteryLevel(const TArray<uint8> &Data, uint8 &Off
 void AUkatonMissionBase::ParseDeviceType(const TArray<uint8> &Data, uint8 &Offset)
 {
 	auto NewDeviceType = (EUkatonDeviceType)Data[Offset++];
+
 	UpdateDeviceType(NewDeviceType);
 }
 
@@ -138,6 +139,11 @@ void AUkatonMissionBase::OnMotionDataUpdate(EUkatonMotionDataType MotionDataType
 		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.Magnetometer, SensorDataManager.Timestamp);
 		break;
 	case EUkatonMotionDataType::QUATERNION:
+		if (bRotateActor)
+		{
+			UE_LOGFMT(LogUkatonMissionBase, Log, "Rotating Actor {0}", *SensorDataManager.MotionData.Quaternion.ToString());
+			SetActorRelativeRotation(SensorDataManager.MotionData.Quaternion);
+		}
 		OnQuaternionUpdated.Broadcast(SensorDataManager.MotionData.Quaternion, SensorDataManager.Timestamp);
 		OnEulerUpdated.Broadcast(SensorDataManager.MotionData.Euler, SensorDataManager.Timestamp);
 		break;

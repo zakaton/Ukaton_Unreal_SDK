@@ -71,7 +71,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ukaton Mission")
 	bool bAutoConnect;
 
-	UPROPERTY(EditAnywhere, Category = "Ukaton Mission")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
 	bool bRotateActor;
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")

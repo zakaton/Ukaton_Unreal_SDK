@@ -82,17 +82,17 @@ void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 &Offset, EU
     // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
-        TempVector.Set(X, Y, Z);
+        TempVector.Set(-Y, -X, -Z);
     }
     else
     {
         if (DeviceType == EUkatonDeviceType::LEFT_INSOLE)
         {
-            TempVector.Set(X, Y, Z);
+            TempVector.Set(X, -Z, Y);
         }
         else
         {
-            TempVector.Set(X, Y, Z);
+            TempVector.Set(-X, Z, Y);
         }
     }
 
@@ -130,7 +130,7 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
     // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
-        TempVector.Set(X, Y, Z);
+        TempVector.Set(X, Y, -Z);
     }
     else
     {
@@ -202,7 +202,8 @@ void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 &Offset
     Offset += 8;
 
     // FIX
-    SetQuat(TempQuaternion, W, X, Y, Z);
+    // SetQuat(TempQuaternion, W, X, Y, Z);
+    SetQuat(TempQuaternion, -Y, W, X, Z);
 
     TempQuaternion *= CorrectionQuaternion;
 
