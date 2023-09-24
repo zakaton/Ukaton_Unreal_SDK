@@ -79,20 +79,19 @@ void FUkatonMotionData::ParseVector(const TArray<uint8> &Data, uint8 &Offset, EU
     auto Z = ByteParser::GetInt16(Data, Offset + 4);
     Offset += 6;
 
-    // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
-        TempVector.Set(-Y, -X, -Z);
+        TempVector.Set(Y, X, -Z);
     }
     else
     {
         if (DeviceType == EUkatonDeviceType::LEFT_INSOLE)
         {
-            TempVector.Set(X, -Z, Y);
+            TempVector.Set(-X, Z, Y);
         }
         else
         {
-            TempVector.Set(-X, Z, Y);
+            TempVector.Set(X, -Z, Y);
         }
     }
 
@@ -130,7 +129,7 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
     // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
-        TempVector.Set(X, Y, -Z);
+        TempVector.Set(X, Y, Z);
     }
     else
     {
@@ -145,10 +144,11 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
     }
 
     TempVector *= Scalar;
+    TempRotator.MakeFromEuler(TempVector);
 
     UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0} Vector: {1}", static_cast<uint8>(EUkatonMotionDataType::ROTATION_RATE), *TempVector.ToString());
 
-    RotationRate = TempVector;
+    RotationRate = TempRotator;
 }
 
 const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeCorrectionQuaternions()

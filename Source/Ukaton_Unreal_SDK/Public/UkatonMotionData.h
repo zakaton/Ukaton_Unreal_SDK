@@ -30,7 +30,7 @@ struct FUkatonMotionData
 	FVector LinearAcceleration;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
-	FVector RotationRate;
+	FRotator RotationRate;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
 	FVector Magnetometer;
@@ -39,7 +39,7 @@ struct FUkatonMotionData
 	FQuat Quaternion;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Motion Data")
-	FVector Euler;
+	FRotator Euler;
 
 	void UpdateDeviceType(EUkatonDeviceType NewDeviceType);
 	void ParseData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset);
@@ -58,6 +58,7 @@ private:
 	EUkatonDeviceType DeviceType;
 
 	FVector TempVector;
+	FRotator TempRotator;
 	void ParseVector(const TArray<uint8> &Data, uint8 &Offset, EUkatonMotionDataType MotionDataType);
 	void ParseEuler(const TArray<uint8> &Data, uint8 &Offset);
 

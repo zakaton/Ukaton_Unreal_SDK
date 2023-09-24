@@ -18,7 +18,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateWithNoParams);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, const uint8, BatteryLevel);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionVectorUpdatedDelegate, const FVector &, Vector, const int64, Timestamp);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionEulerUpdatedDelegate, const FVector &, Euler, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionEulerUpdatedDelegate, const FRotator &, Euler, const int64, Timestamp);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionQuaternionUpdatedDelegate, const FQuat &, Quaternion, const int64, Timestamp);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureValuesUpdatedDelegate, const TArray<FUkatonPressureValue> &, PressureValues, const int64, Timestamp);
@@ -86,7 +86,7 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
 	FMotionVectorUpdatedDelegate OnLinearAccelerationUpdated;
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
-	FMotionVectorUpdatedDelegate OnRotationRateUpdated;
+	FMotionEulerUpdatedDelegate OnRotationRateUpdated;
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
 	FMotionVectorUpdatedDelegate OnMagnetometerUpdated;
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")

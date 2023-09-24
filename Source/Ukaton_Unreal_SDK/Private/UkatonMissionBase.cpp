@@ -127,16 +127,16 @@ void AUkatonMissionBase::OnMotionDataUpdate(EUkatonMotionDataType MotionDataType
 		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.Acceleration, SensorDataManager.Timestamp);
 		break;
 	case EUkatonMotionDataType::GRAVITY:
-		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.Gravity, SensorDataManager.Timestamp);
+		OnGravityUpdated.Broadcast(SensorDataManager.MotionData.Gravity, SensorDataManager.Timestamp);
 		break;
 	case EUkatonMotionDataType::LINEAR_ACCELERATION:
-		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.LinearAcceleration, SensorDataManager.Timestamp);
+		OnLinearAccelerationUpdated.Broadcast(SensorDataManager.MotionData.LinearAcceleration, SensorDataManager.Timestamp);
 		break;
 	case EUkatonMotionDataType::ROTATION_RATE:
-		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.RotationRate, SensorDataManager.Timestamp);
+		OnRotationRateUpdated.Broadcast(SensorDataManager.MotionData.RotationRate, SensorDataManager.Timestamp);
 		break;
 	case EUkatonMotionDataType::MAGNETOMETER:
-		OnAccelerationUpdated.Broadcast(SensorDataManager.MotionData.Magnetometer, SensorDataManager.Timestamp);
+		OnMagnetometerUpdated.Broadcast(SensorDataManager.MotionData.Magnetometer, SensorDataManager.Timestamp);
 		break;
 	case EUkatonMotionDataType::QUATERNION:
 		if (bRotateActor)
@@ -154,7 +154,25 @@ void AUkatonMissionBase::OnMotionDataUpdate(EUkatonMotionDataType MotionDataType
 }
 void AUkatonMissionBase::OnPressureDataUpdate(EUkatonPressureDataType PressureDataType)
 {
-	// FILL
+	switch (PressureDataType)
+	{
+	case EUkatonPressureDataType::PRESSURE_SINGLE_BYTE:
+	case EUkatonPressureDataType::PRESSURE_DOUBLE_BYTE:
+		OnPressureValuesUpdated.Broadcast(SensorDataManager.PressureData.PressureValuesWrapper.PressureValues, SensorDataManager.Timestamp);
+		break;
+	case EUkatonPressureDataType::CENTER_OF_MASS:
+		OnPressureCenterOfMassUpdated.Broadcast(SensorDataManager.PressureData.CenterOfMass, SensorDataManager.Timestamp);
+		break;
+	case EUkatonPressureDataType::MASS:
+		OnPressureMassUpdated.Broadcast(SensorDataManager.PressureData.Mass, SensorDataManager.Timestamp);
+		break;
+	case EUkatonPressureDataType::HEEL_TO_TOE:
+		OnPressureHeelToToeUpdated.Broadcast(SensorDataManager.PressureData.HeelToToe, SensorDataManager.Timestamp);
+		break;
+	default:
+		UE_LOGFMT(LogUkatonMissionBase, Error, "Uncaught handler for PressureDataType: {0}", static_cast<uint8>(PressureDataType));
+		break;
+	}
 }
 
 void AUkatonMissionBase::ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset)
