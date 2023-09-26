@@ -22,7 +22,7 @@ void FUkatonHapticsManager::SerializeSequence(const TArray<FUkatonVibrationSeque
     for (uint8 i = 0; i < Sequence.Num(); i++)
     {
         auto Segment = Sequence[i];
-        SerializedVibration.Add(Segment.Amplitude);
+        SerializedVibration.Add(static_cast<uint8>(Segment.Amplitude * 126));
         SerializedVibration.Add(static_cast<uint8>(Segment.Delay / 10));
     }
 }

@@ -10,13 +10,13 @@ struct FUkatonVibrationSequenceSegment
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Amplitude [0, 126]", meta = (ClampMin = "0", ClampMax = "126"))
-    uint8 Amplitude;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Amplitude [0, 1]", meta = (ClampMin = "0", ClampMax = "1"))
+    float Amplitude;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Delay (s)")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Delay (s)", meta = (ClampMin = "0", ClampMax = "2000"))
     int Delay;
 
-    FUkatonVibrationSequenceSegment(uint8 InAmplitude = 126, int InDelay = 100)
+    FUkatonVibrationSequenceSegment(float InAmplitude = 1, int InDelay = 100)
         : Amplitude(InAmplitude), Delay(InDelay)
     {
     }
