@@ -102,11 +102,11 @@ void AUkatonMissionUDP::ParseSetRemoteReceivePortMessage(const TArray<uint8> &Da
 void AUkatonMissionUDP::SetSensorDataConfigurations()
 {
     Super::SetSensorDataConfigurations();
-    auto &configuration = SensorDataConfigurationsManager.SerializedConfigurations;
-    auto size = configuration.Num();
-    configuration.Insert(static_cast<uint8>(EUkatonUDPMessageType::SET_SENSOR_DATA_CONFIGURATIONS), 0);
-    configuration.Insert(static_cast<uint8>(size), 1);
-    EmitBytes(configuration);
+    auto &Configuration = SensorDataConfigurationsManager.SerializedConfigurations;
+    auto Size = Configuration.Num();
+    Configuration.Insert(static_cast<uint8>(EUkatonUDPMessageType::SET_SENSOR_DATA_CONFIGURATIONS), 0);
+    Configuration.Insert(static_cast<uint8>(Size), 1);
+    EmitBytes(Configuration);
 }
 
 const TArray<uint8> &AUkatonMissionUDP::GetPingMessage()
@@ -127,7 +127,11 @@ const TArray<uint8> &AUkatonMissionUDP::GetPingMessage()
 TArray<uint8> AUkatonMissionUDP::PingMessage = {static_cast<uint8>(EUkatonUDPMessageType::PING)};
 TArray<uint8> AUkatonMissionUDP::RequestInfoMessage = {static_cast<uint8>(EUkatonUDPMessageType::GET_TYPE), static_cast<uint8>(EUkatonUDPMessageType::GET_NAME)};
 
-void AUkatonMissionUDP::RequestVibration(const TArray<uint8> &Data)
+void AUkatonMissionUDP::RequestVibration()
 {
-    // FILL 3
+    auto &Vibration = HapticsManager.SerializedVibration;
+    auto Size = Vibration.Num();
+    Vibration.Insert(static_cast<uint8>(EUkatonUDPMessageType::VIBRATION), 0);
+    Vibration.Insert(static_cast<uint8>(Size), 1);
+    EmitBytes(Vibration);
 }

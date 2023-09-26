@@ -125,7 +125,7 @@ protected:
 
 	virtual FString GetAutoConnectDeviceIdentifier() const;
 
-	virtual void RequestVibration(const TArray<uint8> &Vibration);
+	virtual void RequestVibration();
 
 protected:
 	bool bIsConnected = false;

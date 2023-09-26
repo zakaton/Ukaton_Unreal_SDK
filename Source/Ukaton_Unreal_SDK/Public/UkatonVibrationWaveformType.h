@@ -8,7 +8,7 @@
 UENUM(BlueprintType)
 enum class EUkatonVibrationWaveformType : uint8
 {
-	ZERO = 0 UMETA(Hidden),
+	NONE = 0 UMETA(DisplayName = "None"),
 
 	StrongClick_100 = 1 UMETA(DisplayName = "Strong Click - 100%"),
 	StrongClick_60 = 2 UMETA(DisplayName = "Strong Click - 60%"),

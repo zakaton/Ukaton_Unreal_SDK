@@ -74,5 +74,5 @@ private:
 
 	bool bDidSendSetInListenPortMessage;
 
-	void RequestVibration(const TArray<uint8> &Data) override;
+	void RequestVibration() override;
 };
