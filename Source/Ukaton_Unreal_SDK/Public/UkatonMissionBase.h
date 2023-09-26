@@ -53,6 +53,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	FUkatonSensorDataManager SensorDataManager;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Ukaton Mission")
 	FUkatonHapticsManager HapticsManager;
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
@@ -73,11 +74,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
 	bool bRotateActor;
-
-	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
-	virtual FString GetAutoConnectDeviceIdentifier() const;
-
-	virtual void SetSensorDataConfigurations();
 
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
 	FMotionVectorUpdatedDelegate OnAccelerationUpdated;
@@ -103,9 +99,16 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Pressure Data")
 	FPressureHeelToToeUpdatedDelegate OnPressureHeelToToeUpdated;
 
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
+	void VibrateWaveform(const TArray<uint8> &Waveform);
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
+	void VibrateSequence(const TArray<uint8> &Sequence);
+
 protected:
 	// Called when the game starts or when spawned
 	void BeginPlay() override;
+
+	virtual void SetIsConnected(bool bNewIsConnected);
 
 	void ParseBatteryLevel(const TArray<uint8> &Data, uint8 &Offset);
 	void ParseDeviceType(const TArray<uint8> &Data, uint8 &Offset);
@@ -113,10 +116,14 @@ protected:
 	void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
 	void ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset);
 
+	virtual void SetSensorDataConfigurations();
+
 	void OnMotionDataUpdate(EUkatonMotionDataType MotionDataType);
 	void OnPressureDataUpdate(EUkatonPressureDataType PressureDataType);
 
-	virtual void SetIsConnected(bool bNewIsConnected);
+	virtual FString GetAutoConnectDeviceIdentifier() const;
+
+	virtual void RequestVibration(const TArray<uint8> &Data);
 
 protected:
 	bool bIsConnected = false;

@@ -73,4 +73,6 @@ private:
 	void ParseSetRemoteReceivePortMessage(const TArray<uint8> &Data, uint8 &Offset);
 
 	bool bDidSendSetInListenPortMessage;
+
+	void RequestVibration(const TArray<uint8> &Data) override;
 };
