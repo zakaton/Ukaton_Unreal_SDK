@@ -1,4 +1,5 @@
 // Copyright (c) 2023 Zack Qattan
+// https://www.ti.com/lit/ds/symlink/drv2605.pdf section 11.2
 
 #pragma once
 

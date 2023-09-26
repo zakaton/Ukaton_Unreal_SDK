@@ -204,13 +204,15 @@ void AUkatonMissionBase::SetSensorDataConfigurations()
 	SensorDataConfigurationsManager.SerializeConfigurations();
 }
 
-void AUkatonMissionBase::RequestVibration(const TArray<uint8> &Data)
+void AUkatonMissionBase::RequestVibration(const TArray<uint8> &Vibration)
 {
 }
 
-void AUkatonMissionBase::VibrateWaveform(const TArray<uint8> &Waveform) {
+void AUkatonMissionBase::VibrateWaveforms(const TArray<EUkatonVibrationWaveformType> &Waveforms)
+{
 	// FILL
 }
-void AUkatonMissionBase::VibrateSequence(const TArray<uint8> &Sequence) {
+void AUkatonMissionBase::VibrateSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence)
+{
 	// FILL
 }

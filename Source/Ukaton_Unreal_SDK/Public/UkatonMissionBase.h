@@ -8,6 +8,8 @@
 #include "UkatonSensorDataConfigurationsManager.h"
 #include "UkatonSensorDataManager.h"
 #include "UkatonHapticsManager.h"
+#include "UkatonVibrationWaveformType.h"
+#include "UkatonVibrationSequenceSegment.h"
 #include "UkatonMotionDataType.h"
 #include "UkatonPressureDataType.h"
 #include "UkatonMissionBase.generated.h"
@@ -100,9 +102,9 @@ public:
 	FPressureHeelToToeUpdatedDelegate OnPressureHeelToToeUpdated;
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
-	void VibrateWaveform(const TArray<uint8> &Waveform);
+	void VibrateWaveforms(const TArray<EUkatonVibrationWaveformType> &Waveforms);
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
-	void VibrateSequence(const TArray<uint8> &Sequence);
+	void VibrateSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence);
 
 protected:
 	// Called when the game starts or when spawned
@@ -123,7 +125,7 @@ protected:
 
 	virtual FString GetAutoConnectDeviceIdentifier() const;
 
-	virtual void RequestVibration(const TArray<uint8> &Data);
+	virtual void RequestVibration(const TArray<uint8> &Vibration);
 
 protected:
 	bool bIsConnected = false;
