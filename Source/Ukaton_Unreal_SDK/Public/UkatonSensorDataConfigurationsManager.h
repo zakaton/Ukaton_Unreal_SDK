@@ -36,6 +36,8 @@ struct FUkatonSensorDataConfigurationsManager
 
     void ParseConfigurations(const TArray<uint8> &Data, uint8 &Offset);
 
+    bool IsConfigurationNonZero = false;
+
 private:
     static const uint8 MaxSerializedConfigurationsLength = (2 * 2) + (3 * ((uint8)EUkatonMotionDataType::COUNT + (uint8)EUkatonPressureDataType::COUNT));
     static const uint8 MaxSerializedConfigurationLength = 2 + (3 * FMath::Max((uint8)EUkatonMotionDataType::COUNT, (uint8)EUkatonPressureDataType::COUNT));

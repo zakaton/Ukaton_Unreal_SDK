@@ -81,6 +81,7 @@ void AUkatonMissionBase::Disconnect()
 {
 	bDidReceiveDeviceName = false;
 	bDidReceiveDeviceType = false;
+	SetIsConnected(false);
 }
 
 void AUkatonMissionBase::ParseBatteryLevel(const TArray<uint8> &Data, uint8 &Offset)

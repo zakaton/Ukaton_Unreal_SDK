@@ -17,7 +17,18 @@ AUkatonMissionUDP::AUkatonMissionUDP()
 void AUkatonMissionUDP::Disconnect_Implementation()
 {
     Super::Disconnect();
-    bDidSendSetInListenPortMessage = false;
+}
+
+void AUkatonMissionUDP::SetIsConnected(bool bNewIsConnected)
+{
+    if (bIsConnected != bNewIsConnected)
+    {
+        if (!bNewIsConnected)
+        {
+            bDidSendSetInListenPortMessage = false;
+        }
+        Super::SetIsConnected(bNewIsConnected);
+    }
 }
 
 void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
@@ -97,6 +108,21 @@ void AUkatonMissionUDP::SetSensorDataConfigurations()
     configuration.Insert(static_cast<uint8>(size), 1);
     EmitBytes(configuration);
 }
+
+const TArray<uint8> &AUkatonMissionUDP::GetPingMessage()
+{
+    if (bDidSendSetInListenPortMessage && SensorDataConfigurationsManager.IsConfigurationNonZero)
+    {
+        auto CurrentTime = FGenericPlatformTime::Seconds();
+        if (CurrentTime - SensorDataManager.LastTimeReceivedSensorData > 2)
+        {
+            UE_LOGFMT(LogUkatonMissionUDP, Log, "Didn't receive data in 2+ seconds");
+            SetIsConnected(false);
+        }
+    }
+
+    return bDidSendSetInListenPortMessage ? PingMessage : SetInListenPortMessage;
+};
 
 TArray<uint8> AUkatonMissionUDP::PingMessage = {static_cast<uint8>(EUkatonUDPMessageType::PING)};
 TArray<uint8> AUkatonMissionUDP::RequestInfoMessage = {static_cast<uint8>(EUkatonUDPMessageType::GET_TYPE), static_cast<uint8>(EUkatonUDPMessageType::GET_NAME)};

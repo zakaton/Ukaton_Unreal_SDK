@@ -12,7 +12,7 @@
 #include "UkatonPressureDataType.h"
 #include "UkatonMissionBase.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionBase, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionBase, Log, Warning);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateWithNoParams);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, const uint8, BatteryLevel);
@@ -116,9 +116,9 @@ protected:
 	void OnMotionDataUpdate(EUkatonMotionDataType MotionDataType);
 	void OnPressureDataUpdate(EUkatonPressureDataType PressureDataType);
 
-	void SetIsConnected(bool bNewIsConnected);
+	virtual void SetIsConnected(bool bNewIsConnected);
 
-private:
+protected:
 	bool bIsConnected = false;
 
 	EUkatonDeviceType DeviceType;

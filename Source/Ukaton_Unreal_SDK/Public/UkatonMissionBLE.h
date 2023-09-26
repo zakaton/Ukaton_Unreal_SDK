@@ -13,7 +13,7 @@ class UKATON_UNREAL_SDK_API AUkatonMissionBLE : public AUkatonMissionBase
 
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission BLE")
-	void Connect(const FString &BLEName) override;
+	void Connect(const FString &Name) override;
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission BLE")
 	void Disconnect() override;

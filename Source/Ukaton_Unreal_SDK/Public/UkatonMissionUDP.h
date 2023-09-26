@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "UkatonMissionBase.h"
+#include "GenericPlatform/GenericPlatformTime.h"
 #include "UkatonMissionUDP.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionUDP, Log, Warning);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionUDP, Log, All);
 
 UCLASS()
 class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase
@@ -23,6 +24,8 @@ public:
 	void Disconnect() override;
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission UDP")
 	void Disconnect_Implementation();
+
+	virtual void SetIsConnected(bool bNewIsConnected) override;
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission UDP")
 	void EmitBytes(const TArray<uint8> &Data);
@@ -45,10 +48,7 @@ public:
 	};
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission UDP")
-	const TArray<uint8> &GetPingMessage()
-	{
-		return bDidSendSetInListenPortMessage ? PingMessage : SetInListenPortMessage;
-	};
+	const TArray<uint8> &GetPingMessage();
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission UDP")
 	int32 GetInListenPort() { return InListenPort; };

@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Zack Qattan
+// Copyright (c) 2023 Zack Qattan + ChatGPT
 
 #include "UkatonMotionData.h"
 #include "ByteParser.h"
@@ -16,15 +16,18 @@ const TMap<EUkatonMotionDataType, double> FUkatonMotionData::ScalarMap = {
     {EUkatonMotionDataType::QUATERNION, FMath::Pow(2.0f, -14.0f)},
 };
 
+FUkatonMotionData::FUkatonMotionData()
+{
+    TempArray1.SetNum(4);
+    TempArray2.SetNum(4);
+}
+
 void FUkatonMotionData::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
 {
     DeviceType = NewDeviceType;
 
     CorrectionQuaternion = CorrectionQuaternions[DeviceType];
-    if (InsoleCorrectionQuaternions.Contains(DeviceType))
-    {
-        CorrectionQuaternion *= InsoleCorrectionQuaternions[DeviceType];
-    }
+    UE_LOGFMT(LogUkatonMotionData, Log, "CorrectionQuaternion: {0}", *CorrectionQuaternion.ToString());
 }
 
 void FUkatonMotionData::ParseData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset)
@@ -126,7 +129,6 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
     auto Z = ByteParser::GetInt16(Data, Offset + 4);
     Offset += 6;
 
-    // FIX
     if (DeviceType == EUkatonDeviceType::MOTION_MODULE)
     {
         TempVector.Set(-X, -Y, -Z);
@@ -154,57 +156,107 @@ void FUkatonMotionData::ParseEuler(const TArray<uint8> &Data, uint8 &Offset)
 
 const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeCorrectionQuaternions()
 {
-    // FIX
     TMap<EUkatonDeviceType, FQuat> Quaternions;
 
-    auto Quaternion = FQuat::MakeFromEuler(FVector(0, 0, 0));
+    auto Quaternion = FQuat::MakeFromEuler(FVector(0, 0, -90));
     Quaternions.Emplace(EUkatonDeviceType::MOTION_MODULE, Quaternion);
 
-    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
-    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternion = FQuat::MakeFromEuler(FVector(-90, 0, 0));
+    Quaternion *= FQuat::MakeFromEuler(FVector(0, 0, 180));
     Quaternions.Emplace(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
 
-    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
-    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
+    Quaternion = FQuat::MakeFromEuler(FVector(-90, 0, 0));
+    Quaternion *= FQuat::MakeFromEuler(FVector(0, 0, 0));
     Quaternions.Emplace(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
 
     return Quaternions;
 }
-const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InitializeInsoleCorrectionQuaternions()
+
+// begin ChatGPT
+const TArray<TArray<int8>> FUkatonMotionData::InitializeQuaternionPermutations()
 {
-    // FIX
-    TMap<EUkatonDeviceType, FQuat> Quaternions;
+    TArray<TArray<int8>> _QuaternionPermutations;
+    TArray<int8> CurrentQuaternionPermutation;
 
-    auto Quaternion = FQuat::MakeFromEuler(FVector(0, 0, 0));
-    Quaternions.Emplace(EUkatonDeviceType::MOTION_MODULE, Quaternion);
+    TArray<int8> InputArray = {1, 2, 3, 4};
 
-    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
-    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
-    Quaternions.Emplace(EUkatonDeviceType::LEFT_INSOLE, Quaternion);
+    // Start the recursive permutation generation
+    GeneratePermutationsAndSignVariationsRec(InputArray, _QuaternionPermutations, CurrentQuaternionPermutation, 0);
 
-    Quaternion = FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
-    Quaternion *= FQuat::MakeFromEuler(FVector(FMath::RadiansToDegrees(0), 0, 0));
-    Quaternions.Emplace(EUkatonDeviceType::RIGHT_INSOLE, Quaternion);
+    return _QuaternionPermutations;
+}
+void FUkatonMotionData::GeneratePermutationsAndSignVariationsRec(
+    const TArray<int8> &inputArray,
+    TArray<TArray<int8>> &permutations,
+    TArray<int8> &currentPermutation,
+    int32 currentIndex)
+{
+    if (currentIndex == inputArray.Num())
+    {
+        // All elements have been processed, add the current permutation to the result
+        permutations.Add(currentPermutation);
+        return;
+    }
 
-    return Quaternions;
+    // Generate permutations with the current element
+    for (int32 i = 0; i < 2; i++)
+    {
+        int8 sign = (i == 0) ? 1 : -1;
+        currentPermutation.Add(inputArray[currentIndex] * sign);
+        GeneratePermutationsAndSignVariationsRec(inputArray, permutations, currentPermutation, currentIndex + 1);
+        currentPermutation.RemoveAt(currentPermutation.Num() - 1);
+    }
+}
+// end ChatGPT
+
+void FUkatonMotionData::PermuteQuaternion(FQuat &Quat)
+{
+    if (QuaternionPermutationIndex < 0)
+    {
+        QuaternionPermutationIndex = 0;
+    }
+    else if (QuaternionPermutationIndex >= QuaternionPermutations.Num())
+    {
+        QuaternionPermutationIndex %= QuaternionPermutations.Num();
+    }
+
+    auto QuaternionPermutation = QuaternionPermutations[QuaternionPermutationIndex];
+
+    TempArray1[0] = Quat.W;
+    TempArray1[1] = Quat.X;
+    TempArray1[2] = Quat.Y;
+    TempArray1[3] = Quat.Z;
+
+    for (uint8 i = 0; i < QuaternionPermutation.Num(); i++)
+    {
+        auto j = QuaternionPermutation[i];
+        auto Value = TempArray1[i];
+        TempArray2[i] = TempArray1[FMath::Abs(j) - 1];
+        if (j < 0)
+        {
+            TempArray2[i] *= -1;
+        }
+    }
+
+    SetQuat(Quat, TempArray2[0], TempArray2[1], TempArray2[2], TempArray2[3]);
+    // UE_LOGFMT(LogUkatonMotionData, Log, "QuaternionPermutation #{0}: {1},{2},{3},{4}", QuaternionPermutationIndex, QuaternionPermutation[0], QuaternionPermutation[1], QuaternionPermutation[2], QuaternionPermutation[3]);
 }
 
 const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::CorrectionQuaternions = FUkatonMotionData::InitializeCorrectionQuaternions();
-const TMap<EUkatonDeviceType, FQuat> FUkatonMotionData::InsoleCorrectionQuaternions = FUkatonMotionData::InitializeInsoleCorrectionQuaternions();
+const TArray<TArray<int8>> FUkatonMotionData::QuaternionPermutations = FUkatonMotionData::InitializeQuaternionPermutations();
 
 void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 &Offset)
 {
     auto Scalar = ScalarMap[EUkatonMotionDataType::QUATERNION];
 
-    auto W = ByteParser::GetInt16(Data, Offset);
-    auto X = ByteParser::GetInt16(Data, Offset + 2);
-    auto Y = ByteParser::GetInt16(Data, Offset + 4);
-    auto Z = ByteParser::GetInt16(Data, Offset + 6);
+    double W = ByteParser::GetInt16(Data, Offset);
+    double X = ByteParser::GetInt16(Data, Offset + 2);
+    double Y = ByteParser::GetInt16(Data, Offset + 4);
+    double Z = ByteParser::GetInt16(Data, Offset + 6);
     Offset += 8;
 
-    // FIX
-    // SetQuat(TempQuaternion, W, X, Y, Z);
-    SetQuat(TempQuaternion, -Y, W, X, Z);
+    SetQuat(TempQuaternion, W, X, -Y, -Z);
+    // PermuteQuaternion(TempQuaternion);
 
     TempQuaternion *= CorrectionQuaternion;
 
@@ -213,9 +265,13 @@ void FUkatonMotionData::ParseQuaternion(const TArray<uint8> &Data, uint8 &Offset
     UE_LOGFMT(LogUkatonMotionData, Log, "MotionDataType {0} Quaternion: {1}", static_cast<uint8>(EUkatonMotionDataType::QUATERNION), *TempQuaternion.ToString());
 
     Quaternion = TempQuaternion;
+
+    auto EulerVector = Quaternion.Euler();
+    SetRotator(Euler, EulerVector);
+    UE_LOGFMT(LogUkatonMotionData, Log, "Euler: {0}", *Euler.ToString());
 }
 
-void FUkatonMotionData::SetQuat(FQuat &Quat, float W, float X, float Y, float Z)
+void FUkatonMotionData::SetQuat(FQuat &Quat, double W, double X, double Y, double Z)
 {
     Quat.W = W;
     Quat.X = X;

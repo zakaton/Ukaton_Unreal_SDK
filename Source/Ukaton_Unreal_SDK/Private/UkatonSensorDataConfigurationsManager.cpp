@@ -68,6 +68,7 @@ void FUkatonSensorDataConfigurationsManager::SerializeConfiguration(EUkatonSenso
 
 void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<uint8> &Data, uint8 &Offset)
 {
+    bool _IsConfigurationNonZero = false;
     for (uint8 SensorTypeIndex = 0; SensorTypeIndex < static_cast<uint8>(EUkatonSensorType::COUNT); SensorTypeIndex++)
     {
         auto SensorType = static_cast<EUkatonSensorType>(SensorTypeIndex);
@@ -77,18 +78,24 @@ void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<ui
             for (uint8 MotionDataTypeIndex = 0; MotionDataTypeIndex < static_cast<uint8>(EUkatonMotionDataType::COUNT); MotionDataTypeIndex++)
             {
                 auto MotionDataType = static_cast<EUkatonMotionDataType>(MotionDataTypeIndex);
-                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(ByteParser::GetUint16(Data, Offset) / 10);
+                auto RawSensorDataRate = ByteParser::GetUint16(Data, Offset);
+                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(RawSensorDataRate / 10);
                 Offset += 2;
                 MotionDataRates.Emplace(MotionDataType, SensorDataRate);
+
+                _IsConfigurationNonZero = _IsConfigurationNonZero || (RawSensorDataRate > 0);
             }
             break;
         case EUkatonSensorType::PRESSURE:
             for (uint8 PressureDataTypeIndex = 0; PressureDataTypeIndex < static_cast<uint8>(EUkatonPressureDataType::COUNT); PressureDataTypeIndex++)
             {
                 auto PressureDataType = static_cast<EUkatonPressureDataType>(PressureDataTypeIndex);
-                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(ByteParser::GetUint16(Data, Offset));
+                auto RawSensorDataRate = ByteParser::GetUint16(Data, Offset);
+                auto SensorDataRate = static_cast<EUkatonSensorDataRate>(RawSensorDataRate / 10);
                 Offset += 2;
                 PressureDataRates.Emplace(PressureDataType, SensorDataRate);
+
+                _IsConfigurationNonZero = _IsConfigurationNonZero || (RawSensorDataRate > 0);
             }
             break;
         default:
@@ -96,4 +103,5 @@ void FUkatonSensorDataConfigurationsManager::ParseConfigurations(const TArray<ui
             break;
         }
     }
+    IsConfigurationNonZero = _IsConfigurationNonZero;
 }
