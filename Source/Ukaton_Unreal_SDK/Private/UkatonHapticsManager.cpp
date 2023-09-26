@@ -1,15 +1,28 @@
 // Copyright (c) 2023 Zack Qattan
 
 #include "UkatonHapticsManager.h"
+#include "UkatonVibrationType.h"
 #include "Logging/StructuredLog.h"
 
 DEFINE_LOG_CATEGORY(LogUkatonHapticsManager);
 
 void FUkatonHapticsManager::SerializeWaveforms(const TArray<EUkatonVibrationWaveformType> &Waveforms)
 {
-    // FILL 1
+    SerializedVibration.Reset();
+    SerializedVibration.Add(static_cast<uint8>(EUkatonVibrationType::WAVEFORM));
+    for (uint8 i = 0; i < Waveforms.Num(); i++)
+    {
+        SerializedVibration.Add(static_cast<uint8>(Waveforms[i]));
+    }
 }
 void FUkatonHapticsManager::SerializeSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence)
 {
-    // FILL 2
+    SerializedVibration.Reset();
+    SerializedVibration.Add(static_cast<uint8>(EUkatonVibrationType::SEQUENCE));
+    for (uint8 i = 0; i < Sequence.Num(); i++)
+    {
+        auto Segment = Sequence[i];
+        SerializedVibration.Add(Segment.Amplitude);
+        SerializedVibration.Add(static_cast<uint8>(Segment.Delay / 10));
+    }
 }
