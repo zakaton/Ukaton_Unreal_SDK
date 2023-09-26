@@ -210,9 +210,11 @@ void AUkatonMissionBase::RequestVibration(const TArray<uint8> &Vibration)
 
 void AUkatonMissionBase::VibrateWaveforms(const TArray<EUkatonVibrationWaveformType> &Waveforms)
 {
+	HapticsManager.SerializeWaveforms(Waveforms);
 	// FILL
 }
 void AUkatonMissionBase::VibrateSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence)
 {
+	HapticsManager.SerializeSequence(Sequence);
 	// FILL
 }

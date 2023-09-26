@@ -5,11 +5,11 @@
 
 DEFINE_LOG_CATEGORY(LogUkatonHapticsManager);
 
-void FUkatonHapticsManager::SerializeWaveform(const TArray<EUkatonVibrationWaveformType> &Waveforms)
+void FUkatonHapticsManager::SerializeWaveforms(const TArray<EUkatonVibrationWaveformType> &Waveforms)
 {
     // FILL
 }
-void FUkatonHapticsManager::SerializeSequence()
+void FUkatonHapticsManager::SerializeSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence)
 {
     // FILL
 }

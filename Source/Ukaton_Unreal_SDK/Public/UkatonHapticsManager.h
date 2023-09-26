@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UkatonVibrationType.h"
 #include "UkatonVibrationWaveformType.h"
+#include "UkatonVibrationSequenceSegment.h"
 #include "UkatonHapticsManager.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogUkatonHapticsManager, Log, All);
@@ -17,6 +18,6 @@ struct FUkatonHapticsManager
 public:
     TArray<uint8> SerializedVibration;
 
-    void SerializeWaveform(const TArray<EUkatonVibrationWaveformType> &Waveforms);
-    void SerializeSequence();
+    void SerializeWaveforms(const TArray<EUkatonVibrationWaveformType> &Waveforms);
+    void SerializeSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence);
 };
