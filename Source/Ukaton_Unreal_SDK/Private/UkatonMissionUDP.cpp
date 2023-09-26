@@ -127,6 +127,7 @@ const TArray<uint8> &AUkatonMissionUDP::GetPingMessage()
 TArray<uint8> AUkatonMissionUDP::PingMessage = {static_cast<uint8>(EUkatonUDPMessageType::PING)};
 TArray<uint8> AUkatonMissionUDP::RequestInfoMessage = {static_cast<uint8>(EUkatonUDPMessageType::GET_TYPE), static_cast<uint8>(EUkatonUDPMessageType::GET_NAME)};
 
-void AUkatonMissionUDP::RequestVibration(const TArray<uint8> &Data) {
-    // FILL
+void AUkatonMissionUDP::RequestVibration(const TArray<uint8> &Data)
+{
+    // FILL 3
 }

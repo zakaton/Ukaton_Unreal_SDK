@@ -7,9 +7,9 @@ DEFINE_LOG_CATEGORY(LogUkatonHapticsManager);
 
 void FUkatonHapticsManager::SerializeWaveforms(const TArray<EUkatonVibrationWaveformType> &Waveforms)
 {
-    // FILL
+    // FILL 1
 }
 void FUkatonHapticsManager::SerializeSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence)
 {
-    // FILL
+    // FILL 2
 }
