@@ -71,7 +71,7 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission")
 	FDelegateWithNoParams OnDisconnected;
 
-	UPROPERTY(EditAnywhere, Category = "Ukaton Mission")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission")
 	bool bAutoConnect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
