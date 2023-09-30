@@ -113,6 +113,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission")
 	void VibrateSequence(const TArray<FUkatonVibrationSequenceSegment> &Sequence);
 
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	bool IsInsole() { return DeviceType == EUkatonDeviceType::MOTION_MODULE; };
+
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	bool IsLeftInsole() { return DeviceType == EUkatonDeviceType::LEFT_INSOLE; };
+
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
+	bool IsRightInsole() { return DeviceType == EUkatonDeviceType::RIGHT_INSOLE; };
+
 protected:
 	// Called when the game starts or when spawned
 	void BeginPlay() override;

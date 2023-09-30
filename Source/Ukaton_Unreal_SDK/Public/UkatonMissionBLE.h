@@ -42,11 +42,18 @@ public:
 		return DeviceNameCharacteristicUUID;
 	}
 
+	static const FString DeviceTypeCharacteristicUUID;
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
+	const FString GetDeviceTypeCharacteristicUUID() const
+	{
+		return DeviceTypeCharacteristicUUID;
+	}
+
 	virtual FString GetAutoConnectDeviceIdentifier() const override
 	{
 		return AutoConnectBLEDeviceName;
 	};
 
-	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE") 
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
 	void OnCharacteristicRead();
 };
