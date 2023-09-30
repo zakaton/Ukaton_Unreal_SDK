@@ -44,6 +44,7 @@ void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 		SensorDataManager.UpdateDeviceType(DeviceType);
 		bDidReceiveDeviceType = true;
 		OnDeviceInformationUpdate();
+		OnDeviceTypeUpdated.Broadcast(DeviceType);
 	}
 }
 
@@ -53,6 +54,7 @@ void AUkatonMissionBase::UpdateDeviceName(const FString &NewDeviceName)
 	UE_LOGFMT(LogUkatonMissionBase, Log, "DeviceName: {0}", DeviceName);
 	bDidReceiveDeviceName = true;
 	OnDeviceInformationUpdate();
+	OnDeviceNameUpdated.Broadcast(DeviceName);
 }
 
 void AUkatonMissionBase::OnDeviceInformationUpdate()

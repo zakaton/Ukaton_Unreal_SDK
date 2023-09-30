@@ -18,6 +18,8 @@ DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionBase, Log, Warning);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateWithNoParams);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, const uint8, BatteryLevel);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeviceTypeUpdatedDelegate, const EUkatonDeviceType, DeviceType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeviceNameUpdatedDelegate, const FString &, DeviceName);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionVectorUpdatedDelegate, const FVector &, Vector, const int64, Timestamp);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionEulerUpdatedDelegate, const FRotator &, Euler, const int64, Timestamp);
@@ -76,6 +78,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ukaton Mission")
 	bool bRotateActor;
+
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission")
+	FDeviceTypeUpdatedDelegate OnDeviceTypeUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission")
+	FDeviceNameUpdatedDelegate OnDeviceNameUpdated;
 
 	UPROPERTY(BlueprintAssignable, Category = "Ukaton Mission Motion Data")
 	FMotionVectorUpdatedDelegate OnAccelerationUpdated;

@@ -21,16 +21,32 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission BLE", DisplayName = "Device Name")
 	FString AutoConnectBLEDeviceName = "";
 
+	static const TArray<FString> ServiceUUIDs;
+
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
 	const TArray<FString> GetServiceUUIDs() const
 	{
 		return ServiceUUIDs;
 	}
 
-	static const TArray<FString> ServiceUUIDs;
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
+	const FString GetMainServiceUUID() const
+	{
+		return ServiceUUIDs[0];
+	}
+
+	static const FString DeviceNameCharacteristicUUID;
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
+	const FString GetDeviceNameCharacteristicUUID() const
+	{
+		return DeviceNameCharacteristicUUID;
+	}
 
 	virtual FString GetAutoConnectDeviceIdentifier() const override
 	{
 		return AutoConnectBLEDeviceName;
 	};
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE") 
+	void OnCharacteristicRead();
 };
