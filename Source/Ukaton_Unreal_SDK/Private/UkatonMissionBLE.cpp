@@ -12,7 +12,8 @@ const TArray<FString> AUkatonMissionBLE::ServiceUUIDs = {
 const FString AUkatonMissionBLE::DeviceTypeCharacteristicUUID = UKATON_MISSION_BLE_GENERATE_UUID("3001");
 const FString AUkatonMissionBLE::DeviceNameCharacteristicUUID = UKATON_MISSION_BLE_GENERATE_UUID("4001");
 
-void AUkatonMissionBLE::OnCharacteristicRead()
+void AUkatonMissionBLE::OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data)
 {
     // FILL
+    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("FUCK YES"));
 }

@@ -55,5 +55,5 @@ public:
 	};
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
-	void OnCharacteristicRead();
+	void OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data);
 };
