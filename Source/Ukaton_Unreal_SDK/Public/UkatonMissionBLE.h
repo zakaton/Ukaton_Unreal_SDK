@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UkatonMissionBase.h"
+#include "BleGoodies/Public/Interface/BleDeviceInterface.h"
 #include "UkatonMissionBLE.generated.h"
 
 UCLASS()
@@ -22,17 +23,19 @@ public:
 	FString AutoConnectBLEDeviceName = "";
 
 	static const TArray<FString> ServiceUUIDs;
-
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
 	const TArray<FString> GetServiceUUIDs() const
 	{
 		return ServiceUUIDs;
 	}
 
+	static const TArray<FString> InitializeServiceUUIDs();
+
+	static const FString MainServiceUUID;
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
 	const FString GetMainServiceUUID() const
 	{
-		return ServiceUUIDs[0];
+		return MainServiceUUID;
 	}
 
 	static const FString DeviceNameCharacteristicUUID;
@@ -56,4 +59,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
 	void OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data);
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	bool OnBleDevice(UObject *InObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	void BindEventsToBleDevice();
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	void ReadDeviceTypeCharacteristic();
+
+	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
+	UObject *GetBleDeviceObject() { return BleDeviceObject; };
+
+private:
+	UObject *BleDeviceObject = nullptr;
 };
