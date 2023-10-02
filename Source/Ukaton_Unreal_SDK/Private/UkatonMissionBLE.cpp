@@ -20,47 +20,10 @@ const TArray<FString> AUkatonMissionBLE::InitializeServiceUUIDs()
 void AUkatonMissionBLE::OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data)
 {
     // FILL
-    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("FUCK YES"));
+    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("READS!"));
 }
-
-bool AUkatonMissionBLE::OnBleDevice(UObject *InObject)
+void AUkatonMissionBLE::OnCharacteristicNotification(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data)
 {
-    IBleDeviceInterface *BleDeviceInterface = Cast<IBleDeviceInterface>(InObject);
-    if (BleDeviceInterface)
-    {
-        auto Name = BleDeviceInterface->GetDeviceName();
-        if (Name == GetAutoConnectDeviceIdentifier())
-        {
-            if (BleDeviceObject)
-            {
-                IBleDeviceInterface *MyBleDeviceInterface = Cast<IBleDeviceInterface>(BleDeviceObject);
-                if (MyBleDeviceInterface->GetDeviceId() != BleDeviceInterface->GetDeviceId())
-                {
-                    return false;
-                }
-            }
-            BleDeviceObject = InObject;
-            BindEventsToBleDevice();
-            return true;
-        }
-    }
-    return false;
+    // FILL
+    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("NOTIFICASTION"));
 }
-
-void AUkatonMissionBLE::BindEventsToBleDevice()
-{
-    IBleDeviceInterface *BleDeviceInterface = Cast<IBleDeviceInterface>(BleDeviceObject);
-    if (BleDeviceInterface)
-    {
-        BleDeviceInterface->OnReadDelegate.BindUFunction(this, "OnCharacteristicRead");
-    }
-};
-
-void AUkatonMissionBLE::ReadDeviceTypeCharacteristic()
-{
-    IBleDeviceInterface *BleDeviceInterface = Cast<IBleDeviceInterface>(BleDeviceObject);
-    if (BleDeviceInterface)
-    {
-        BleDeviceInterface->ReadCharacteristic(MainServiceUUID, DeviceTypeCharacteristicUUID);
-    }
-};

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "UkatonMissionBase.h"
-#include "BleGoodies/Public/Interface/BleDeviceInterface.h"
 #include "UkatonMissionBLE.generated.h"
 
 UCLASS()
@@ -61,17 +60,5 @@ public:
 	void OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data);
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
-	bool OnBleDevice(UObject *InObject);
-
-	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
-	void BindEventsToBleDevice();
-
-	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
-	void ReadDeviceTypeCharacteristic();
-
-	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
-	UObject *GetBleDeviceObject() { return BleDeviceObject; };
-
-private:
-	UObject *BleDeviceObject = nullptr;
+	void OnCharacteristicNotification(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data);
 };
