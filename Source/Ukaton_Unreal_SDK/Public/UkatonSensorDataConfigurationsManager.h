@@ -35,6 +35,10 @@ struct FUkatonSensorDataConfigurationsManager
     };
 
     void ParseConfigurations(const TArray<uint8> &Data, uint8 &Offset);
+    void ParseConfigurations(const TArray<uint8> &Data) {
+        uint8 Offset = 0;
+        ParseConfigurations(Data, Offset);
+    }
 
     bool IsConfigurationNonZero = false;
 

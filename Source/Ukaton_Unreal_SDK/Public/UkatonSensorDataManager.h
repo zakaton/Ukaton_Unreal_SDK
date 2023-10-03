@@ -24,7 +24,7 @@ struct FUkatonSensorDataManager
     UPROPERTY(BlueprintReadOnly, Category = "Ukaton Sensor Data")
     FUkatonPressureData PressureData;
 
-    void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
+    void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset);
 
     UPROPERTY(BlueprintReadOnly, Category = "Ukaton Sensor Data")
     int64 Timestamp;

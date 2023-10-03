@@ -53,8 +53,12 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
             break;
         case EUkatonUDPMessageType::GET_NAME:
         case EUkatonUDPMessageType::SET_NAME:
-            ParseDeviceName(Data, Offset);
-            break;
+        {
+            uint8 NameLength = Data[Offset++];
+            uint8 FinalOffset = Offset + NameLength;
+            ParseDeviceName(Data, Offset, FinalOffset);
+        }
+        break;
         case EUkatonUDPMessageType::MOTION_CALIBRATION:
             ParseMotionCalibration(Data, Offset);
             break;
@@ -63,8 +67,12 @@ void AUkatonMissionUDP::ParseMessage(const TArray<uint8> &Data)
             SensorDataConfigurationsManager.ParseConfigurations(Data, Offset);
             break;
         case EUkatonUDPMessageType::SENSOR_DATA:
-            ParseSensorData(Data, Offset);
-            break;
+        {
+            uint8 DataSize = Data[Offset++];
+            uint8 FinalOffset = Offset + DataSize;
+            ParseSensorData(Data, Offset, FinalOffset);
+        }
+        break;
         case EUkatonUDPMessageType::SET_REMOTE_RECEIVE_PORT:
             ParseSetRemoteReceivePortMessage(Data, Offset);
             break;
@@ -102,11 +110,11 @@ void AUkatonMissionUDP::ParseSetRemoteReceivePortMessage(const TArray<uint8> &Da
 void AUkatonMissionUDP::SetSensorDataConfigurations()
 {
     Super::SetSensorDataConfigurations();
-    auto &Configuration = SensorDataConfigurationsManager.SerializedConfigurations;
-    auto Size = Configuration.Num();
-    Configuration.Insert(static_cast<uint8>(EUkatonUDPMessageType::SET_SENSOR_DATA_CONFIGURATIONS), 0);
-    Configuration.Insert(static_cast<uint8>(Size), 1);
-    EmitBytes(Configuration);
+    auto &Configurations = SensorDataConfigurationsManager.SerializedConfigurations;
+    auto Size = Configurations.Num();
+    Configurations.Insert(static_cast<uint8>(EUkatonUDPMessageType::SET_SENSOR_DATA_CONFIGURATIONS), 0);
+    Configurations.Insert(static_cast<uint8>(Size), 1);
+    EmitBytes(Configurations);
 }
 
 const TArray<uint8> &AUkatonMissionUDP::GetPingMessage()

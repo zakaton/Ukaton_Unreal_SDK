@@ -43,8 +43,8 @@ void AUkatonMissionBase::UpdateDeviceType(const EUkatonDeviceType NewDeviceType)
 		SensorDataConfigurationsManager.UpdateDeviceType(DeviceType);
 		SensorDataManager.UpdateDeviceType(DeviceType);
 		bDidReceiveDeviceType = true;
-		OnDeviceInformationUpdate();
 		OnDeviceTypeUpdated.Broadcast(DeviceType);
+		OnDeviceInformationUpdate();
 	}
 }
 
@@ -53,8 +53,8 @@ void AUkatonMissionBase::UpdateDeviceName(const FString &NewDeviceName)
 	DeviceName = NewDeviceName;
 	UE_LOGFMT(LogUkatonMissionBase, Log, "DeviceName: {0}", DeviceName);
 	bDidReceiveDeviceName = true;
-	OnDeviceInformationUpdate();
 	OnDeviceNameUpdated.Broadcast(DeviceName);
+	OnDeviceInformationUpdate();
 }
 
 void AUkatonMissionBase::OnDeviceInformationUpdate()
@@ -99,9 +99,9 @@ void AUkatonMissionBase::ParseDeviceType(const TArray<uint8> &Data, uint8 &Offse
 	UpdateDeviceType(NewDeviceType);
 }
 
-void AUkatonMissionBase::ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset)
+void AUkatonMissionBase::ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset)
 {
-	auto NameLength = Data[Offset++];
+	auto NameLength = FinalOffset - Offset;
 	FString NewName;
 	NewName.Empty(NameLength);
 	for (uint8 i = 0; i < NameLength; i++)
@@ -111,9 +111,9 @@ void AUkatonMissionBase::ParseDeviceName(const TArray<uint8> &Data, uint8 &Offse
 	UpdateDeviceName(NewName);
 }
 
-void AUkatonMissionBase::ParseSensorData(const TArray<uint8> &Data, uint8 &Offset)
+void AUkatonMissionBase::ParseSensorData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset)
 {
-	SensorDataManager.ParseSensorData(Data, Offset);
+	SensorDataManager.ParseSensorData(Data, Offset, FinalOffset);
 	SensorDataManager.MotionData.DataUpdateFlags.IterateSetFlags([this](EUkatonMotionDataType MotionDataType)
 																 { OnMotionDataUpdate(MotionDataType); },
 																 true);

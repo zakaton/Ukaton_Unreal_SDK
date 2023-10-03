@@ -16,12 +16,9 @@ void FUkatonSensorDataManager::UpdateDeviceType(EUkatonDeviceType NewDeviceType)
     PressureData.UpdateDeviceType(DeviceType);
 }
 
-void FUkatonSensorDataManager::ParseSensorData(const TArray<uint8> &Data, uint8 &Offset)
+void FUkatonSensorDataManager::ParseSensorData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset)
 {
     LastTimeReceivedSensorData = FGenericPlatformTime::Seconds();
-
-    auto SensorDataSize = Data[Offset++];
-    auto FinalOffset = Offset + SensorDataSize;
 
     uint16 RawTimestamp = ByteParser::GetUint16(Data, Offset);
     Offset += 2;

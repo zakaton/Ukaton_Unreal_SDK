@@ -135,22 +135,34 @@ protected:
 		ParseBatteryLevel(Data, Offset);
 	};
 	void ParseDeviceType(const TArray<uint8> &Data, uint8 &Offset);
-	void ParseDeviceType(const TArray<uint8> &Data) {
+	void ParseDeviceType(const TArray<uint8> &Data)
+	{
 		uint8 Offset = 0;
 		ParseDeviceType(Data, Offset);
 	};
-	void ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset);
+	void ParseDeviceName(const TArray<uint8> &Data, const uint8 FinalOffset)
+	{
+		uint8 Offset = 0;
+		ParseDeviceName(Data, Offset, FinalOffset);
+	}
 	void ParseDeviceName(const TArray<uint8> &Data) {
+		const uint8 FinalOffset = Data.Num();
+		ParseDeviceName(Data, FinalOffset);
+	};
+	void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset, const uint8 FinalOffset);
+	void ParseSensorData(const TArray<uint8> &Data, const uint8 FinalOffset)
+	{
 		uint8 Offset = 0;
-		ParseDeviceName(Data, Offset);
+		ParseSensorData(Data, Offset, FinalOffset);
 	}
-	void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
 	void ParseSensorData(const TArray<uint8> &Data) {
-		uint8 Offset = 0;
-		ParseSensorData(Data, Offset);
-	}
+		const uint8 FinalOffset = Data.Num();
+		ParseSensorData(Data, FinalOffset);
+	};
 	void ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset);
-	void ParseMotionCalibration(const TArray<uint8> &Data) {
+	void ParseMotionCalibration(const TArray<uint8> &Data)
+	{
 		uint8 Offset = 0;
 		ParseMotionCalibration(Data, Offset);
 	}

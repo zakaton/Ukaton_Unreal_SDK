@@ -24,6 +24,11 @@ public:
 	FString AutoConnectBLEDeviceName = "";
 
 	static const FString MainServiceUUID;
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Ukaton Mission BLE")
+	const FString &GetMainServiceUUID() const
+	{
+		return MainServiceUUID;
+	}
 
 	static const TArray<FString> ServiceUUIDs;
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
@@ -35,6 +40,29 @@ public:
 
 	static const FString DeviceTypeCharacteristicUUID;
 	static const FString DeviceNameCharacteristicUUID;
+
+	static const FString MotionCalibrationCharacteristicUUID;
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Ukaton Mission BLE")
+	const FString &GetMotionCalibrationCharacteristicUUID() const
+	{
+		return MotionCalibrationCharacteristicUUID;
+	}
+
+	static const FString SensorDataConfigurationsCharacteristicUUID;
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Ukaton Mission BLE")
+	const FString &GetSensorDataConfigurationsCharacteristicUUID() const
+	{
+		return SensorDataConfigurationsCharacteristicUUID;
+	}
+
+	static const FString SensorDataCharacteristicUUID;
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Ukaton Mission BLE")
+	const FString &GetSensorDataCharacteristicUUID() const
+	{
+		return SensorDataCharacteristicUUID;
+	}
+
+	static const FString HapticsVibrationCharacteristicUUID;
 
 	virtual FString GetAutoConnectDeviceIdentifier() const override
 	{
@@ -66,4 +94,10 @@ public:
 	{
 		ReadCharacteristic(MainServiceUUID, DeviceNameCharacteristicUUID);
 	}
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	virtual void SetSensorDataConfigurations() override;
+
+private:
+	void RequestVibration() override;
 };
