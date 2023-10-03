@@ -17,12 +17,12 @@ const TArray<FString> AUkatonMissionBLE::InitializeServiceUUIDs()
     return {MainServiceUUID};
 }
 
-void AUkatonMissionBLE::OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data)
+void AUkatonMissionBLE::OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> &Data)
 {
     // FILL
     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("READS!"));
 }
-void AUkatonMissionBLE::OnCharacteristicNotification(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data)
+void AUkatonMissionBLE::OnCharacteristicNotification(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> &Data)
 {
     // FILL
     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("NOTIFICASTION"));

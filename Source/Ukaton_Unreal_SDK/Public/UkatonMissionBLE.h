@@ -21,35 +21,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ukaton Mission BLE", DisplayName = "Device Name")
 	FString AutoConnectBLEDeviceName = "";
 
+	static const FString MainServiceUUID;
+
 	static const TArray<FString> ServiceUUIDs;
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
 	const TArray<FString> GetServiceUUIDs() const
 	{
 		return ServiceUUIDs;
 	}
-
 	static const TArray<FString> InitializeServiceUUIDs();
 
-	static const FString MainServiceUUID;
-	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
-	const FString GetMainServiceUUID() const
-	{
-		return MainServiceUUID;
-	}
-
-	static const FString DeviceNameCharacteristicUUID;
-	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
-	const FString GetDeviceNameCharacteristicUUID() const
-	{
-		return DeviceNameCharacteristicUUID;
-	}
-
 	static const FString DeviceTypeCharacteristicUUID;
-	UFUNCTION(BlueprintPure, Category = "Ukaton Mission BLE")
-	const FString GetDeviceTypeCharacteristicUUID() const
-	{
-		return DeviceTypeCharacteristicUUID;
-	}
+	static const FString DeviceNameCharacteristicUUID;
 
 	virtual FString GetAutoConnectDeviceIdentifier() const override
 	{
@@ -57,8 +40,22 @@ public:
 	};
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
-	void OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data);
+	void OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> &Data);
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	void OnCharacteristicNotification(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> &Data);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Ukaton Mission BLE")
+	void ReadCharacteristic(const FString &ServiceUUID, const FString &CharacteristicUUID);
+	UFUNCTION(BlueprintImplementableEvent, Category = "Ukaton Mission BLE")
+	void WriteCharacteristic(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> &Data);
+	UFUNCTION(BlueprintImplementableEvent, Category = "Ukaton Mission BLE")
+	void SubscribeToCharacteristic(const FString &ServiceUUID, const FString &CharacteristicUUID);
+	UFUNCTION(BlueprintImplementableEvent, Category = "Ukaton Mission BLE")
+	void UnsubscribeFromCharacteristic(const FString &ServiceUUID, const FString &CharacteristicUUID);
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
-	void OnCharacteristicNotification(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> Data);
+	void ReadDeviceTypeCharacteristic()
+	{
+		ReadCharacteristic(MainServiceUUID, DeviceTypeCharacteristicUUID);
+	}
 };
