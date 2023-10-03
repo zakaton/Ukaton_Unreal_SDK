@@ -96,6 +96,24 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	void SubscribeToMotionCalibrationCharacteristic()
+	{
+		SubscribeToCharacteristic(MainServiceUUID, MotionCalibrationCharacteristicUUID);
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	void SubscribeToSensorDataCharacteristic()
+	{
+		SubscribeToCharacteristic(MainServiceUUID, SensorDataCharacteristicUUID);
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	void SubscribeToSensorDataConfigurationsCharacteristic()
+	{
+		SubscribeToCharacteristic(MainServiceUUID, SensorDataConfigurationsCharacteristicUUID);
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
 	virtual void SetSensorDataConfigurations() override;
 
 private:
