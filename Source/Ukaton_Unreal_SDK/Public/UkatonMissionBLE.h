@@ -12,6 +12,8 @@ class UKATON_UNREAL_SDK_API AUkatonMissionBLE : public AUkatonMissionBase
 	GENERATED_BODY()
 
 public:
+	AUkatonMissionBLE();
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ukaton Mission BLE")
 	void Connect(const FString &Name) override;
 
@@ -57,5 +59,11 @@ public:
 	void ReadDeviceTypeCharacteristic()
 	{
 		ReadCharacteristic(MainServiceUUID, DeviceTypeCharacteristicUUID);
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
+	void ReadDeviceNameCharacteristic()
+	{
+		ReadCharacteristic(MainServiceUUID, DeviceNameCharacteristicUUID);
 	}
 };

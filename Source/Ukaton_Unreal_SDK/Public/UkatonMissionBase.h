@@ -129,10 +129,31 @@ protected:
 	virtual void SetIsConnected(bool bNewIsConnected);
 
 	void ParseBatteryLevel(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseBatteryLevel(const TArray<uint8> &Data)
+	{
+		uint8 Offset = 0;
+		ParseBatteryLevel(Data, Offset);
+	};
 	void ParseDeviceType(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseDeviceType(const TArray<uint8> &Data) {
+		uint8 Offset = 0;
+		ParseDeviceType(Data, Offset);
+	};
 	void ParseDeviceName(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseDeviceName(const TArray<uint8> &Data) {
+		uint8 Offset = 0;
+		ParseDeviceName(Data, Offset);
+	}
 	void ParseSensorData(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseSensorData(const TArray<uint8> &Data) {
+		uint8 Offset = 0;
+		ParseSensorData(Data, Offset);
+	}
 	void ParseMotionCalibration(const TArray<uint8> &Data, uint8 &Offset);
+	void ParseMotionCalibration(const TArray<uint8> &Data) {
+		uint8 Offset = 0;
+		ParseMotionCalibration(Data, Offset);
+	}
 
 	virtual void SetSensorDataConfigurations();
 
