@@ -28,7 +28,6 @@ const TArray<FString> AUkatonMissionBLE::InitializeServiceUUIDs()
 
 void AUkatonMissionBLE::OnCharacteristicRead(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> &Data)
 {
-    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("OnCharacteristicRead"));
     if (ServiceUUID == MainServiceUUID)
     {
         if (CharacteristicUUID == DeviceTypeCharacteristicUUID)
@@ -39,7 +38,6 @@ void AUkatonMissionBLE::OnCharacteristicRead(const FString &ServiceUUID, const F
 }
 void AUkatonMissionBLE::OnCharacteristicNotification(const FString &ServiceUUID, const FString &CharacteristicUUID, const TArray<uint8> &Data)
 {
-    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("OnCharacteristicNotification"));
     if (ServiceUUID == MainServiceUUID)
     {
         if (CharacteristicUUID == MotionCalibrationCharacteristicUUID)
