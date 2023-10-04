@@ -108,12 +108,6 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
-	void SubscribeToSensorDataConfigurationsCharacteristic()
-	{
-		SubscribeToCharacteristic(MainServiceUUID, SensorDataConfigurationsCharacteristicUUID);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "Ukaton Mission BLE")
 	virtual void SetSensorDataConfigurations() override;
 
 private:

@@ -44,10 +44,6 @@ void AUkatonMissionBLE::OnCharacteristicNotification(const FString &ServiceUUID,
         {
             ParseMotionCalibration(Data);
         }
-        else if (CharacteristicUUID == SensorDataConfigurationsCharacteristicUUID)
-        {
-            SensorDataConfigurationsManager.ParseConfigurations(Data);
-        }
         else if (CharacteristicUUID == SensorDataCharacteristicUUID)
         {
             ParseSensorData(Data);
