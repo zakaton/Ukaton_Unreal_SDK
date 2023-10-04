@@ -42,10 +42,12 @@ void AUkatonMissionBLE::OnCharacteristicNotification(const FString &ServiceUUID,
     {
         if (CharacteristicUUID == MotionCalibrationCharacteristicUUID)
         {
+            // GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Calibration"));
             ParseMotionCalibration(Data);
         }
         else if (CharacteristicUUID == SensorDataCharacteristicUUID)
         {
+            // GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Dater"));
             ParseSensorData(Data);
         }
     }

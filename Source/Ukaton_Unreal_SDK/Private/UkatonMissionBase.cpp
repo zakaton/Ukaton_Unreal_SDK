@@ -95,7 +95,6 @@ void AUkatonMissionBase::ParseBatteryLevel(const TArray<uint8> &Data, uint8 &Off
 void AUkatonMissionBase::ParseDeviceType(const TArray<uint8> &Data, uint8 &Offset)
 {
 	auto NewDeviceType = (EUkatonDeviceType)Data[Offset++];
-
 	UpdateDeviceType(NewDeviceType);
 }
 
