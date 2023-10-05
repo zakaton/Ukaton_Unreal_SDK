@@ -9,6 +9,8 @@
 #include "UkatonMissionSide.h"
 #include "UkatonMissions.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissions, Log, All);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureCenterOfMassDelegate, const FVector2D &, CenterOfMass, const int64 &, Timestamp);
 
 UCLASS()
@@ -49,7 +51,7 @@ protected:
 
 	TMap<EUkatonMissionSide, AUkatonMissionBase *> Insoles;
 
-	float Sum;
+	float RawValueSum;
 	FVector2D CenterOfMass;
 	TMap<EUkatonMissionSide, float> Masses;
 };
