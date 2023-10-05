@@ -7,7 +7,7 @@
 #include "GenericPlatform/GenericPlatformTime.h"
 #include "UkatonMissionUDP.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionUDP, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionUDP, Log, Warning);
 
 UCLASS()
 class UKATONMISSION_API AUkatonMissionUDP : public AUkatonMissionBase
