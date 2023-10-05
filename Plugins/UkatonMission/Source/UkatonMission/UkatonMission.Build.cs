@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class UkatonMissionSDK : ModuleRules
+public class UkatonMission : ModuleRules
 {
-	public UkatonMissionSDK(ReadOnlyTargetRules Target) : base(Target)
+	public UkatonMission(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		

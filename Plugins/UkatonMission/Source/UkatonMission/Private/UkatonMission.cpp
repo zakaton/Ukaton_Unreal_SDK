@@ -1,15 +1,15 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "UkatonMissionSDK.h"
+#include "UkatonMission.h"
 
-#define LOCTEXT_NAMESPACE "FUkatonMissionSDKModule"
+#define LOCTEXT_NAMESPACE "FUkatonMissionModule"
 
-void FUkatonMissionSDKModule::StartupModule()
+void FUkatonMissionModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 
-void FUkatonMissionSDKModule::ShutdownModule()
+void FUkatonMissionModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
@@ -17,4 +17,4 @@ void FUkatonMissionSDKModule::ShutdownModule()
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FUkatonMissionSDKModule, UkatonMissionSDK)
+IMPLEMENT_MODULE(FUkatonMissionModule, UkatonMission)

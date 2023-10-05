@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FUkatonMissionSDKModule : public IModuleInterface
+class FUkatonMissionModule : public IModuleInterface
 {
 public:
 
