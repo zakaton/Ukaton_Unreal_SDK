@@ -21,14 +21,14 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBatteryLevelUpdatedDelegate, const 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeviceTypeUpdatedDelegate, const EUkatonDeviceType, DeviceType);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeviceNameUpdatedDelegate, const FString &, DeviceName);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionVectorUpdatedDelegate, const FVector &, Vector, const int64, Timestamp);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionEulerUpdatedDelegate, const FRotator &, Euler, const int64, Timestamp);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionQuaternionUpdatedDelegate, const FQuat &, Quaternion, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionVectorUpdatedDelegate, const FVector &, Vector, const int64 &, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionEulerUpdatedDelegate, const FRotator &, Euler, const int64 &, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMotionQuaternionUpdatedDelegate, const FQuat &, Quaternion, const int64 &, Timestamp);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureValuesUpdatedDelegate, const TArray<FUkatonPressureValue> &, PressureValues, const int64, Timestamp);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureCenterOfMassUpdatedDelegate, const FVector2D &, CenterOfMass, const int64, Timestamp);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureMassUpdatedDelegate, const float &, Mass, const int64, Timestamp);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureHeelToToeUpdatedDelegate, const double &, HeelToToe, const int64, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureValuesUpdatedDelegate, const TArray<FUkatonPressureValue> &, PressureValues, const int64 &, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureCenterOfMassUpdatedDelegate, const FVector2D &, CenterOfMass, const int64 &, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureMassUpdatedDelegate, const float &, Mass, const int64 &, Timestamp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureHeelToToeUpdatedDelegate, const double &, HeelToToe, const int64 &, Timestamp);
 
 UCLASS(Abstract)
 class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
@@ -36,7 +36,6 @@ class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	AUkatonMissionBase();
 
 	UFUNCTION(BlueprintPure, Category = "Ukaton Mission")
@@ -146,7 +145,8 @@ protected:
 		uint8 Offset = 0;
 		ParseDeviceName(Data, Offset, FinalOffset);
 	}
-	void ParseDeviceName(const TArray<uint8> &Data) {
+	void ParseDeviceName(const TArray<uint8> &Data)
+	{
 		const uint8 FinalOffset = Data.Num();
 		ParseDeviceName(Data, FinalOffset);
 	};
@@ -156,7 +156,8 @@ protected:
 		uint8 Offset = 0;
 		ParseSensorData(Data, Offset, FinalOffset);
 	}
-	void ParseSensorData(const TArray<uint8> &Data) {
+	void ParseSensorData(const TArray<uint8> &Data)
+	{
 		const uint8 FinalOffset = Data.Num();
 		ParseSensorData(Data, FinalOffset);
 	};
