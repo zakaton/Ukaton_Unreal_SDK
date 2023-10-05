@@ -14,7 +14,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissions, Log, All);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureCenterOfMassDelegate, const FVector2D &, CenterOfMass, const int64 &, Timestamp);
 
 UCLASS()
-class UKATON_UNREAL_SDK_API AUkatonMissions : public AActor
+class UKATONMISSION_API AUkatonMissions : public AActor
 {
 	GENERATED_BODY()
 

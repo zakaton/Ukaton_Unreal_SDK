@@ -7,7 +7,7 @@
 #include "UDPPortUtils.generated.h"
 
 UCLASS()
-class UKATON_UNREAL_SDK_API UUDPPortUtils : public UBlueprintFunctionLibrary
+class UKATONMISSION_API UUDPPortUtils : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

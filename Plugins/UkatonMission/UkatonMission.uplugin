@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "UkatonMission",
+	"FriendlyName": "Ukaton Mission SDK",
 	"Description": "Access Ukaton Smart Insoles and Motion Modules",
 	"Category": "Wearables",
 	"CreatedBy": "Zack Qattan",
@@ -14,11 +14,18 @@
 	"IsBetaVersion": true,
 	"IsExperimentalVersion": false,
 	"Installed": false,
+	"EngineVersion": "5.2.0",
 	"Modules": [
 		{
 			"Name": "UkatonMission",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Mac",
+				"Android",
+				"IOS"
+			]
 		}
 	]
 }

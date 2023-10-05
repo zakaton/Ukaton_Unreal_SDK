@@ -31,7 +31,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureMassUpdatedDelegate, const
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPressureHeelToToeUpdatedDelegate, const double &, HeelToToe, const int64 &, Timestamp);
 
 UCLASS(Abstract)
-class UKATON_UNREAL_SDK_API AUkatonMissionBase : public AActor
+class UKATONMISSION_API AUkatonMissionBase : public AActor
 {
 	GENERATED_BODY()
 

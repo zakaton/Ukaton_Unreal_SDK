@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-class UKATON_UNREAL_SDK_API ByteParser
+class UKATONMISSION_API ByteParser
 {
 public:
 	static uint16 GetUint16(const TArray<uint8> &Data, uint8 Offset);

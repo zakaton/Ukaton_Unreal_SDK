@@ -7,7 +7,7 @@
 #include "UkatonMissionBLE.generated.h"
 
 UCLASS()
-class UKATON_UNREAL_SDK_API AUkatonMissionBLE : public AUkatonMissionBase
+class UKATONMISSION_API AUkatonMissionBLE : public AUkatonMissionBase
 {
 	GENERATED_BODY()
 

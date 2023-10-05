@@ -10,7 +10,7 @@
 DECLARE_LOG_CATEGORY_EXTERN(LogUkatonMissionUDP, Log, All);
 
 UCLASS()
-class UKATON_UNREAL_SDK_API AUkatonMissionUDP : public AUkatonMissionBase
+class UKATONMISSION_API AUkatonMissionUDP : public AUkatonMissionBase
 {
 	GENERATED_BODY()
 
