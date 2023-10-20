@@ -110,7 +110,7 @@ enum class EUkatonVibrationWaveformType : uint8
 
 	TransitionRampDownShortSmooth1_100 = 75 UMETA(DisplayName = "Transition Ramp Down Short Smooth 1 - 100 to 0%"),
 	TransitionRampDownShortSmooth2_100 = 76 UMETA(DisplayName = "Transition Ramp Down Short Smooth 2 - 100 to 0%"),
-
+	// FIX LATER - 76 appears twice
 	TransitionRampDownLongSharp1_100 = 76 UMETA(DisplayName = "Transition Ramp Down Long Sharp 1 - 100 to 0%"),
 	TransitionRampDownLongSharp2_100 = 77 UMETA(DisplayName = "Transition Ramp Down Long Sharp 2 - 100 to 0%"),
 
