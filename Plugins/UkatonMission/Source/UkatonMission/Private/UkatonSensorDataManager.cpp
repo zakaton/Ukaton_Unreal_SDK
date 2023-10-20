@@ -26,7 +26,7 @@ void FUkatonSensorDataManager::ParseSensorData(const TArray<uint8> &Data, uint8 
     {
         TimestampOffset += UINT16_MAX + 1;
     }
-    Timestamp = RawTimestamp + Offset;
+    Timestamp = RawTimestamp + TimestampOffset;
     LastRawTimestamp = RawTimestamp;
 
     while (Offset < FinalOffset)
