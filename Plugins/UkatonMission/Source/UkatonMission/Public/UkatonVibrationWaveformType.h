@@ -102,22 +102,22 @@ enum class EUkatonVibrationWaveformType : uint8
 	TransitionHum_20 = 68 UMETA(DisplayName = "Transition Hum 5 - 20%"),
 	TransitionHum_10 = 69 UMETA(DisplayName = "Transition Hum 6 - 10%"),
 
-	TransitionRampDownLongSmooth1_100 = 71 UMETA(DisplayName = "Transition Ramp Down Long Smooth 1 - 100 to 0%"),
-	TransitionRampDownLongSmooth2_100 = 72 UMETA(DisplayName = "Transition Ramp Down Long Smooth 2 - 100 to 0%"),
+	TransitionRampDownLongSmooth1_100 = 70 UMETA(DisplayName = "Transition Ramp Down Long Smooth 1 - 100 to 0%"),
+	TransitionRampDownLongSmooth2_100 = 71 UMETA(DisplayName = "Transition Ramp Down Long Smooth 2 - 100 to 0%"),
 
-	TransitionRampDownMediumSmooth1_100 = 73 UMETA(DisplayName = "Transition Ramp Down Medium Smooth 1 - 100 to 0%"),
-	TransitionRampDownMediumSmooth2_100 = 74 UMETA(DisplayName = "Transition Ramp Down Medium Smooth 2 - 100 to 0%"),
+	TransitionRampDownMediumSmooth1_100 = 72 UMETA(DisplayName = "Transition Ramp Down Medium Smooth 1 - 100 to 0%"),
+	TransitionRampDownMediumSmooth2_100 = 73 UMETA(DisplayName = "Transition Ramp Down Medium Smooth 2 - 100 to 0%"),
 
-	TransitionRampDownShortSmooth1_100 = 75 UMETA(DisplayName = "Transition Ramp Down Short Smooth 1 - 100 to 0%"),
-	TransitionRampDownShortSmooth2_100 = 76 UMETA(DisplayName = "Transition Ramp Down Short Smooth 2 - 100 to 0%"),
-	// FIX LATER - 76 appears twice
+	TransitionRampDownShortSmooth1_100 = 74 UMETA(DisplayName = "Transition Ramp Down Short Smooth 1 - 100 to 0%"),
+	TransitionRampDownShortSmooth2_100 = 75 UMETA(DisplayName = "Transition Ramp Down Short Smooth 2 - 100 to 0%"),
+
 	TransitionRampDownLongSharp1_100 = 76 UMETA(DisplayName = "Transition Ramp Down Long Sharp 1 - 100 to 0%"),
 	TransitionRampDownLongSharp2_100 = 77 UMETA(DisplayName = "Transition Ramp Down Long Sharp 2 - 100 to 0%"),
 
 	TransitionRampDownMediumSharp1_100 = 78 UMETA(DisplayName = "Transition Ramp Down Medium Sharp 1 - 100 to 0%"),
 	TransitionRampDownMediumSharp2_100 = 79 UMETA(DisplayName = "Transition Ramp Down Medium Sharp 2 - 100 to 0%"),
 
-	TransitionRampDownShortSharp1_100 = 88 UMETA(DisplayName = "Transition Ramp Down Short Sharp 1 - 100 to 0%"),
+	TransitionRampDownShortSharp1_100 = 80 UMETA(DisplayName = "Transition Ramp Down Short Sharp 1 - 100 to 0%"),
 	TransitionRampDownShortSharp2_100 = 81 UMETA(DisplayName = "Transition Ramp Down Short Sharp 2 - 100 to 0%"),
 
 	TransitionRampUpLongSmooth1_100 = 82 UMETA(DisplayName = "Transition Ramp Up Long Smooth 1 - 100 to 0%"),
